@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>通用小说人物卡片（详尽版）</title>
+    <style>
+        *{box-sizing:border-box;font-family:微软雅黑, sans-serif;}
+        body{margin:20px;line-height:1.6;}
+        table{width:100%;border-collapse:collapse;margin:20px 0;}
+        td,th{border:1px solid #333;padding:8px 12px;vertical-align:top;}
+        th{background:#f5f5f5;text-align:left;}
+        .cate{background:#eef6ff;font-weight:bold;}
+        textarea{width:100%;height:40px;border:none;resize:vertical;outline:none;}
+        .btn-group{margin:20px 0;}
+        button{padding:8px 16px;border:none;background:#409eff;color:white;border-radius:4px;cursor:pointer;margin-right:10px;}
+        button:hover{background:#66b1ff;}
+        button.reset{background:#f56c6c;}
+        button.reset:hover{background:#f78989;}
+    </style>
+</head>
+<body>
+<h2>通用小说人物卡片（详尽版）</h2>
+
+<div class="btn-group">
+    <button id="saveBtn">手动保存内容</button>
+    <button id="resetBtn" class="reset">清空所有内容</button>
+    <span style="color:#666;">（注：内容会自动保存在你的浏览器里，换设备/清缓存会丢失）</span>
+</div>
+
+<table id="characterTable">
+    <tr>
+        <th class="cate" colspan="2">基础身份信息</th>
+    </tr>
+    <tr><td>姓名（全名/笔名/代号/曾用名/化名）</td><td><textarea name="name"></textarea></td></tr>
+    <tr><td>性别</td><td><textarea name="gender"></textarea></td></tr>
+    <tr><td>年龄（实际/外表/心理）</td><td><textarea name="age"></textarea></td></tr>
+    <tr><td>出生日期（公历/农历/异世界纪年）</td><td><textarea name="birth"></textarea></td></tr>
+    <tr><td>星座/命格</td><td><textarea name="constellation"></textarea></td></tr>
+    <tr><td>种族</td><td><textarea name="race"></textarea></td></tr>
+    <tr><td>身份定位（主角/配角/反派/工具人等）</td><td><textarea name="role"></textarea></td></tr>
+    <tr><td>所处时代</td><td><textarea name="era"></textarea></td></tr>
+    <tr><td>国籍/地域/宗门/星球</td><td><textarea name="region"></textarea></td></tr>
+    <tr><td>语言（母语/通用语/特殊语言）</td><td><textarea name="language"></textarea></td></tr>
+
+    <tr>
+        <th class="cate" colspan="2">外貌形象特征</th>
+    </tr>
+    <tr><td>整体气质</td><td><textarea name="temperament"></textarea></td></tr>
+    <tr><td>身高体型</td><td><textarea name="body"></textarea></td></tr>
+    <tr><td>面部特征（脸型/眉眼/鼻唇/肤色）</td><td><textarea name="face"></textarea></td></tr>
+    <tr><td>标志性外貌（胎记/疤痕/异瞳等）</td><td><textarea name="feature"></textarea></td></tr>
+    <tr><td>发型发色</td><td><textarea name="hair"></textarea></td></tr>
+    <tr><td>声音特点（音色/语速/口头禅）</td><td><textarea name="voice"></textarea></td></tr>
+    <tr><td>穿着风格</td><td><textarea name="clothes"></textarea></td></tr>
+    <tr><td>随身物品</td><td><textarea name="items"></textarea></td></tr>
+    <tr><td>体态习惯</td><td><textarea name="posture"></textarea></td></tr>
+
+    <tr>
+        <th class="cate" colspan="2">家庭与社会关系</th>
+    </tr>
+    <tr><td>家庭背景</td><td><textarea name="familyBg"></textarea></td></tr>
+    <tr><td>直系亲属（姓名+身份+关系）</td><td><textarea name="directRel"></textarea></td></tr>
+    <tr><td>旁系亲属（姓名+身份+关系）</td><td><textarea name="indirectRel"></textarea></td></tr>
+    <tr><td>伴侣关系（恋人/配偶/前任等）</td><td><textarea name="partner"></textarea></td></tr>
+    <tr><td>挚友/盟友</td><td><textarea name="friends"></textarea></td></tr>
+    <tr><td>仇敌/对手</td><td><textarea name="enemies"></textarea></td></tr>
+    <tr><td>师徒关系</td><td><textarea name="master"></textarea></td></tr>
+    <tr><td>上下级关系</td><td><textarea name="leader"></textarea></td></tr>
+    <tr><td>关键羁绊（影响最大的人）</td><td><textarea name="bond"></textarea></td></tr>
+    <tr><td>社交圈层</td><td><textarea name="social"></textarea></td></tr>
+
+    <tr>
+        <th class="cate" colspan="2">性格与心理特质</th>
+    </tr>
+    <tr><td>核心性格</td><td><textarea name="personality"></textarea></td></tr>
+    <tr><td>隐藏性格</td><td><textarea name="hiddenPersona"></textarea></td></tr>
+    <tr><td>MBTI/人格类型</td><td><textarea name="mbti"></textarea></td></tr>
+    <tr><td>三观倾向</td><td><textarea name="view"></textarea></td></tr>
+    <tr><td>优点（≤5个）</td><td><textarea name="merits"></textarea></td></tr>
+    <tr><td>缺点（≤5个）</td><td><textarea name="flaws"></textarea></td></tr>
+    <tr><td>口头禅</td><td><textarea name="motto"></textarea></td></tr>
+    <tr><td>行为习惯/怪癖</td><td><textarea name="habits"></textarea></td></tr>
+    <tr><td>情绪特点</td><td><textarea name="emotion"></textarea></td></tr>
+    <tr><td>心理创伤</td><td><textarea name="trauma"></textarea></td></tr>
+
+    <tr>
+        <th class="cate" colspan="2">能力与技能设定</th>
+    </tr>
+    <tr><td>核心能力/金手指</td><td><textarea name="ability"></textarea></td></tr>
+    <tr><td>武力值/战斗风格/擅长武器</td><td><textarea name="combat"></textarea></td></tr>
+    <tr><td>专业技能</td><td><textarea name="skills"></textarea></td></tr>
+    <tr><td>特殊天赋</td><td><textarea name="talent"></textarea></td></tr>
+    <tr><td>学识储备</td><td><textarea name="knowledge"></textarea></td></tr>
+    <tr><td>弱点短板</td><td><textarea name="weakness"></textarea></td></tr>
+    <tr><td>成长潜力</td><td><textarea name="potential"></textarea></td></tr>
+    <tr><td>职业/职位</td><td><textarea name="job"></textarea></td></tr>
+    <tr><td>经济状况</td><td><textarea name="money"></textarea></td></tr>
+    <tr><td>持有资源（人脉/宝物/权力等）</td><td><textarea name="resources"></textarea></td></tr>
+
+    <tr>
+        <th class="cate" colspan="2">人生与剧情设定</th>
+    </tr>
+    <tr><td>人物标签（3-5个）</td><td><textarea name="tags"></textarea></td></tr>
+    <tr><td>核心动机</td><td><textarea name="motivation"></textarea></td></tr>
+    <tr><td>人生信念/座右铭</td><td><textarea name="belief"></textarea></td></tr>
+    <tr><td>童年经历</td><td><textarea name="childhood"></textarea></td></tr>
+    <tr><td>关键转折（人生重要节点）</td><td><textarea name="turning"></textarea></td></tr>
+    <tr><td>剧情作用</td><td><textarea name="plotRole"></textarea></td></tr>
+    <tr><td>人物弧光（成长变化）</td><td><textarea name="arc"></textarea></td></tr>
+    <tr><td>结局走向</td><td><textarea name="ending"></textarea></td></tr>
+    <tr><td>核心矛盾</td><td><textarea name="conflict"></textarea></td></tr>
+    <tr><td>遗憾之事</td><td><textarea name="regret"></textarea></td></tr>
+
+    <tr>
+        <th class="cate" colspan="2">喜好与禁忌</th>
+    </tr>
+    <tr><td>喜欢的事物</td><td><textarea name="like"></textarea></td></tr>
+    <tr><td>讨厌的事物</td><td><textarea name="dislike"></textarea></td></tr>
+    <tr><td>害怕的事物</td><td><textarea name="fear"></textarea></td></tr>
+    <tr><td>执念之物/人</td><td><textarea name="obsession"></textarea></td></tr>
+    <tr><td>生活习惯</td><td><textarea name="lifeHabit"></textarea></td></tr>
+</table>
+
+<script>
+    // 页面加载时，自动读取本地保存的内容
+    window.onload = function() {
+        const allTextareas = document.querySelectorAll('textarea');
+        allTextareas.forEach(textarea => {
+            const savedValue = localStorage.getItem(textarea.name);
+            if (savedValue) {
+                textarea.value = savedValue;
+            }
+            // 输入时自动保存
+            textarea.addEventListener('input', function() {
+                localStorage.setItem(this.name, this.value);
+            });
+        });
+
+        // 手动保存按钮（双重保障）
+        document.getElementById('saveBtn').addEventListener('click', function() {
+            const allTextareas = document.querySelectorAll('textarea');
+            allTextareas.forEach(textarea => {
+                localStorage.setItem(textarea.name, textarea.value);
+            });
+            alert('内容已保存！');
+        });
+
+        // 清空按钮
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            if (confirm('确定要清空所有内容吗？清空后无法恢复！')) {
+                const allTextareas = document.querySelectorAll('textarea');
+                allTextareas.forEach(textarea => {
+                    textarea.value = '';
+                    localStorage.removeItem(textarea.name);
+                });
+                alert('已清空所有内容');
+            }
+        });
+    }
+</script>
+</body>
+</html>
