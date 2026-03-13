@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵弦华夏 | 贪文笔著</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: #0a0a1a;
+            color: #e0e6ff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        /* 星空背景 */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        /* 弦线动画容器 */
+        .strings {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        /* 主容器 */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10vh 5%;
+            text-align: center;
+        }
+        /* 标题样式 */
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            background: linear-gradient(90deg, #00d4ff, #8a2be2, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #8892b0;
+            margin-bottom: 4rem;
+            letter-spacing: 0.05em;
+        }
+        /* 导航栏 */
+        nav {
+            margin: 3rem 0;
+            border-top: 1px solid rgba(136, 146, 176, 0.2);
+            border-bottom: 1px solid rgba(136, 146, 176, 0.2);
+            padding: 1.5rem 0;
+        }
+        nav a {
+            color: #8892b0;
+            text-decoration: none;
+            margin: 0 1.5rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00d4ff;
+            transition: width 0.3s ease;
+        }
+        nav a:hover {
+            color: #00d4ff;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+        /* 内容区块 */
+        .section {
+            margin: 5rem 0;
+            text-align: left;
+        }
+        .section h2 {
+            font-size: 2rem;
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        .section h2::before {
+            content: '▸';
+            margin-right: 0.5rem;
+            color: #8a2be2;
+        }
+        .section p {
+            line-height: 1.8;
+            color: #a8b2d1;
+            font-size: 1.1rem;
+        }
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            nav a { margin: 0 0.8rem; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 星空背景 -->
+    <div class="stars" id="stars"></div>
+    <!-- 弦线动画 -->
+    <canvas class="strings" id="strings"></canvas>
+    <!-- 主内容 -->
+    <div class="container">
+        <header>
+            <h1>灵弦华夏</h1>
+            <p class="subtitle">贪食笔著 | 宇宙意识与时间循环的叙事诗</p>
+        </header>
+        <nav>
+            <a href="#story">故事梗概</a>
+            <a href="#worldview">灵弦体系</a>
+            <a href="#characters">人物志</a>
+            <a href="#contact">关于我</a>
+        </nav>
+        <section class="section" id="story">
+            <h2>故事梗概</h2>
+            <p>未来的李子许试图消灭反灵旋以阻止其吞噬宇宙意识，最终却发现此举会导致灵旋无法完成。他想通过牺牲自己将上一轮灵旋的信息传递给现在的李子许，罗沫先接受并因此死亡，最终现在的李子许成功完成灵旋，未来的李子许消失，现在的李子许也为保护罗沫而死，只剩下过去的李子许记录这一切。</p>
+        </section>
+        <section class="section" id="worldview">
+            <h2>灵弦体系</h2>
+        </section>
+        <section class="section" id="characters">
+            <h2>核心人物</h2>
+            <p><strong>李子许</strong>：物理系研究生，灵弦体系的关键执行者。</p>
+            <p><strong>罗沫</strong>：意识传递的媒介，以死亡为代价承接上一轮灵旋的信息，是连接过去与未来的桥梁。</p>
+        </section>
+        <section class="section" id="contact">
+            <h2>关于我</h2>
+            <p>贪文笔，一个试图用文字编织宇宙的硬核玩家。</p>
+        </section>
+    </div>
+
+    <script>
+        // 生成星空
+        const stars = document.getElementById('stars');
+        for (let i = 0; i < 1000; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 2 + 'px';
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 2 + 's';
+            stars.appendChild(star);
+        }
+
+        // 弦线粒子动画
+        const canvas = document.getElementById('strings');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 150 };
+
+        // 调整画布大小
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // 初始化粒子
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.floor(canvas.width / 20);
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    radius: Math.random() * 1.5 + 0.5
+                });
+            }
+        }
+
+        // 鼠标移动监听
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+
+        // 动画循环
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                // 边界反弹
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                // 绘制粒子
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 212, 255, 0.5)';
+                ctx.fill();
+                // 连接粒子（弦线效果）
+                particles.forEach(p2 => {
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(138, 43, 226, ${1 - distance / 100})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                });
+                // 鼠标交互
+                if (mouse.x && mouse.y) {
+                    const dx = p.x - mouse.x;
+                    const dy = p.y - mouse.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius) {
+                        const force = (mouse.radius - distance) / mouse.radius;
+                        p.vx += (dx / distance) * force * 0.5;
+                        p.vy += (dy / distance) * force * 0.5;
+                    }
+                }
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
