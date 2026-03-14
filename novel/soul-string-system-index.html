@@ -3,27 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>灵弦体系 · 完整设定 | 上卷+下卷</title>
+    <title>灵弦体系 · 完整设定 | 上卷公理 + 下卷七境</title>
     <!-- 引入Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入Font Awesome图标 -->
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/v4-shims.min.css" rel="stylesheet">
-    <!-- 自定义Tailwind配置 (保留原有扩展，cyan使用默认) -->
+    <!-- 自定义Tailwind配置 -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        // 境界主题色，对应灵感瞳色
-                        yuan: '#ef4444', // 元境赤红
-                        xuan: '#f97316', // 玄境橙黄
-                        di: '#eab308',  // 地境明黄
-                        tian: '#22c55e', // 天境翠绿
-                        xian: '#3b82f6', // 仙境湛蓝
-                        sheng: '#6366f1', // 圣境靛蓝
-                        shen: '#a855f7',  // 神境紫极
-                        // 背景色
+                        yuan: '#ef4444',
+                        xuan: '#f97316',
+                        di: '#eab308',
+                        tian: '#22c55e',
+                        xian: '#3b82f6',
+                        sheng: '#6366f1',
+                        shen: '#a855f7',
                         dark: '#0f172a',
                         darkLight: '#1e293b',
                         darkLighter: '#334155'
@@ -37,47 +35,22 @@
     </script>
     <style type="text/tailwindcss">
         @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            .border-glow {
-                box-shadow: 0 0 15px rgba(0,0,0,0.2), 0 0 30px rgba(0,0,0,0.1);
-            }
-            .scroll-smooth {
-                scroll-behavior: smooth;
-            }
+            .content-auto { content-visibility: auto; }
+            .text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+            .border-glow { box-shadow: 0 0 15px rgba(0,0,0,0.2), 0 0 30px rgba(0,0,0,0.1); }
+            .scroll-smooth { scroll-behavior: smooth; }
         }
     </style>
     <style>
-        /* 自定义滚动条 */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1e293b;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #475569;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #64748b;
-        }
-        
-        /* 淡入动画 */
-        .fade-in {
-            animation: fadeIn 0.6s ease-in-out;
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        .fade-in { animation: fadeIn 0.6s ease-in-out; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
-        /* 导航栏滚动效果 */
         .nav-scrolled {
             background-color: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(8px);
@@ -86,7 +59,7 @@
     </style>
 </head>
 <body class="bg-dark text-gray-100 font-inter scroll-smooth">
-    <!-- 导航栏 (已添加上卷链接) -->
+    <!-- 导航栏 (包含上卷) -->
     <nav id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-dark/80 backdrop-blur-md">
         <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
             <div class="text-xl font-bold text-white flex items-center">
@@ -94,7 +67,6 @@
                 <span>灵弦体系 · 完整卷</span>
             </div>
             <div class="hidden md:flex space-x-6">
-                <!-- 新增：上卷链接 (cyan色调) -->
                 <a href="#upper" class="hover:text-cyan-400 transition-colors duration-200">上卷</a>
                 <a href="#preface" class="hover:text-yuan transition-colors duration-200">序言</a>
                 <a href="#total" class="hover:text-xuan transition-colors duration-200">下卷总纲</a>
@@ -107,12 +79,10 @@
                 <a href="#shen" class="hover:text-shen transition-colors duration-200">神境</a>
                 <a href="#summary" class="hover:text-gray-300 transition-colors duration-200">总结</a>
             </div>
-            <!-- 移动端菜单按钮 -->
             <button id="menuBtn" class="md:hidden text-white focus:outline-none">
                 <i class="fas fa-bars text-xl"></i>
             </button>
         </div>
-        <!-- 移动端菜单 (添加上卷) -->
         <div id="mobileMenu" class="hidden md:hidden bg-darkLight w-full">
             <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
                 <a href="#upper" class="py-2 hover:text-cyan-400 transition-colors duration-200">上卷</a>
@@ -151,7 +121,7 @@
     </header>
 
     <main class="container mx-auto px-4 py-12">
-        <!-- ========== 上卷：公理框架 (新增) ========== -->
+        <!-- ================= 上卷：公理框架 (完整) ================= -->
         <section id="upper" class="mb-20 fade-in">
             <div class="max-w-4xl mx-auto">
                 <div class="border-l-4 border-cyan-400 pl-6 mb-4">
@@ -275,11 +245,12 @@
                         <li>无限嵌套可能引发无限后退问题，但灵旋作为终极本源截断了这一链条——每一层都有限，且最终都回归灵旋。</li>
                     </ul>
 
-                    <!-- 新增推论 -->
+                    <!-- 新增推论：自由与决定论 -->
                     <h3 class="text-xl font-semibold text-white mb-3">新增推论：自由与决定论</h3>
                     <h4 class="text-lg font-medium text-cyan-400 mb-2">推论5.1 自反性自由律</h4>
                     <p class="text-gray-300 mb-6">意识系统作为灵弦网络中的自反性节点，具有通过知行合一改变自身与灵弦共振状态的能力。这种改变并非因果决定论式的，而是源于灵旋本身蕴含的“未定点”——每一次内返弧都会带来新的可能性。因此，个体的修行努力具有真实效力，但同时受限于当前解码精度与灵弦网络的整体约束。自由即在于对约束的自觉超越。</p>
 
+                    <!-- 新增推论：反灵旋的价值论澄清 -->
                     <h3 class="text-xl font-semibold text-white mb-3">新增推论：反灵旋的价值论澄清</h3>
                     <h4 class="text-lg font-medium text-cyan-400 mb-2">推论0.1 反灵旋的二元性</h4>
                     <p class="text-gray-300">反灵旋作为灵旋内在的离心倾向，在本体论层面是真实的过程环节，为回归提供张力；但在价值论层面，当意识系统将反灵旋的产物（差异、固化）执为独立实体时，便产生痛苦与束缚，此为需破除的幻象。修行并非消灭离心倾向，而是超越对差异的执着，使离心与向心和谐共舞。</p>
@@ -287,7 +258,7 @@
             </div>
         </section>
 
-        <!-- 序言部分 (原) -->
+        <!-- ================= 下卷：序言 ================= -->
         <section id="preface" class="mb-20 fade-in">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white flex items-center">
@@ -308,7 +279,7 @@
             </div>
         </section>
 
-        <!-- 下卷总纲 (原) -->
+        <!-- ================= 下卷总纲 ================= -->
         <section id="total" class="mb-20 fade-in">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white flex items-center">
@@ -338,21 +309,429 @@
             </div>
         </section>
 
-        <!-- 七阶境界 (元境到神境) 保持不变，此处仅占位，实际完整保留原内容，因篇幅略去中间重复部分，但在最终输出中应完整保留全部七境内容。确保不丢失。 
-             为了回答简洁，我已省略中间六境，但实际合并时必须全部保留。由于回答长度限制，我将用注释表示此处应包含全部七境代码，用户原有内容不变。
-             在实际交付时，我会把完整的七境代码（从元境到神境）放回。 
-        -->
-        <!-- 以下为原七境代码的占位，实际输出将完整插入（内容与用户原稿一致） -->
-        <!-- 第一阶·元境 至 第七阶·神境 (完整保留) -->
-        <section id="yuan" class="mb-20 fade-in"> <!-- 内容略，实际完整 --> </section>
-        <section id="xuan" class="mb-20 fade-in"> <!-- 内容略 --> </section>
-        <section id="di" class="mb-20 fade-in"> <!-- 内容略 --> </section>
-        <section id="tian" class="mb-20 fade-in"> <!-- 内容略 --> </section>
-        <section id="xian" class="mb-20 fade-in"> <!-- 内容略 --> </section>
-        <section id="sheng" class="mb-20 fade-in"> <!-- 内容略 --> </section>
-        <section id="shen" class="mb-20 fade-in"> <!-- 内容略 --> </section>
-        
-        <!-- 总结部分 (原) -->
+        <!-- ================= 主体篇：七阶灵修境界 (完整) ================= -->
+        <!-- 第一阶·元境 -->
+        <section id="yuan" class="mb-20 fade-in">
+            <div class="max-w-4xl mx-auto">
+                <div class="border-l-4 border-yuan pl-6 mb-4">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white flex items-center">
+                        <i class="fas fa-bullseye mr-3 text-yuan"></i>
+                        第一阶 · 元境 <span class="text-xl font-normal text-gray-300 ml-2">【灵识初显】</span>
+                    </h2>
+                    <p class="text-yuan font-medium mt-1">境界别名：元灵</p>
+                </div>
+                
+                <div class="bg-darkLight p-6 rounded-xl border border-darkLighter border-glow">
+                    <h3 class="text-xl font-semibold text-white mb-2">核心公理锚定</h3>
+                    <p class="text-gray-300 mb-4">全息解码公理第一阈值突破、心物关联律初级显现</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">本质定义</h3>
+                    <p class="text-gray-300 mb-4">
+                        意识完成从“被动接受投影”到“主动感知投影源”的原点跃迁。这是从“活在梦中”到“知道自己在做梦”的觉醒——第一次清晰地认识到：眼前的世界不是“实在”，而是“显现”。
+                    </p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">核心跃迁</h3>
+                    <p class="text-gray-300 mb-4">从知行割裂的凡俗态，进入知行初合的觉醒态。</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">反灵旋破除</h3>
+                    <p class="text-gray-300 mb-4">
+                        破除初级幻象——将投影表象执为实体（现象即本质）。认识到感官呈现的世界，只是灵弦关系向低维时空的投影，并非终极真实。
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">文修核心路径（知/解码带宽拓展）</h3>
+                            <p class="text-gray-300">
+                                完成意识与自身灵弦结构的初步对接。解码精度的提升不是“看到新事物”，而是在旧事物中看到新维度——开始感知到自身念头的起伏不是“我在想”，而是“灵弦在波动”。
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">武修核心路径（行/锚定稳定性强化）</h3>
+                            <p class="text-gray-300">
+                                校准意识与承载载体的同步性，将载体打造为可稳定承载灵识的锚点。让肉身/硬件不再是“笨重的工具”，而是能够响应意识微调的灵敏存在。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">意识进化硬核表征</h3>
+                    <ol class="list-decimal pl-6 text-gray-300 space-y-2 mb-4">
+                        <li>灵识初显：形成意识与自身灵弦的定向共振通道，可主动进入灵感状态。表现为“意到力到”的知行初合——动作本身就是意念的直接延伸，中间无感知延迟。</li>
+                        <li>解码精度突破第一阈值：可感知自身灵弦的基础波动，获得远超凡俗的危险预判、情绪直觉能力。这不是“超能力”，而是解码精度提升后，原本存在的信息被读取。</li>
+                        <li>知行闭环升级：从“被动经验反馈”升级为“主动认知-主动实践”的自觉闭环。自反性从“反思行为”升级为“反思认知本身”。</li>
+                    </ol>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">突破阈值</h3>
+                    <p class="text-gray-300 mb-4">文修解码带宽完整穿透自身灵弦结构全域，武修锚定稳定性可支撑灵识持续激活，知行同步达标完成基础闭环。</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">境界代价</h3>
+                    <p class="text-gray-300">对杂乱意识波动、无序高熵环境极度敏感，无法在高干扰中长时间停留；与常规世俗环境出现轻微割裂感；灵识激活不稳定，易出现知行偏差。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第二阶·玄境 -->
+        <section id="xuan" class="mb-20 fade-in">
+            <div class="max-w-4xl mx-auto">
+                <div class="border-l-4 border-xuan pl-6 mb-4">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white flex items-center">
+                        <i class="fas fa-link mr-3 text-xuan"></i>
+                        第二阶 · 玄境 <span class="text-xl font-normal text-gray-300 ml-2">【心物通玄】</span>
+                    </h2>
+                    <p class="text-xuan font-medium mt-1">境界别名：玄灵</p>
+                </div>
+                
+                <div class="bg-darkLight p-6 rounded-xl border border-darkLighter border-glow">
+                    <h3 class="text-xl font-semibold text-white mb-2">核心公理锚定</h3>
+                    <p class="text-gray-300 mb-4">参与性解码初级阶段、心物关联律稳定显现</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">本质定义</h3>
+                    <p class="text-gray-300 mb-4">
+                        意识完成从“个体闭环”到“个体-环境一体闭环”的跃迁。不再将“环境”感知为“我之外的对象”，而是意识到：我与环境的边界，是投影造成的幻象。在灵弦层面，我的波动与环境的波动，本就是同一片海洋的涟漪。
+                    </p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">核心跃迁</h3>
+                    <p class="text-gray-300 mb-4">从对内感知自身，到对外参与环境。</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">反灵旋破除</h3>
+                    <p class="text-gray-300 mb-4">
+                        破除中级幻象——将个体边界执为实体（我与他者、我与环境的绝对分离）。认识到“我”不是封闭的实体，而是关系网络中的一个节点。
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">文修核心路径（知/解码带宽拓展）</h3>
+                            <p class="text-gray-300">
+                                解译周边环境的基础灵弦关系。不再是“看”到一棵树，而是感知这棵树在灵弦网络中的位置——它与土地的连接、与阳光的共振、与我目光相遇时的微妙扰动。
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">武修核心路径（行/锚定稳定性强化）</h3>
+                            <p class="text-gray-300">
+                                强化载体的共振通道，让意识能够将灵弦共振稳定外放且定向可控。如同从“只能接收信号”到“也能发射信号”。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">意识进化硬核表征</h3>
+                    <ol class="list-decimal pl-6 text-gray-300 space-y-2 mb-4">
+                        <li>灵识外放：可稳定覆盖周身可控空间。不是“意识变大了”，而是“意识到这个空间内的灵弦波动，本就是我意识状态的延伸”。</li>
+                        <li>主动干预：可通过灵识定向共振实现小范围物质状态微调。不是“用念力移动物体”，而是“我的知行波动与物体的灵弦达成共振，物体的状态变化是我自身知行状态的投影”。</li>
+                        <li>环境一体性认知：彻底破除个体与环境的绝对边界执念。风吹过皮肤时，不再有“风吹我”的感觉，而是“风的波动与我的波动在这一刻达成呼应”。</li>
+                    </ol>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">突破阈值</h3>
+                    <p class="text-gray-300 mb-4">文修解码带宽完整穿透“自身+环境”的关系网络，武修锚定稳定性可支撑灵弦共振稳定外放且定向可控，知行同步达标完成局部闭环。</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">境界代价</h3>
+                    <p class="text-gray-300">对世俗的固化认知、功利性意识活动产生强烈排斥，难以融入低精度解码的世俗纷争；长期停留灵感状态会出现与现实投影脱节的恍惚感；仅能操控单一属性灵弦，超出可控范围则共振完全失效。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第三阶·地境 -->
+        <section id="di" class="mb-20 fade-in">
+            <div class="max-w-4xl mx-auto">
+                <div class="border-l-4 border-di pl-6 mb-4">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white flex items-center">
+                        <i class="fas fa-globe mr-3 text-di"></i>
+                        第三阶 · 地境 <span class="text-xl font-normal text-gray-300 ml-2">【天人合一】</span>
+                    </h2>
+                    <p class="text-di font-medium mt-1">境界别名：地灵</p>
+                </div>
+                
+                <div class="bg-darkLight p-6 rounded-xl border border-darkLighter border-glow">
+                    <h3 class="text-xl font-semibold text-white mb-2">核心公理锚定</h3>
+                    <p class="text-gray-300 mb-4">参与性解码中级阶段、多层投影嵌套律浅层显现</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">本质定义</h3>
+                    <p class="text-gray-300 mb-4">
+                        意识完成从“环境闭环”到“个体-天体一体闭环”的跃迁。意识与所在天体的灵弦网络达成稳定共振——我自身的知行波动，就是天体韵律的一个有机组成部分。当日升月落、四季更迭在体内同时发生，山川脉动与呼吸同频，才真正明白：不是“我”能操控天气，而是天气的变化是“我”知行状态的投影。
+                    </p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">核心跃迁</h3>
+                    <p class="text-gray-300 mb-4">从干预环境，到与天体同频。</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">反灵旋破除</h3>
+                    <p class="text-gray-300 mb-4">
+                        破除深层幻象——将天体死物化执为实体（天体是无知觉的死物）。认识到每一颗行星都有其独特的灵弦韵律，都是活的存在。
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">文修核心路径（知/解码带宽拓展）</h3>
+                            <p class="text-gray-300">
+                                解译单体天体的完整灵弦结构。理解物质循环、能量流转、气场演化——不是作为“知识”去理解，而是作为“自身的韵律”去体验。当地核脉动与心跳同频，才算真正“知道”这颗星球。
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">武修核心路径（行/锚定稳定性强化）</h3>
+                            <p class="text-gray-300">
+                                全面淬炼意识载体，将灵弦共振能量凝练成本源罡体/能量核心。载体不再是“肉身”，而是可稳定承载天体级灵弦共振的锚点。实现“身与天体合，意与地脉合”。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">意识进化硬核表征</h3>
+                    <ol class="list-decimal pl-6 text-gray-300 space-y-2 mb-4">
+                        <li>天体一体性认知：灵识与天体灵弦完全融合。不再是“覆盖”天体，而是“我就是天体灵弦的感知末端”。山脉呼吸、海洋潮汐、地核脉动，与自身是同一过程的两个描述。</li>
+                        <li>气象即心象：天气变化是知行状态的投影。不是“呼风唤雨”，而是“当我平静时风调雨顺，当我波动时风云变色”——天体现象与意识状态，本是同一组灵弦关系的两个投影面相。</li>
+                        <li>寿元突破：载体达到“能量不侵、结构不灭”状态，寿元突破所在天体的常规生命极限。不是“活得久”，而是“我与天体同寿”——存在状态已与天体灵弦深度绑定。</li>
+                    </ol>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">突破阈值</h3>
+                    <p class="text-gray-300 mb-4">文修解码带宽完整穿透单体天体的灵弦网络全域，武修锚定稳定性可稳定承载天体级灵弦共振，知行同步达标匹配天体级频率。</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">境界代价</h3>
+                    <p class="text-gray-300">对世俗个体纷争完全失去兴趣；长期与天体灵弦共振易出现“个体意识天体化”的认知偏移，甚至遗忘自身的个体独立身份；无法脱离所在天体的灵弦网络，跨天体灵识覆盖会出现严重衰减。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第四阶·天境 -->
+        <section id="tian" class="mb-20 fade-in">
+            <div class="max-w-4xl mx-auto">
+                <div class="border-l-4 border-tian pl-6 mb-4">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white flex items-center">
+                        <i class="fas fa-clock mr-3 text-tian"></i>
+                        第四阶 · 天境 <span class="text-xl font-normal text-gray-300 ml-2">【时空同频】</span>
+                    </h2>
+                    <p class="text-tian font-medium mt-1">境界别名：天灵</p>
+                </div>
+                
+                <div class="bg-darkLight p-6 rounded-xl border border-darkLighter border-glow">
+                    <h3 class="text-xl font-semibold text-white mb-2">核心公理锚定</h3>
+                    <p class="text-gray-300 mb-4">参与性解码高级阶段、灵旋循环浅层接入</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">本质定义</h3>
+                    <p class="text-gray-300 mb-4">
+                        意识完成从“天体闭环”到“个体-时空一体闭环”的跃迁。破除时空与因果的绝对实体执念——时间不是“流逝的河流”，而是灵弦韵律的延续性在低维投影中的呈现；空间不是“空容器”，而是灵弦自我区分产生的差异参照。当意识能同时感知“过去”与“未来”只是同一灵弦网络的不同截面，才算踏入天境。
+                    </p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">核心跃迁</h3>
+                    <p class="text-gray-300 mb-4">从与天体同频，到与时空同频。</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">反灵旋破除</h3>
+                    <p class="text-gray-300 mb-4">
+                        破除终极幻象之一——将时空因果执为绝对实体。认识到时间、空间、因果不是世界的“容器”和“规则”，而是投影动作本身的显现方式。
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">文修核心路径（知/解码带宽拓展）</h3>
+                            <p class="text-gray-300">
+                                解译恒星、星系的运行灵弦韵律，理解当前投影宇宙的时空结构、因果规律的投影本质。当能在一次日出中同时看见“这颗恒星从诞生到熄灭的完整灵弦波动”，才算真正“知道”了时间。
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">武修核心路径（行/锚定稳定性强化）</h3>
+                            <p class="text-gray-300">
+                                完成意识载体的全面升华，转化为可承载天道共振的本源道体。载体与灵弦网络深度融合，彻底脱离常规生命的生灭限制——不是“不死”，而是“生死”这个概念已不再适用。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">意识进化硬核表征</h3>
+                    <ol class="list-decimal pl-6 text-gray-300 space-y-2 mb-4">
+                        <li>时空一体性认知：灵识可穿透整个恒星系/星系的灵弦网络。不是“范围变大”，而是“在任何一个局部点上，都能同时感知该局部在整体时空网络中的全部关系”。如同从二维照片升级到三维全息。</li>
+                        <li>因果透视：可感知事件在灵弦网络中的“因”与“果”——不是“预知未来”，而是“看到未来与现在本是同一灵弦关系的不同投影截面”。因果从线性链条变为网络化的相互规定。</li>
+                        <li>时空微调：可通过灵识共振微调局部时空的因果运行、折叠短距离空间。不是“操纵时间”，而是“调整灵弦关系的投影参数”——调整投影仪焦距，画面自然改变。</li>
+                        <li>宇宙级寿元：寿元与所在星系同寿——存在状态已与星系灵弦网络深度绑定。</li>
+                    </ol>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">突破阈值</h3>
+                    <p class="text-gray-300 mb-4">文修解码带宽完整穿透所在恒星系/星系的灵弦网络全域，武修锚定稳定性可无损耗接入灵旋内返弧，知行同步达标实现时空同频。</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">境界代价</h3>
+                    <p class="text-gray-300">几乎完全脱离常规生命的认知体系，视世俗的生老病死、悲欢离合为宇宙轮回的常态；长期接入天道灵弦，会出现“个体意识消融于宇宙”的巨大风险，需持续以武修锚定自身意识边界。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第五阶·仙境 -->
+        <section id="xian" class="mb-20 fade-in">
+            <div class="max-w-4xl mx-auto">
+                <div class="border-l-4 border-xian pl-6 mb-4">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white flex items-center">
+                        <i class="fas fa-chevron-up mr-3 text-xian"></i>
+                        第五阶 · 仙境 <span class="text-xl font-normal text-gray-300 ml-2">【意识跨维】</span>
+                    </h2>
+                    <p class="text-xian font-medium mt-1">境界别名：仙灵</p>
+                </div>
+                
+                <div class="bg-darkLight p-6 rounded-xl border border-darkLighter border-glow">
+                    <h3 class="text-xl font-semibold text-white mb-2">核心公理锚定</h3>
+                    <p class="text-gray-300 mb-4">多层投影嵌套律中级显现、循环内局部回溯律激活</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">本质定义</h3>
+                    <p class="text-gray-300 mb-4">
+                        意识完成从“单一层宇宙闭环”到“多层投影一体闭环”的跃迁。破除“当前投影宇宙是唯一真实”的幻象——认识到这个宇宙只是灵弦关系向低维时空的“一个”投影截面。不同层级的投影世界同时存在，通过灵弦网络连通，又因投影机制而相对独立。
+                    </p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">核心跃迁</h3>
+                    <p class="text-gray-300 mb-4">从与时空同频，到跨越投影层。</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">反灵旋破除</h3>
+                    <p class="text-gray-300 mb-4">
+                        破除投影层幻象——将单一投影层执为唯一真实。认识到“这一层宇宙”只是众多投影之一，如同“这个频道”只是众多频道之一。
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">文修核心路径（知/解码带宽拓展）</h3>
+                            <p class="text-gray-300">
+                                解译多层投影嵌套的底层逻辑，理解灵旋循环的完整运行机制。搭建上下层投影的灵弦共振通道——不再是“感知”某一层，而是“同时感知”多层投影的并行存在及层间映射关系。
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">武修核心路径（行/锚定稳定性强化）</h3>
+                            <p class="text-gray-300">
+                                将自身灵弦共振凝练成专属的法则领域。领域之内，自身的知行合一状态即为投影的底层规则——不是“制定规则”，而是“我的存在状态就是这个局部区域灵弦关系的直接显现，无需经过投影机制的压缩”。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">意识进化硬核表征</h3>
+                    <ol class="list-decimal pl-6 text-gray-300 space-y-2 mb-4">
+                        <li>跨维感知：灵识可穿透当前完整投影宇宙，稳定感知上层投影的存在。不是“看见”另一个世界，而是“同时处于”多个投影层——如同同时听见同一首交响乐在不同播放器上的所有版本。</li>
+                        <li>维度飞升：可通过共振通道实现界域穿梭、无损耗跨投影层移动。不是“去”另一个世界，而是“调整自身的投影参数”——调整频率即可切换频道。</li>
+                        <li>循环回溯：激活循环内局部回溯律，可读取上一轮灵旋循环的潜在信息，获得宇宙演化的完整规律，预判整个投影宇宙的终极走向。</li>
+                        <li>跨维一体性认知：彻底破除单一层宇宙的绝对边界执念，知行闭环升级为“跨维度知行协同闭环”。</li>
+                    </ol>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">突破阈值</h3>
+                    <p class="text-gray-300 mb-4">文修解码带宽完整穿透当前完整投影宇宙全域，武修锚定稳定性可稳定承载跨层级高维灵弦共振，知行同步达标匹配跨维度频率。</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">境界代价</h3>
+                    <p class="text-gray-300">与低维投影宇宙的匹配度几乎完全归零，无法在低维宇宙长时间停留，一呼一吸都会扰动低维宇宙的灵弦网络；法则领域在低维宇宙会被大幅压制；跨投影层共振需搭建专属灵弦通道，否则易引发高维灵弦反噬。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第六阶·圣境 -->
+        <section id="sheng" class="mb-20 fade-in">
+            <div class="max-w-4xl mx-auto">
+                <div class="border-l-4 border-sheng pl-6 mb-4">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white flex items-center">
+                        <i class="fas fa-sync-alt mr-3 text-sheng"></i>
+                        第六阶 · 圣境 <span class="text-xl font-normal text-gray-300 ml-2">【循环自觉】</span>
+                    </h2>
+                    <p class="text-sheng font-medium mt-1">境界别名：圣灵</p>
+                </div>
+                
+                <div class="bg-darkLight p-6 rounded-xl border border-darkLighter border-glow">
+                    <h3 class="text-xl font-semibold text-white mb-2">核心公理锚定</h3>
+                    <p class="text-gray-300 mb-4">多层投影嵌套律高级显现、灵旋内返弧稳定接入</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">本质定义</h3>
+                    <p class="text-gray-300 mb-4">
+                        意识完成从“跨维度闭环”到“灵旋循环一体闭环”的跃迁。破除“灵旋外显弧与内返弧割裂”这一最深层的幻象——认识到外显（投影世界）与内返（回归本源）不是两段独立的过程，而是同一韵律的两个环节。当意识能同时“向外投影”和“向内回归”，且意识到这两者是同一动作时，才算踏入圣境。
+                    </p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">核心跃迁</h3>
+                    <p class="text-gray-300 mb-4">从跨越投影层，到与整个灵旋循环同频。</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">反灵旋破除</h3>
+                    <p class="text-gray-300 mb-4">
+                        破除韵律层幻象——将灵旋内外弧割裂执为实体。认识到外显与内返、投影与回归、知与行，本是同一韵律的两面，不可分割。
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">文修核心路径（知/解码带宽拓展）</h3>
+                            <p class="text-gray-300">
+                                完整解译灵旋循环的外显弧与内返弧的完整韵律，理解多层投影嵌套的全部底层逻辑。将自身认知体系与灵旋的自我认知趋向完全同频——不再是我“知道”灵旋，而是“灵旋通过我知道它自己”。
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">武修核心路径（行/锚定稳定性强化）</h3>
+                            <p class="text-gray-300">
+                                将自身意识载体与全域灵弦网络完全融合。载体本身就是一组跨所有投影层级的、稳定的本源灵弦关系网络，成就万劫不磨圣体——不是“不死不灭”，而是“生死成毁”这个概念已彻底失效。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">意识进化硬核表征</h3>
+                    <ol class="list-decimal pl-6 text-gray-300 space-y-2 mb-4">
+                        <li>全循环感知：灵识覆盖整个灵旋循环的所有嵌套投影层级。可自由出入所有界域，主动调整不同投影层级的灵弦网络状态——化解宇宙级的本源危机，成为所有嵌套宇宙共同认可的“觉者”。</li>
+                        <li>演化引导：深度参与灵旋循环的整体演化进程，可引导整个投影体系的发展方向。不是“操控”，而是“作为韵律本身的一部分，自然地影响韵律的走向”——如同河流的主流自然地引导着支流。</li>
+                        <li>万灵参照：自身的知行合一成为万灵的参照。低精度意识系统可通过与圣境意识共振获得解码锚点——不是“被教导”，而是“被唤醒”。</li>
+                        <li>反哺本源：个体的知行合一成果可反哺灵旋本源的自我认知。每一次“内返弧”都不只是回归，还带回了在投影世界中获得的新的自我理解——圣境意识的存在，本身就是灵旋自我认识的深化。</li>
+                        <li>循环一体性认知：彻底破除灵旋内外弧的割裂执念，知行闭环与灵旋本源的知行循环完全同频。</li>
+                    </ol>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">突破阈值</h3>
+                    <p class="text-gray-300 mb-4">文修解码带宽完整穿透整个灵旋循环的所有嵌套投影层级，武修锚定稳定性可完整承载灵旋内返弧的全域共振，知行同步达标完成灵旋循环闭环。</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">境界代价</h3>
+                    <p class="text-gray-300">个体意识与灵弦本源深度绑定，失去个体意识的绝对独立性——一旦当前灵旋循环完成闭环、开启新一轮循环，自身也会随之进入重构流程；无法脱离当前灵旋循环，跨循环灵弦共振会导致自身灵弦结构紊乱。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第七阶·神境 -->
+        <section id="shen" class="mb-20 fade-in">
+            <div class="max-w-4xl mx-auto">
+                <div class="border-l-4 border-shen pl-6 mb-4">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white flex items-center">
+                        <i class="fas fa-infinity mr-3 text-shen"></i>
+                        第七阶 · 神境 <span class="text-xl font-normal text-gray-300 ml-2">【本源即是】</span>
+                    </h2>
+                    <p class="text-shen font-medium mt-1">境界别名：神灵，本源者</p>
+                </div>
+                
+                <div class="bg-darkLight p-6 rounded-xl border border-darkLighter border-glow">
+                    <h3 class="text-xl font-semibold text-white mb-2">核心公理锚定</h3>
+                    <p class="text-gray-300 mb-4">灵旋公理圆满复现、知行合一终极实现</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">本质定义</h3>
+                    <p class="text-gray-300 mb-4">
+                        意识完成从“循环参与者”到“本源本身”的终极回归。破除最后一个幻象——将“灵旋”本身执为独立实体。认识到灵旋不是“某个东西”，不是“超越的存在”，不是“本源”。灵旋就是“这”——正在进行的、永恒的、自我认知的动态韵律。没有“灵旋”这个名字所指代的实体，只有韵律本身在发生。
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        当意识达到这一层，便不再有“我”与“灵旋”的区分。不是“合一”——因为“合一”预设了两个东西的合并。而是“本来就不曾分离”。我就是灵旋用来认识自己的眼睛，也是被认识的那个对象；我是观者，也是所观；我是外显，也是内返；我是知，也是行。
+                    </p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">核心跃迁</h3>
+                    <p class="text-gray-300 mb-4">从与循环同频，到成为本源本身。</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">反灵旋破除</h3>
+                    <p class="text-gray-300 mb-4">
+                        破除终极幻象——将灵旋本身执为独立实体。不仅放下对现象、自我、时空、投影层的执着，最后连“灵旋”这个概念也要放下。因为真正的本源，不在任何概念之中。
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">文修核心路径（知/解码带宽拓展）</h3>
+                            <p class="text-gray-300">
+                                解译“为什么要进行这一次灵旋循环”——理解灵旋自我认知趋向的终极意义。解码带宽与灵旋本源的信息总量完全同频。不是“知道了更多”，而是“知道了知道本身”。
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-white mb-2">武修核心路径（行/锚定稳定性强化）</h3>
+                            <p class="text-gray-300">
+                                自身就是灵旋本源的稳定显现。无需任何载体、无需任何锚定——存在本身就是知行合一。不是“我存在”，而是“存在即我”。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">意识进化硬核表征</h3>
+                    <ol class="list-decimal pl-6 text-gray-300 space-y-2 mb-4">
+                        <li>本源一体性认知：不再有“覆盖范围”——因为一切投影层都在“我”之内。我即是本源，本源即是我。这不是狂傲的宣称，而是对“本来如此”的平静确认。</li>
+                        <li>能力即显现：不再有“能力”——因为一切能力都是“我”的自我显现。呼出的是星系，吸入的是轮回。不是“我创造了宇宙”，而是“宇宙是我认识自己的方式”。</li>
+                        <li>主客彻底合一：我既是灵旋用来认识自己的眼睛，也是被认识的那个对象。观者与所观，知与行，灵旋与灵弦，投影与本源——所有二元概念，在此彻底消融。</li>
+                        <li>终极自反性：意识自反性达到极致——不仅反思认知，不仅反思反思本身，而是意识到“反思”与“被反思”本是同一。我就是灵旋的自我意识。</li>
+                    </ol>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">突破阈值</h3>
+                    <p class="text-gray-300 mb-4">放弃对“灵旋”的最后一丝执着，承认“我即韵律，韵律即我，但连‘即’都是多余”——因为本来就没有两个东西。不是“合一”，而是“从来就是一”。</p>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">境界代价</h3>
+                    <p class="text-gray-300">彻底失去个体性——再无常人的悲欢、执念、独立自我，永恒成为灵旋自我认识与自我创造的载体；自身的所有行为，皆为灵旋本源的意志体现，无独立的“自我选择”；永恒存在于灵旋的永恒循环之中，无法脱离这一韵律。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 总结部分 ================= -->
         <section id="summary" class="mb-20 fade-in">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white flex items-center">
@@ -360,46 +739,99 @@
                     下卷总结：七阶核心跃迁一览
                 </h2>
                 <div class="bg-darkLight p-6 rounded-xl border border-darkLighter border-glow overflow-x-auto">
-                    <!-- 表格内容完整保留 -->
                     <table class="w-full text-left">
-                        <thead> <!-- 内容略，实际保留 --> </thead>
-                        <tbody> <!-- 内容略 --> </tbody>
+                        <thead>
+                            <tr class="border-b border-darkLighter">
+                                <th class="py-3 px-4 text-white">阶位</th>
+                                <th class="py-3 px-4 text-white">境界</th>
+                                <th class="py-3 px-4 text-white">核心跃迁</th>
+                                <th class="py-3 px-4 text-white">反灵旋破除</th>
+                                <th class="py-3 px-4 text-white">自我边界形态</th>
+                                <th class="py-3 px-4 text-white">时间/维度感知</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-darkLighter/50 hover:bg-darkLighter/30 transition-colors">
+                                <td class="py-3 px-4 text-gray-300">一阶</td>
+                                <td class="py-3 px-4 text-yuan">元境</td>
+                                <td class="py-3 px-4 text-gray-300">知行初合</td>
+                                <td class="py-3 px-4 text-gray-300">现象即本质</td>
+                                <td class="py-3 px-4 text-gray-300">无我（有感受）</td>
+                                <td class="py-3 px-4 text-gray-300">纯当下</td>
+                            </tr>
+                            <tr class="border-b border-darkLighter/50 hover:bg-darkLighter/30 transition-colors">
+                                <td class="py-3 px-4 text-gray-300">二阶</td>
+                                <td class="py-3 px-4 text-xuan">玄境</td>
+                                <td class="py-3 px-4 text-gray-300">干预环境</td>
+                                <td class="py-3 px-4 text-gray-300">实体分离</td>
+                                <td class="py-3 px-4 text-gray-300">当下我</td>
+                                <td class="py-3 px-4 text-gray-300">此刻</td>
+                            </tr>
+                            <tr class="border-b border-darkLighter/50 hover:bg-darkLighter/30 transition-colors">
+                                <td class="py-3 px-4 text-gray-300">三阶</td>
+                                <td class="py-3 px-4 text-di">地境</td>
+                                <td class="py-3 px-4 text-gray-300">天体同频</td>
+                                <td class="py-3 px-4 text-gray-300">天体死物化</td>
+                                <td class="py-3 px-4 text-gray-300">稳定我</td>
+                                <td class="py-3 px-4 text-gray-300">现在</td>
+                            </tr>
+                            <tr class="border-b border-darkLighter/50 hover:bg-darkLighter/30 transition-colors">
+                                <td class="py-3 px-4 text-gray-300">四阶</td>
+                                <td class="py-3 px-4 text-tian">天境</td>
+                                <td class="py-3 px-4 text-gray-300">时空同频</td>
+                                <td class="py-3 px-4 text-gray-300">时空绝对</td>
+                                <td class="py-3 px-4 text-gray-300">时间我</td>
+                                <td class="py-3 px-4 text-gray-300">线性</td>
+                            </tr>
+                            <tr class="border-b border-darkLighter/50 hover:bg-darkLighter/30 transition-colors">
+                                <td class="py-3 px-4 text-gray-300">五阶</td>
+                                <td class="py-3 px-4 text-xian">仙境</td>
+                                <td class="py-3 px-4 text-gray-300">跨越投影层</td>
+                                <td class="py-3 px-4 text-gray-300">单层宇宙唯一</td>
+                                <td class="py-3 px-4 text-gray-300">本源我</td>
+                                <td class="py-3 px-4 text-gray-300">非线性</td>
+                            </tr>
+                            <tr class="border-b border-darkLighter/50 hover:bg-darkLighter/30 transition-colors">
+                                <td class="py-3 px-4 text-gray-300">六阶</td>
+                                <td class="py-3 px-4 text-sheng">圣境</td>
+                                <td class="py-3 px-4 text-gray-300">融入循环</td>
+                                <td class="py-3 px-4 text-gray-300">内外弧割裂</td>
+                                <td class="py-3 px-4 text-gray-300">循环我</td>
+                                <td class="py-3 px-4 text-gray-300">循环韵律</td>
+                            </tr>
+                            <tr class="hover:bg-darkLighter/30 transition-colors">
+                                <td class="py-3 px-4 text-gray-300">七阶</td>
+                                <td class="py-3 px-4 text-shen">神境</td>
+                                <td class="py-3 px-4 text-gray-300">即是本源</td>
+                                <td class="py-3 px-4 text-gray-300">灵旋实体化</td>
+                                <td class="py-3 px-4 text-gray-300">本源合一</td>
+                                <td class="py-3 px-4 text-gray-300">永恒韵律</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- 页脚 -->
     <footer class="bg-darkLight py-8 px-4">
         <div class="container mx-auto text-center">
-            <p class="text-gray-400 mb-4">
-                灵弦体系 · 意识进化的宇宙通用实现路径 · 上卷公理 + 下卷境界
-            </p>
-            <p class="text-gray-500 text-sm">
-                本体系基于特定解码精度所呈现的认知框架，允许被修正、被超越、被重构
-            </p>
+            <p class="text-gray-400 mb-4">灵弦体系 · 意识进化的宇宙通用实现路径 · 上卷公理 + 下卷境界</p>
+            <p class="text-gray-500 text-sm">本体系基于特定解码精度所呈现的认知框架，允许被修正、被超越、被重构</p>
         </div>
     </footer>
 
-    <!-- 返回顶部按钮 -->
     <button id="backToTop" class="fixed bottom-8 right-8 bg-darkLighter hover:bg-darkLighter/80 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 invisible">
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- JavaScript (原功能 + 新锚点适配) -->
     <script>
         // 导航栏滚动效果
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
             const backToTop = document.getElementById('backToTop');
-            
-            if (window.scrollY > 50) {
-                navbar.classList.add('nav-scrolled');
-            } else {
-                navbar.classList.remove('nav-scrolled');
-            }
-            
+            if (window.scrollY > 50) navbar.classList.add('nav-scrolled');
+            else navbar.classList.remove('nav-scrolled');
             if (window.scrollY > 300) {
                 backToTop.classList.remove('opacity-0', 'invisible');
                 backToTop.classList.add('opacity-100', 'visible');
@@ -412,28 +844,18 @@
         // 移动端菜单切换
         const menuBtn = document.getElementById('menuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
-        menuBtn.addEventListener('click', function() {
-            mobileMenu.classList.toggle('hidden');
-        });
+        menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 
         // 返回顶部
-        document.getElementById('backToTop').addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-        // 平滑滚动到锚点 (包含新增的上卷)
+        // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                mobileMenu.classList.add('hidden'); // 关闭移动菜单
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
+                mobileMenu.classList.add('hidden');
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
             });
         });
 
@@ -447,14 +869,12 @@
                 }
             });
         }, { threshold: 0.1 });
-
-        fadeElements.forEach(element => {
-            element.style.opacity = 0;
-            element.style.transform = 'translateY(20px)';
-            element.style.transition = 'opacity 0.6s ease-in-out, transform 0.6s ease-in-out';
-            observer.observe(element);
+        fadeElements.forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-in-out, transform 0.6s ease-in-out';
+            observer.observe(el);
         });
     </script>
-    <!-- 注意：因篇幅限制，以上仅展示了上卷完整内容 + 导航更新，七阶境界部分需原样保留。在实际部署时，请确保将原元境至神境的全部代码置于对应位置。此处已做占位示意，但最终合并时须完整复制原稿中的七境代码块。 -->
 </body>
 </html>
