@@ -1,1 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>灵弦华夏 - 小说目录</title>
+  <style>
+    /* 基础样式（原有核心样式） */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "微软雅黑", "宋体", sans-serif;
+    }
+    body {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 0 20px;
+      background-color: #f8f5f0; /* 护眼浅背景 */
+      transition: background-color 0.3s ease; /* 暗黑模式过渡动画 */
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
 
+    /* 暗黑模式样式 */
+    body.dark {
+      background-color: #1a1a1a;
+      color: #f5f5f5;
+    }
+    body.dark h1 {
+      color: #f5f5f5;
+      border-bottom-color: #444;
+    }
+    body.dark .chapter-list li {
+      background-color: #2c2c2c;
+    }
+    body.dark .chapter-list a {
+      color: #f5f5f5;
+    }
+    body.dark .chapter-list a:hover {
+      color: #e74c3c;
+    }
+    body.dark #chapter-search {
+      background-color: #2c2c2c;
+      border-color: #444;
+      color: #f5f5f5;
+    }
+
+    /* 搜索框样式 */
+    .search-box {
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    #chapter-search {
+      width: 80%;
+      max-width: 600px;
+      padding: 10px 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    #chapter-search:focus {
+      outline: none;
+      border-color: #e74c3c;
+      box-shadow: 0 0 5px rgba(231, 76, 60, 0.2);
+    }
+
+    /* 章节列表样式（含已读/未读标记） */
+    .chapter-list {
+      list-style: none;
+    }
+    .chapter-list li {
+      margin: 10px 0;
+      padding: 10px 18px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+    }
+    /* 已读/未读标记样式 */
+    .read-status {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      margin-right: 10px;
+      flex-shrink: 0; /* 防止标记被压缩 */
+    }
+    .unread { /* 未读：红色 */
+      background-color: #e74c3c;
+    }
+    .read { /* 已读：绿色 */
+      background-color: #2ecc71;
+    }
+    .chapter-list a {
+      text-decoration: none;
+      color: #2c3e50;
+      font-size: 16px;
+      flex: 1; /* 链接占满剩余空间 */
+    }
+    .chapter-list a:hover {
+      color: #e74c3c;
+      text-decoration: underline;
+    }
+
+    /* 返回顶部按钮样式 */
+    #back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 45px;
+      height: 45px;
+      line-height: 45px;
+      text-align: center;
+      background-color: #e74c3c;
+      color: #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+      z-index: 999; /* 防止被遮挡 */
+    }
+    #back-to-top:hover {
+      background-color: #c0392b;
+    }
+    body.dark #back-to-top {
+      background-color: #2c3e50;
+    }
+    body.dark #back-to-top:hover {
+      background-color: #34495e;
+    }
+
+    /* 暗黑模式切换按钮 */
+    .dark-mode-btn {
+      margin-left: 20px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      background-color: #333;
+      color: #fff;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background-color 0.3s ease;
+    }
+    .dark-mode-btn:hover {
+      background-color: #444;
+    }
+    body.dark .dark-mode-btn {
+      background-color: #f5f5f5;
+      color: #1a1a1a;
+    }
+    body.dark .dark-mode-btn:hover {
+      background-color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <!-- 标题 + 暗黑模式切换按钮 -->
+  <h1>
+    灵弦华夏 - 小说目录
+    <button class="dark-mode-btn" onclick="toggleDarkMode()">暗黑模式</button>
+  </h1>
+
+  <!-- 章节搜索框 -->
+  <div class="search-box">
+    <input type="text" id="chapter-search" placeholder="输入章节名/关键词搜索（支持模糊匹配）...">
+  </div>
+
+  <!-- 章节列表（核心：改这里的章节名和文件名即可） -->
+  <ul class="chapter-list">
+    <!-- 格式说明：
+         read-status 类：unread=未读（红），read=已读（绿）
+         href=章节HTML文件名（必须和实际文件名一致）
+    -->
+    <li>
+      <span class="read-status unread"></span>
+      <a href="第1章-人物设定.html">第1章 :</a>
+    </li>
+    <li>
+      <span class="read-status read"></span>
+      <a href="第2章-开篇.html">第2章 :</a>
+    </li>
+    <li>
+      <span class="read-status unread"></span>
+      <a href="第3章-相遇.html">第3章 :</a>
+    </li>
+    <li>
+      <span class="read-status unread"></span>
+      <a href="第4章-往事.html">第4章 :</a>
+    </li>
+    <li>
+      <span class="read-status unread"></span>
+      <a href="第5章-抉择.html">第5章 :</a>
+    </li>
+    <!-- 新增章节：复制上面<li>块，改状态/名称/文件名即可 -->
+  </ul>
+
+  <!-- 返回顶部按钮 -->
+  <div id="back-to-top" onclick="backToTop()">↑</div>
+
+  <script>
+    // 1. 暗黑模式切换逻辑
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+      // 可选：记住暗黑模式状态（刷新不重置）
+      const isDark = document.body.classList.contains('dark');
+      localStorage.setItem('novelDarkMode', isDark);
+    }
+    // 页面加载时恢复暗黑模式状态
+    window.onload = function() {
+      const isDark = localStorage.getItem('novelDarkMode') === 'true';
+      if (isDark) {
+        document.body.classList.add('dark');
+      }
+      // 初始化滚动监听（返回顶部按钮）
+      window.onscroll = handleScroll;
+    };
+
+    // 2. 返回顶部逻辑
+    function handleScroll() {
+      const backBtn = document.getElementById('back-to-top');
+      // 滚动超过100px显示按钮
+      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        backBtn.style.display = 'block';
+      } else {
+        backBtn.style.display = 'none';
+      }
+    }
+    function backToTop() {
+      // 平滑滚动到顶部（更友好）
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // 3. 章节搜索逻辑（模糊匹配，不区分大小写）
+    document.getElementById('chapter-search').addEventListener('input', function(e) {
+      const keyword = e.target.value.trim().toLowerCase();
+      const chapterItems = document.querySelectorAll('.chapter-list li');
+      
+      chapterItems.forEach(item => {
+        const chapterName = item.textContent.toLowerCase();
+        if (keyword === '' || chapterName.includes(keyword)) {
+          item.style.display = 'flex'; // 匹配则显示
+        } else {
+          item.style.display = 'none'; // 不匹配则隐藏
+        }
+      });
+    });
+  </script>
+</body>
+</html>
