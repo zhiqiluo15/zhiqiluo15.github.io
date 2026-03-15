@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《灵弦华夏》- 第三章 元境</title>
+    <style>
+        /* 全局样式重置与基础规范 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 核心阅读样式 - 专为中文长篇小说优化 */
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", "SimSun", sans-serif;
+            background-color: #f8f5f0;
+            color: #2b2b2b;
+            line-height: 1.85;
+            letter-spacing: 0.5px;
+            padding-bottom: 100px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* 夜间模式护眼配色 */
+        body.night-mode {
+            background-color: #1a1a1a;
+            color: #d0d0d0;
+        }
+
+        /* 头部标题区域 */
+        header {
+            text-align: center;
+            padding: 40px 20px 30px;
+            border-bottom: 1px solid #e0d8c8;
+            margin-bottom: 25px;
+        }
+
+        .night-mode header {
+            border-bottom-color: #333;
+        }
+
+        .novel-title {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .chapter-title {
+            font-size: 20px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .night-mode .chapter-title {
+            color: #aaa;
+        }
+
+        /* 阅读控制面板 */
+        .control-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background-color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .night-mode .control-btn {
+            background-color: #2d2d2d;
+            border-color: #444;
+            color: #d0d0d0;
+        }
+
+        .control-btn:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-1px);
+        }
+
+        .night-mode .control-btn:hover {
+            background-color: #3d3d3d;
+        }
+
+        /* 章节内容核心区域 */
+        .chapter-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+            font-size: 17px;
+            text-align: justify;
+            text-justify: inter-ideograph;
+        }
+
+        /* 字体大小预设 */
+        .font-sm {
+            font-size: 15px;
+        }
+
+        .font-default {
+            font-size: 17px;
+        }
+
+        .font-lg {
+            font-size: 19px;
+        }
+
+        /* 中文段落规范 - 首行缩进2字符，段落间距优化 */
+        .chapter-content p {
+            text-indent: 2em;
+            margin-bottom: 18px;
+            word-break: break-all;
+            overflow-wrap: break-word;
+        }
+
+        /* 翻页按钮区域 */
+        .pager {
+            display: flex;
+            justify-content: space-between;
+            max-width: 800px;
+            margin: 50px auto 0;
+            padding: 0 24px;
+            gap: 20px;
+        }
+
+        .page-btn {
+            flex: 1;
+            padding: 12px 0;
+            border: none;
+            border-radius: 6px;
+            background-color: #4a86e8;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .page-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background-color: #3971d8;
+            transform: translateY(-2px);
+        }
+
+        .night-mode .page-btn {
+            background-color: #3a5a8a;
+        }
+
+        .night-mode .page-btn:disabled {
+            background-color: #444;
+        }
+
+        .night-mode .page-btn:hover:not(:disabled) {
+            background-color: #4a6a9a;
+        }
+
+        /* 回到顶部悬浮按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: #4a86e8;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 18px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            user-select: none;
+            z-index: 999;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: #3971d8;
+            transform: translateY(-3px);
+        }
+
+        .night-mode .back-to-top {
+            background-color: #3a5a8a;
+        }
+
+        .night-mode .back-to-top:hover {
+            background-color: #4a6a9a;
+        }
+
+        /* 返回目录按钮 */
+        .back-to-list {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .list-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 6px;
+            background-color: #e74c3c;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .list-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-1px);
+        }
+
+        .night-mode .list-btn {
+            background-color: #2c3e50;
+        }
+
+        .night-mode .list-btn:hover {
+            background-color: #34495e;
+        }
+
+        /* 页脚版权区域 */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 13px;
+            color: #999;
+            padding: 20px;
+        }
+
+        .night-mode footer {
+            color: #666;
+        }
+
+        /* 移动端响应式适配 */
+        @media (max-width: 768px) {
+            header {
+                padding: 30px 15px 20px;
+            }
+
+            .novel-title {
+                font-size: 22px;
+            }
+
+            .chapter-title {
+                font-size: 18px;
+            }
+
+            .control-bar {
+                gap: 10px;
+            }
+
+            .control-btn {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+
+            .chapter-content {
+                padding: 0 18px;
+                font-size: 16px;
+            }
+
+            .font-sm {
+                font-size: 14px;
+            }
+
+            .font-lg {
+                font-size: 18px;
+            }
+
+            .pager {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 小说标题与章节头部 -->
+    <header>
+        <div class="novel-title">《灵弦华夏》</div>
+        <div class="chapter-title">第三章 元境</div>
+    </header>
+
+    <!-- 阅读控制面板 -->
+    <div class="control-bar">
+        <button class="control-btn" id="font-sm">字体减小</button>
+        <button class="control-btn" id="font-default">默认字体</button>
+        <button class="control-btn" id="font-lg">字体增大</button>
+        <button class="control-btn" id="night-toggle">夜间模式</button>
+    </div>
+
+    <!-- 返回目录按钮 -->
+    <div class="back-to-list">
+        <button class="list-btn" id="back-to-list-btn">返回章节目录</button>
+    </div>
+
+    <!-- 章节正文内容 -->
+    <div class="chapter-content" id="novel-content">
+        <p>论文写到第十七天，离截止还有一周，那7个异常的分析还没写完，李子许开始怀疑自己是不是病了。</p>
+        <p>起初只是睡不好。凌晨两三点醒来，掌心发烫，盯着天花板等到天亮。他以为是压力——毕设截止日期越来越近，那7个异常的分析还没写完。</p>
+        <p>后来是注意力。盯着屏幕，代码在眼前飘，字是字，意思是意思，但连不起来。他喝咖啡，喝浓茶，喝功能饮料——都没用。意识像一台过热的机器，转速上不去，还开始抖。</p>
+        <p>再后来，是感知。</p>
+        <p>第十天晚上，他走出实验室，突然听见所有人的脚步声。不是“听见”，是“被击中”——几十双脚踩在地上，每一步都像踩在他颅骨内侧。他扶着墙站了三秒，等那阵眩晕过去。</p>
+        <p>第十二天，他不敢去食堂了。不是因为人，是因为灯。那些日光灯管发出的嗡嗡声，以前从未注意过，现在却像钻头一样往脑子里扎。</p>
+        <p>他开始在宿舍写。拉上窗帘，关掉所有灯，只留屏幕的背光。那样好一点。</p>
+        <p>第十八天凌晨，他意识到一件事：掌心的空洞给他的感觉变了。以前温热只集中在孔洞边缘那一个点，现在却扩散成了面——像有什么东西从深处往外渗。</p>
+        <p>他看着那道伤，很久。</p>
+        <p>然后打开电脑，继续写。</p>
+        <p>数据部分写完了。方法部分写完了。现在是讨论——最难的部分。</p>
+        <p>那7个异常，该怎么解释？</p>
+        <p>他敲下一行字：“上述偏离可能与引力波传播路径中的未知因素有关。”</p>
+        <p>删掉。</p>
+        <p>再敲：“无法被现有噪声模型解释的波形异常，集中于高红移区域。”</p>
+        <p>删掉。</p>
+        <p>他盯着屏幕，光标一闪一闪。</p>
+        <p>他知道自己真正想写什么。但他不敢写。</p>
+        <p>凌晨三点十七分。他靠在椅背上，闭上眼睛。</p>
+        <p>掌心温热开始蔓延。</p>
+        <p>这一次，不只是温热。是牵引——像有一根无形的线，从孔洞深处探出来，轻轻拉了一下。</p>
+        <p>他睁开眼。</p>
+        <p>房间还是那个房间。屏幕还是那个屏幕。但有什么东西，不一样了。</p>
+        <p>窗帘的褶皱。</p>
+        <p>那些褶皱在动。不是被风吹——窗户关着。是……他自己也说不上来。褶皱的线条在“呼吸”，像有生命一样。</p>
+        <p>他低头看掌心。空洞的边缘泛着极淡的光，暗红色，像烧过的炭。</p>
+        <p>他再抬头。</p>
+        <p>整个房间都在“呼吸”。墙面的纹理、键盘的缝隙、屏幕上的字——所有线条都在极慢地脉动，像有一个看不见的节奏，把它们连在一起。</p>
+        <p>他想站起来。但身体没动。</p>
+        <p>不是不能动。是……他觉得不该动。这个状态很脆弱，动一下就会碎。</p>
+        <p>然后他听见那个声音。</p>
+        <p>不是耳朵听见的。是直接出现在意识里，像自己的念头，但不是自己的。</p>
+        <p>“你看到的是投影。”</p>
+        <p>他下意识想问：你是谁？</p>
+        <p>但没有声音回答。只有那股牵引，变得更清晰——空洞深处有什么在“呼唤”他。</p>
+        <p>他闭上眼睛。</p>
+        <p>然后他坠落。</p>
+        <p>不是身体坠落。是意识坠落——像从很高的地方掉下去，但掉的方向不是下，是里。往自己的深处掉。</p>
+        <p>他看见自己的念头。一个一个，像气泡从深处浮上来。论文、数据、罗沫、墓碑、那道光矢——每一个念头都连着线，那些线又连成网，网又延伸到无穷远处。</p>
+        <p>他看见自己的记忆。不是“回忆”，是直接“看”——三年前的那个下午，他和罗沫边走边聊，他扭头看向虚空，光矢从褶皱里探出。这一次他看见了更多：光矢出现的瞬间，周围的线条——树的轮廓、楼房的边缘、她发丝的弧度——所有线条都在那一瞬间朝光矢汇聚。不是它穿过空间，是空间为它让出了路。</p>
+        <p>他继续坠落。</p>
+        <p>他看见那道光矢的轨迹。它穿过他的手，穿过她的胸膛，然后……没有消失。它继续向前，向某个方向延伸，像一根线，连向看不见的远处。</p>
+        <p>他想顺着那根线看过去。</p>
+        <p>然后他停住了。</p>
+        <p>不是他主动停的。是有什么东西挡住了他——不是墙，是界限。他的意识撞在那个界限上，像鱼撞上冰面。</p>
+        <p>他试图突破。但每撞一次，意识就散一点。</p>
+        <p>再撞，再散。</p>
+        <p>他开始恐慌。他知道自己应该回去，应该停止，但他不知道怎么停止。坠落变成了跌落，跌落变成了失控。那根牵引的线还在，但不再是温和的拉，而是绷紧的拽——他觉得自己快被撕开了。</p>
+        <p>然后一只手握住了他的掌心。</p>
+        <p>不是幻觉。是真真切切的触感——有东西握住了他右手的掌心，握在那个空洞的位置。</p>
+        <p>那只手是温热的。</p>
+        <p>和空洞的温热一模一样。</p>
+        <p>他听见那个声音再次响起，这一次不是念头，而是某种更直接的存在：</p>
+        <p>“你还不能过去。”</p>
+        <p>然后他被推了回去。</p>
+        <p>不是拉，是推——一股力量从掌心涌入，把他从那个深渊里推出来。意识重新填充进身体，像水倒回容器。</p>
+        <p>他睁开眼。</p>
+        <p>房间还是那个房间。屏幕还是那个屏幕。凌晨三点二十三分。过了六分钟。</p>
+        <p>他低头看掌心。</p>
+        <p>空洞还在。但不一样了——之前它像一只倒置的眼，空洞、死寂、只有边缘泛着苍白的肉色。现在，空洞深处有什么在流动。极淡的光，暗红色，像烧过的炭余烬未灭，又像……血管。不是他自己的血管，是某种更深的、从别处延伸进来的东西。</p>
+        <p>他抬起头，看向对面的镜子。</p>
+        <p>然后他愣住了。</p>
+        <p>镜子里，他的眼睛泛着同样的红光。不是血丝，不是发炎。是瞳孔深处透出来的光，和他掌心空洞里的光，一模一样。</p>
+        <p>他试着“看”向那个空洞——不是用眼睛，是用刚学会的那种方式。</p>
+        <p>空洞深处的光流动起来。与此同时，镜子里的红光也亮了一点。</p>
+        <p>他看见了。</p>
+        <p>空洞深处，不是血肉，不是骨骼，而是网。无数条线交织成的网，延伸到无穷远处。而那根三年前穿过他手掌的光矢，它的轨迹还在——从网中穿出来，连向某个方向。但这一次，轨迹上有光在流动。缓慢的、温热的、像被唤醒的河流。</p>
+        <p>他意识到一件事：</p>
+        <p>那道光矢的力量，没有消失。它只是留在了他手里。</p>
+        <p>而他现在，学会了怎么用它。</p>
+        <p>凌晨四点。他不再试图睡觉。打开电脑，继续写论文。</p>
+        <p>他瞥了一眼镜子。瞳孔里的红光还在，但稳定了很多。像一盏调好了的灯，不再闪烁。</p>
+        <p>他试着把注意力沉进那个空洞。</p>
+        <p>空洞深处的光流动起来。然后论文的思路就来了。</p>
+        <p>不是他“想”出来的。是那些文字自己出现在脑子里，他只需要敲出来。讨论部分该怎么写、结论该怎么下、哪些地方需要留有余地——全都清清楚楚。</p>
+        <p>他飞快地敲击键盘，像在听写，不是在创作。</p>
+        <p>六点。讨论部分完成。</p>
+        <p>七点。结论部分完成。</p>
+        <p>八点。摘要和引言修改完毕。</p>
+        <p>九点。整篇论文从头到尾通读一遍，改了三个错别字。</p>
+        <p>他靠在椅背上，看着屏幕上那个“100%”的进度条。毕设，完成了。</p>
+        <p>提前三天。</p>
+        <p>他应该高兴。但他只是盯着屏幕，想着凌晨发生的事。</p>
+        <p>那是幻觉吗？</p>
+        <p>如果是幻觉，为什么论文写得这么顺？如果不是幻觉，那只手是谁的？</p>
+        <p>他想起罗沫笔记里的那句摘抄的话：“灵识：意识系统突破知行阈值后，与灵弦网络形成的定向共振通道。”</p>
+        <p>他低头看掌心。空洞安静地敞着，深处那抹暗红还在流动。他又看向镜子——瞳孔里的红光也还在，只是比凌晨时淡了一点，微微闪烁，像电量不足的指示灯。</p>
+        <p>这不是力量“用一次少一次”。他隐约觉得，这是他的身体还没完全适应。就像新生的肌肉，用久了会酸。需要锻炼，需要习惯，需要……</p>
+        <p>他想起了罗沫笔记里的另一个词：灵修，即主动进化意识的修炼者。</p>
+        <p>他把这个词记在备忘录里。然后看向掌心。</p>
+        <p>空洞安静地敞着。但这一次，他知道那不是伤口，是通道。</p>
+        <p>还有一件事——他一直没有细想。但在被推回来的那个瞬间，他隐约看见了一双眼睛。</p>
+        <p>不是完整的形象。只是一双眼睛，在某个他无法理解的深处，看着他。</p>
+        <p>那双眼睛的瞳孔里，是深紫色的光。</p>
+        <p>他当时以为是幻觉。但现在，他看着镜子里自己那抹暗红，忽然有一种奇怪的感觉——那双眼睛，好像在哪里见过。不是罗沫。不是任何他认识的人。但就是……熟悉。</p>
+        <p>紫色。那是哪个境界？</p>
+        <p>他不知道。但他知道，那双眼睛的主人，迟早会再来找他。</p>
+        <p>他起身走到窗边，拉开窗帘。阳光刺进来，他眯起眼。</p>
+        <p>梧桐、单车、抱着书本的学生。一切如常。</p>
+        <p>但他的手心还残留着那股温度。温热的、安静的、像有人轻轻握着。</p>
+        <p>他低头看着掌心，轻声说：</p>
+        <p>“我知道不是你。”</p>
+        <p>停顿。</p>
+        <p>“但你知道是谁，对吗？”</p>
+        <p>空洞没有回答。只有暗红色的光，缓缓流动。</p>
+        <p>窗外阳光正好。他转身走向电脑，新建一个文件夹。</p>
+        <p>命名：灵修之元境。</p>
+    </div>
+
+    <!-- 章节翻页按钮 -->
+    <div class="pager">
+        <button class="page-btn" id="prev-chapter">上一章</button>
+        <button class="page-btn" id="next-chapter">下一章</button>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <div class="back-to-top" id="back-to-top">↑</div>
+
+    <!-- 页脚版权 -->
+    <footer>
+        © 2026 《灵弦华夏》 版权所有
+    </footer>
+
+    <script>
+        const content = document.getElementById('novel-content');
+        const fontSmBtn = document.getElementById('font-sm');
+        const fontDefaultBtn = document.getElementById('font-default');
+        const fontLgBtn = document.getElementById('font-lg');
+        const nightToggleBtn = document.getElementById('night-toggle');
+        const body = document.body;
+        const backToTopBtn = document.getElementById('back-to-top');
+        const prevChapterBtn = document.getElementById('prev-chapter');
+        const nextChapterBtn = document.getElementById('next-chapter');
+        const backToListBtn = document.getElementById('back-to-list-btn');
+
+        // 路径配置（已适配你的目录结构）
+        const PREV_CHAPTER_PATH = 'chapter-two.html';
+        const NEXT_CHAPTER_PATH = '#';
+        const CHAPTER_LIST_PATH = '../contents/list.html';
+
+        // 字体大小
+        fontSmBtn.addEventListener('click', () => {
+            content.classList.remove('font-default', 'font-lg');
+            content.classList.add('font-sm');
+        });
+        fontDefaultBtn.addEventListener('click', () => {
+            content.classList.remove('font-sm', 'font-lg');
+            content.classList.add('font-default');
+        });
+        fontLgBtn.addEventListener('click', () => {
+            content.classList.remove('font-sm', 'font-default');
+            content.classList.add('font-lg');
+        });
+
+        // 夜间模式
+        nightToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('night-mode');
+            nightToggleBtn.textContent = body.classList.contains('night-mode') ? '日间模式' : '夜间模式';
+            localStorage.setItem('novelDarkMode', body.classList.contains('night-mode'));
+        });
+
+        // 回到顶部
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 翻页 & 返回目录
+        prevChapterBtn.addEventListener('click', () => {
+            window.location.href = PREV_CHAPTER_PATH;
+        });
+        nextChapterBtn.addEventListener('click', () => {
+            alert('后续章节正在更新中，敬请期待');
+        });
+        backToListBtn.addEventListener('click', () => {
+            window.location.href = CHAPTER_LIST_PATH;
+        });
+
+        // 初始化
+        window.onload = function() {
+            const isDark = localStorage.getItem('novelDarkMode') === 'true';
+            if (isDark) {
+                body.classList.add('night-mode');
+                nightToggleBtn.textContent = '日间模式';
+            }
+        };
+    </script>
+</body>
+</html>
