@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《灵弦华夏》- 第二章 李子许</title>
+    <style>
+        /* 全局样式重置与基础规范 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 核心阅读样式 - 专为中文长篇小说优化 */
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", "SimSun", sans-serif;
+            background-color: #f8f5f0;
+            color: #2b2b2b;
+            line-height: 1.85;
+            letter-spacing: 0.5px;
+            padding-bottom: 100px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* 夜间模式护眼配色 */
+        body.night-mode {
+            background-color: #1a1a1a;
+            color: #d0d0d0;
+        }
+
+        /* 头部标题区域 */
+        header {
+            text-align: center;
+            padding: 40px 20px 30px;
+            border-bottom: 1px solid #e0d8c8;
+            margin-bottom: 25px;
+        }
+
+        .night-mode header {
+            border-bottom-color: #333;
+        }
+
+        .novel-title {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .chapter-title {
+            font-size: 20px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .night-mode .chapter-title {
+            color: #aaa;
+        }
+
+        /* 阅读控制面板 */
+        .control-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background-color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .night-mode .control-btn {
+            background-color: #2d2d2d;
+            border-color: #444;
+            color: #d0d0d0;
+        }
+
+        .control-btn:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-1px);
+        }
+
+        .night-mode .control-btn:hover {
+            background-color: #3d3d3d;
+        }
+
+        /* 章节内容核心区域 */
+        .chapter-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+            font-size: 17px;
+            text-align: justify;
+            text-justify: inter-ideograph;
+        }
+
+        /* 字体大小预设 */
+        .font-sm {
+            font-size: 15px;
+        }
+
+        .font-default {
+            font-size: 17px;
+        }
+
+        .font-lg {
+            font-size: 19px;
+        }
+
+        /* 中文段落规范 - 首行缩进2字符，段落间距优化 */
+        .chapter-content p {
+            text-indent: 2em;
+            margin-bottom: 18px;
+            word-break: break-all;
+            overflow-wrap: break-word;
+        }
+
+        /* 翻页按钮区域 */
+        .pager {
+            display: flex;
+            justify-content: space-between;
+            max-width: 800px;
+            margin: 50px auto 0;
+            padding: 0 24px;
+            gap: 20px;
+        }
+
+        .page-btn {
+            flex: 1;
+            padding: 12px 0;
+            border: none;
+            border-radius: 6px;
+            background-color: #4a86e8;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .page-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background-color: #3971d8;
+            transform: translateY(-2px);
+        }
+
+        .night-mode .page-btn {
+            background-color: #3a5a8a;
+        }
+
+        .night-mode .page-btn:disabled {
+            background-color: #444;
+        }
+
+        .night-mode .page-btn:hover:not(:disabled) {
+            background-color: #4a6a9a;
+        }
+
+        /* 回到顶部悬浮按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: #4a86e8;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 18px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            user-select: none;
+            z-index: 999;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: #3971d8;
+            transform: translateY(-3px);
+        }
+
+        .night-mode .back-to-top {
+            background-color: #3a5a8a;
+        }
+
+        .night-mode .back-to-top:hover {
+            background-color: #4a6a9a;
+        }
+
+        /* 返回目录按钮 */
+        .back-to-list {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .list-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 6px;
+            background-color: #e74c3c;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .list-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-1px);
+        }
+
+        .night-mode .list-btn {
+            background-color: #2c3e50;
+        }
+
+        .night-mode .list-btn:hover {
+            background-color: #34495e;
+        }
+
+        /* 页脚版权区域 */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 13px;
+            color: #999;
+            padding: 20px;
+        }
+
+        .night-mode footer {
+            color: #666;
+        }
+
+        /* 移动端响应式适配 */
+        @media (max-width: 768px) {
+            header {
+                padding: 30px 15px 20px;
+            }
+
+            .novel-title {
+                font-size: 22px;
+            }
+
+            .chapter-title {
+                font-size: 18px;
+            }
+
+            .control-bar {
+                gap: 10px;
+            }
+
+            .control-btn {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+
+            .chapter-content {
+                padding: 0 18px;
+                font-size: 16px;
+            }
+
+            .font-sm {
+                font-size: 14px;
+            }
+
+            .font-lg {
+                font-size: 18px;
+            }
+
+            .pager {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 小说标题与章节头部 -->
+    <header>
+        <div class="novel-title">《灵弦华夏》</div>
+        <div class="chapter-title">第二章 李子许</div>
+    </header>
+
+    <!-- 阅读控制面板 -->
+    <div class="control-bar">
+        <button class="control-btn" id="font-sm">字体减小</button>
+        <button class="control-btn" id="font-default">默认字体</button>
+        <button class="control-btn" id="font-lg">字体增大</button>
+        <button class="control-btn" id="night-toggle">夜间模式</button>
+    </div>
+
+    <!-- 返回目录按钮 -->
+    <div class="back-to-list">
+        <button class="list-btn" id="back-to-list-btn">返回章节目录</button>
+    </div>
+
+    <!-- 章节正文内容 - 原文完整嵌入 -->
+    <div class="chapter-content" id="novel-content">
+        <p>晨曦穿过窗棂，轻轻落在一本泛黄的笔记上。桌旁沉睡的男子骤然睁眼。</p>
+        <p>昨夜，他又梦见了罗沫。她只是安静地仰望着天空，坐在湖面之上，像一颗澄澈的蓝宝石，嵌在天与水的交界。</p>
+        <p>他下意识抬起右手，望向掌心——那个空洞仍在。三年来，痛感微弱得几乎不存在，可它从未消失，像一只倒置的眼，不分昼夜地凝视着他。</p>
+        <p>罗沫，真的是替我而死的吗？</p>
+        <p>这个念头冒出来的那一刻，他自己都怔住了。三年来，他从不敢触碰这个问题，直到昨夜那句“罗沫的死，和我有关”脱口而出，心中那堵墙才开始松动。</p>
+        <p>他不得不问。</p>
+        <p>那道光矢杀人的瞬间，常理之下无人能够干预。可他的记忆清晰无比——是他伸出了手，挡在了她的身前。掌心这道伤，便是那只手伸出去的唯一证据。</p>
+        <p>逻辑不通。但高中初次接触弦论时，他曾有过一模一样的感受：濒死的恐惧，时间被无限拉长的凝滞。那时他并未看见光矢，只是读完一页纸，便仿佛凝视深渊。事后看过心理医生，也查不出任何异常。</p>
+        <p>两次毫无缘由的濒死体验，连世上最顶尖的演员都无法复刻。</p>
+        <p>他的直觉没有骗他。罗默进门时说的话再次回响在耳边：“她不是不想告诉你，是怕你有危险。”</p>
+        <p>罗沫似乎早就知道，一旦他先触碰灵弦体系，率先迎来的只会是杀身之祸。</p>
+        <p>一切都充满了矛盾。</p>
+        <p>他凝视着掌心的孔洞，第一次不再将它视作愧疚的烙印，而是一个待解的符号——如同墓碑上那个恰好能嵌进他指尖、划出痕迹的印记。</p>
+        <p>罗沫的笔记还躺在枕边，罗默夫妇交付的图谱与数据摊在桌面。他必须重新研读，不再带着沉沦与自责，而是带着唯一的问题：</p>
+        <p>那天，到底发生了什么？</p>
+        <p>他开始怀疑，那时并非只有一种超自然力量。一道是致命的光矢，另一股，则能扭曲客观时间，甚至在暗中护着他。</p>
+        <p>冥思良久，李子许揉了揉酸涩的眼。毕业在即，毕业论文仍一字未动。他决定暂且放下悬案，先完成眼前的任务。</p>
+        <p>他来到华科的引力波实验室，打开电脑，文档一片空白。</p>
+        <p>论文题目挂了三天，只有孤零零一行：《双黑洞并合引力波信号的参数估计与贝叶斯分析》。下方空空如也。</p>
+        <p>不是写不出。而是每次指尖触碰到键盘，想起罗默那句“她把这个世界当成一层投影”，手指便会僵在半空。</p>
+        <p>投影。这个词在物理中本就存在。全息原理、AdS/CFT对偶——边界的场论与内部的引力，本是同一事物。罗沫用他最熟悉的语言留下线索，可他从未想过，这套语言还能指向另一个世界。</p>
+        <p>他睁开眼，再次看向掌心的空洞。</p>
+        <p>算了。先写吧。</p>
+        <p>他打开LIGO公开数据库，调出GW150914的应变时间序列——这是人类探测到的第一个双黑洞并合事件，他分析过无数次，闭着眼都能写出匹配滤波的代码。</p>
+        <p>但这一次，他没有直接套用标准流程。他盯着那组数据，忽然意识到一件事：所有引力波分析都在假设广义相对论完全正确，然后用这个假设去检验数据——这本身就是循环论证。</p>
+        <p>如果罗沫是对的，如果引力真的只是“影子”，那么标准模板从一开始就可能是错的。</p>
+        <p>他没有去改代码。他新建了一个文件夹，从GWTC-3目录中把全部92个双黑洞事件的应变时间序列拷了进来——每个事件前后各几十秒，总数据量几十GB，勉强塞进了移动硬盘。然后写了一个极简的脚本：不是匹配滤波，而是直接比对事件之间的波形相似性，让数据自己说话，而不是被理论模板框住。</p>
+        <p>计算机开始运算。他盯着屏幕，手指抚上掌心的空洞。</p>
+        <p>算法跑起来，风扇开始嗡鸣。他起身泡了杯面，靠在窗边看着夜色。等面吃完，屏幕上进度条刚过60%。又过了十分钟，第一轮结果才出来。</p>
+        <p>大部分事件波形高度相似，但有7个——它们的互相关系数明显低于其他，呈现出某种无法被任何已知噪声模型解释的相干结构。</p>
+        <p>不是随机涨落。是规律性的偏离，像同一个原因在不同距离留下的痕迹。</p>
+        <p>他没有直接看数字，而是先调出几个他熟悉的事件——GW150914、GW170729——目视确认波形形态大致正常。然后才让程序跑全部比对。当那7个异常被程序标记出来时，他调出波形看了一眼——确实，一眼就能看出不一样。</p>
+        <p>他调出这7个事件的参数——红移全部大于0.3。</p>
+        <p>他心跳加快。但他没有急着下结论。他打开那85个正常事件的参数列表，扫了一眼红移分布：大约三分之二在0.3以下，但也有十几个大于0.3的。这说明红移本身不是决定因素——那十几个高红移的正常事件，为什么没有异常？</p>
+        <p>他试着控制其他变量：质量比、自旋、信噪比。逐个筛查，异常事件没有明显的共同特征。红移似乎是唯一的线索，但样本太小，他不敢断定。</p>
+        <p>他知道，这只是一个初步观察。要真正验证红移相关，需要更大的样本，需要背景估计，需要排除试凑错误。他在笔记本上写：需O4数据验证。</p>
+        <p>但掌心还是烫了一下。不是持续的温热，是瞬间的灼烫，像被什么点了一下。</p>
+        <p>他低头看。空洞边缘泛着极淡的红，又迅速褪去。</p>
+        <p>他盯着屏幕，忽然想起罗沫笔记里的一句话：“灵弦是纯粹的关系网络。引力，只是它在投影世界里的影子。”</p>
+        <p>如果引力是影子，那影子被扰动，只可能是因为投影源里有什么在动。而远处的影子扰动更多——不是因为距离远，而是因为光走了更长的路，被“触碰”的次数更多。</p>
+        <p>这是一个可能的解释。但他告诉自己：这只是可能的解释。还需要更多数据。</p>
+        <p>他调出LIGO的噪声功率谱密度，把7个异常的频域特征和噪声背景做了初步比对——没有明显重合。他又换了LIGO官方推荐的另一套噪声模型，重新跑显著性检验。p值小于0.01。但他知道，这是多重比较的结果——他从92个事件里挑出7个，本身就增加了偶然相关的概率。真正的显著性，需要背景估计来确认。</p>
+        <p>他把LIGO和Virgo的数据分开处理，交叉验证。结果一致。还是那7个。</p>
+        <p>他做可视化：频域功率谱、时域波形堆叠、相干性分析曲线。7条曲线叠在一起，抖动的相位几乎完全对齐，像同一个原因在不同距离留下的回声。</p>
+        <p>他盯着屏幕，掌心又烫了一下。这一次，他低头看了看——不是整个孔洞发热，而是边缘的一个点，正好对着无名指的方向。那个点微微泛红，像被什么从里面顶了一下。</p>
+        <p>他忽然想起，墓碑上那个符号的最后一笔，正好也是这个方向。</p>
+        <p>凌晨两点。计算机还在跑。他趴在桌上，半梦半醒间又梦见那片湖。醒来时天已微亮，屏幕上静静躺着结果——和他睡前看到的一模一样。</p>
+        <p>他起身走到窗边，深吸一口气。梧桐、单车、学生，一切如常。但他知道有什么东西已经不一样了。</p>
+        <p>走回电脑前，他开始归档。预处理代码、分析脚本、中间数据、结果图表——全部按日期命名，存进GW_anomaly_scan。然后在文件夹里新建一个子目录，命名：figures。</p>
+        <p>把7张波形图拖进去。</p>
+        <p>他打开论文文档，新建一个章节，标题：Preliminary Results。下面只写了一行字：</p>
+        <p>“在92个双黑洞并合事件中，识别出7个具有系统性波形偏离的样本。偏离集中于并合后0.1-0.3秒区间，与红移呈初步相关，无法被现有噪声模型解释。受限于样本量，上述结果的统计显著性有待后续观测验证。”</p>
+        <p>他盯着这行字，又看了看掌心。</p>
+        <p>那道光矢穿过他的手，穿过她的身体，留下的不是伤口，是通道。</p>
+        <p>现在，这个通道的另一端，连着92个黑洞、7个异常、和一句写在笔记里的话。</p>
+        <p>他在论文文档里继续敲：</p>
+        <p>“上述偏离的特征与引力波传播路径中可能存在未知因素的预期一致。可能的物理机制有待进一步研究。”</p>
+        <p>他把“未知因素”四个字打了又删，删了又打。</p>
+        <p>最后决定留着。这是学术语言，是能在论文里出现的词。</p>
+        <p>但那个真正的名字，他只会在深夜对着掌心说。</p>
+        <p>灵弦。</p>
+    </div>
+
+    <!-- 章节翻页按钮 -->
+    <div class="pager">
+        <button class="page-btn" id="prev-chapter">上一章</button>
+        <button class="page-btn" id="next-chapter">下一章</button>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <div class="back-to-top" id="back-to-top">↑</div>
+
+    <!-- 页脚版权 -->
+    <footer>
+        © 2026 《灵弦华夏》 版权所有
+    </footer>
+
+    <!-- 交互功能JS脚本 -->
+    <script>
+        // 核心元素获取
+        const content = document.getElementById('novel-content');
+        const fontSmBtn = document.getElementById('font-sm');
+        const fontDefaultBtn = document.getElementById('font-default');
+        const fontLgBtn = document.getElementById('font-lg');
+        const nightToggleBtn = document.getElementById('night-toggle');
+        const body = document.body;
+        const backToTopBtn = document.getElementById('back-to-top');
+        const prevChapterBtn = document.getElementById('prev-chapter');
+        const nextChapterBtn = document.getElementById('next-chapter');
+        const backToListBtn = document.getElementById('back-to-list-btn');
+
+        // ====================== 路径配置（适配你的目录结构）======================
+        // 上一章路径：同级的chapter-one.html
+        const PREV_CHAPTER_PATH = 'chapter-one.html';
+        // 下一章路径：预留，后续替换为chapter-three.html
+        const NEXT_CHAPTER_PATH = '#';
+        // 目录页路径：回到上一级的contents文件夹里的目录页
+        const CHAPTER_LIST_PATH = '../contents/list.html';
+
+        // ====================== 1. 字体大小调整功能 ======================
+        fontSmBtn.addEventListener('click', () => {
+            content.classList.remove('font-default', 'font-lg');
+            content.classList.add('font-sm');
+        });
+
+        fontDefaultBtn.addEventListener('click', () => {
+            content.classList.remove('font-sm', 'font-lg');
+            content.classList.add('font-default');
+        });
+
+        fontLgBtn.addEventListener('click', () => {
+            content.classList.remove('font-sm', 'font-default');
+            content.classList.add('font-lg');
+        });
+
+        // ====================== 2. 夜间/日间模式切换 ======================
+        nightToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('night-mode');
+            nightToggleBtn.textContent = body.classList.contains('night-mode') ? '日间模式' : '夜间模式';
+            
+            // 保存夜间模式状态，刷新不重置
+            localStorage.setItem('novelDarkMode', body.classList.contains('night-mode'));
+        });
+
+        // ====================== 3. 回到顶部功能 ======================
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // ====================== 4. 章节翻页 & 返回目录 ======================
+        // 上一章（第一章）
+        prevChapterBtn.addEventListener('click', () => {
+            window.location.href = PREV_CHAPTER_PATH;
+        });
+
+        // 下一章（预留提示）
+        nextChapterBtn.addEventListener('click', () => {
+            if (NEXT_CHAPTER_PATH === '#') {
+                alert('后续章节正在更新中，敬请期待');
+            } else {
+                window.location.href = NEXT_CHAPTER_PATH;
+            }
+        });
+
+        // 返回章节目录
+        backToListBtn.addEventListener('click', () => {
+            window.location.href = CHAPTER_LIST_PATH;
+        });
+
+        // ====================== 5. 页面初始化 ======================
+        window.onload = function() {
+            // 恢复夜间模式状态
+            const isDark = localStorage.getItem('novelDarkMode') === 'true';
+            if (isDark) {
+                body.classList.add('night-mode');
+                nightToggleBtn.textContent = '日间模式';
+            }
+
+            // 初始化滚动监听
+            window.onscroll();
+        };
+
+        // ====================== 6. 移动端优化：禁止双击缩放 ======================
+        document.addEventListener('touchstart', function(event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, { passive: false });
+    </script>
+</body>
+</html>
