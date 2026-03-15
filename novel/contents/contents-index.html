@@ -5,51 +5,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>灵弦华夏 - 小说目录</title>
   <style>
-    /* 基础样式（原有核心样式） */
+    /* 全局样式重置 */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "微软雅黑", "宋体", sans-serif;
+      font-family: "PingFang SC", "Microsoft YaHei", "SimSun", sans-serif;
     }
+
+    /* 基础页面样式 */
     body {
       max-width: 800px;
       margin: 50px auto;
       padding: 0 20px;
-      background-color: #f8f5f0; /* 护眼浅背景 */
-      transition: background-color 0.3s ease; /* 暗黑模式过渡动画 */
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 20px;
-      border-bottom: 2px solid #ccc;
-      padding-bottom: 10px;
-      transition: color 0.3s ease, border-color 0.3s ease;
+      background-color: #f8f5f0;
+      transition: background-color 0.3s ease;
     }
 
-    /* 暗黑模式样式 */
-    body.dark {
-      background-color: #1a1a1a;
-      color: #f5f5f5;
+    /* 标题栏样式 */
+    .title-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #ccc;
+      transition: border-color 0.3s ease;
     }
-    body.dark h1 {
-      color: #f5f5f5;
-      border-bottom-color: #444;
+
+    h1 {
+      font-size: 26px;
+      color: #333;
+      transition: color 0.3s ease;
+      flex-shrink: 0;
     }
-    body.dark .chapter-list li {
-      background-color: #2c2c2c;
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
-    body.dark .chapter-list a {
-      color: #f5f5f5;
+
+    .base-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
     }
-    body.dark .chapter-list a:hover {
-      color: #e74c3c;
+
+    /* 首页按钮样式 */
+    .home-btn {
+      background-color: #4a86e8;
+      color: #fff;
     }
-    body.dark #chapter-search {
-      background-color: #2c2c2c;
-      border-color: #444;
-      color: #f5f5f5;
+
+    .home-btn:hover {
+      background-color: #3971d8;
+      transform: translateY(-1px);
+    }
+
+    /* 暗黑模式按钮样式 */
+    .dark-mode-btn {
+      background-color: #333;
+      color: #fff;
+    }
+
+    .dark-mode-btn:hover {
+      background-color: #444;
+      transform: translateY(-1px);
     }
 
     /* 搜索框样式 */
@@ -57,6 +85,7 @@
       margin-bottom: 25px;
       text-align: center;
     }
+
     #chapter-search {
       width: 80%;
       max-width: 600px;
@@ -66,53 +95,66 @@
       font-size: 14px;
       transition: all 0.3s ease;
     }
+
     #chapter-search:focus {
       outline: none;
       border-color: #e74c3c;
       box-shadow: 0 0 5px rgba(231, 76, 60, 0.2);
     }
 
-    /* 章节列表样式（含已读/未读标记） */
+    /* 章节列表核心样式 */
     .chapter-list {
       list-style: none;
     }
+
     .chapter-list li {
       margin: 10px 0;
-      padding: 10px 18px;
+      padding: 12px 18px;
       background-color: #fff;
       border-radius: 8px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s ease;
       display: flex;
       align-items: center;
     }
-    /* 已读/未读标记样式 */
+
+    .chapter-list li:hover {
+      transform: translateX(5px);
+    }
+
+    /* 已读/未读标记 */
     .read-status {
       display: inline-block;
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      margin-right: 10px;
-      flex-shrink: 0; /* 防止标记被压缩 */
+      margin-right: 12px;
+      flex-shrink: 0;
     }
-    .unread { /* 未读：红色 */
+
+    .unread {
       background-color: #e74c3c;
     }
-    .read { /* 已读：绿色 */
+
+    .read {
       background-color: #2ecc71;
     }
-    .chapter-list a {
+
+    /* 章节链接样式 */
+    .chapter-link {
       text-decoration: none;
       color: #2c3e50;
       font-size: 16px;
-      flex: 1; /* 链接占满剩余空间 */
+      flex: 1;
+      line-height: 1.5;
     }
-    .chapter-list a:hover {
+
+    .chapter-link:hover {
       color: #e74c3c;
       text-decoration: underline;
     }
 
-    /* 返回顶部按钮样式 */
+    /* 返回顶部按钮 */
     #back-to-top {
       position: fixed;
       bottom: 30px;
@@ -128,105 +170,228 @@
       display: none;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       transition: background-color 0.3s ease;
-      z-index: 999; /* 防止被遮挡 */
+      z-index: 999;
     }
+
     #back-to-top:hover {
       background-color: #c0392b;
     }
-    body.dark #back-to-top {
-      background-color: #2c3e50;
-    }
-    body.dark #back-to-top:hover {
-      background-color: #34495e;
+
+    /* ====================== 暗黑模式全局样式 ====================== */
+    body.dark {
+      background-color: #1a1a1a;
+      color: #f5f5f5;
     }
 
-    /* 暗黑模式切换按钮 */
-    .dark-mode-btn {
-      margin-left: 20px;
-      padding: 6px 12px;
-      border: none;
-      border-radius: 6px;
-      background-color: #333;
-      color: #fff;
-      cursor: pointer;
-      font-size: 12px;
-      transition: background-color 0.3s ease;
+    body.dark .title-bar {
+      border-bottom-color: #444;
     }
-    .dark-mode-btn:hover {
-      background-color: #444;
+
+    body.dark h1 {
+      color: #f5f5f5;
     }
+
     body.dark .dark-mode-btn {
       background-color: #f5f5f5;
       color: #1a1a1a;
     }
+
     body.dark .dark-mode-btn:hover {
       background-color: #e0e0e0;
+    }
+
+    body.dark #chapter-search {
+      background-color: #2c2c2c;
+      border-color: #444;
+      color: #f5f5f5;
+    }
+
+    body.dark .chapter-list li {
+      background-color: #2c2c2c;
+    }
+
+    body.dark .chapter-link {
+      color: #f5f5f5;
+    }
+
+    body.dark .chapter-link:hover {
+      color: #e74c3c;
+    }
+
+    body.dark #back-to-top {
+      background-color: #2c3e50;
+    }
+
+    body.dark #back-to-top:hover {
+      background-color: #34495e;
+    }
+
+    /* 移动端响应式适配 */
+    @media (max-width: 768px) {
+      body {
+        margin: 30px auto;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      .title-bar {
+        justify-content: center;
+      }
+
+      #chapter-search {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- 标题 + 暗黑模式切换按钮 -->
-  <h1>
-    灵弦华夏 - 小说目录
-    <button class="dark-mode-btn" onclick="toggleDarkMode()">暗黑模式</button>
-  </h1>
+  <!-- 标题栏：标题+按钮组 -->
+  <div class="title-bar">
+    <h1>灵弦华夏 - 小说目录</h1>
+    <div class="btn-group">
+      <button class="base-btn home-btn" onclick="goToHome()">返回首页</button>
+      <button class="base-btn dark-mode-btn" onclick="toggleDarkMode()">暗黑模式</button>
+    </div>
+  </div>
 
   <!-- 章节搜索框 -->
   <div class="search-box">
     <input type="text" id="chapter-search" placeholder="输入章节名/关键词搜索（支持模糊匹配）...">
   </div>
 
-  <!-- 章节列表（核心：改这里的章节名和文件名即可） -->
-  <ul class="chapter-list">
-    <!-- 格式说明：
-         read-status 类：unread=未读（红），read=已读（绿）
-         href=章节HTML文件名（必须和实际文件名一致）
+  <!-- 章节列表（核心配置区，新增章节只改这里） -->
+  <ul class="chapter-list" id="chapterList">
+    <!-- 
+      章节模板说明：
+      1. data-chapter-id：章节唯一ID，不能重复，用于标记已读状态
+      2. data-file-name：章节文件名，只写文件名，不用写路径
+      3. 中间的文字：页面上显示的章节名
+      4. 新增章节直接复制下面<li>整段，修改对应内容即可
     -->
     <li>
-      <span class="read-status unread"></span>
-      <a href="content/chapter-one.html">第1章 :罗沫</a>
+      <span class="read-status unread" data-chapter-id="chapter-1"></span>
+      <a class="chapter-link" href="#" data-chapter-id="chapter-1" data-file-name="chapter-one.html">第1章 罗沫</a>
     </li>
     <li>
-      <span class="read-status read"></span>
-      <a href="第2章-开篇.html">第2章 :</a>
+      <span class="read-status unread" data-chapter-id="chapter-2"></span>
+      <a class="chapter-link" href="#" data-chapter-id="chapter-2" data-file-name="第2章-开篇.html">第2章 开篇</a>
     </li>
     <li>
-      <span class="read-status unread"></span>
-      <a href="第3章-相遇.html">第3章 :</a>
+      <span class="read-status unread" data-chapter-id="chapter-3"></span>
+      <a class="chapter-link" href="#" data-chapter-id="chapter-3" data-file-name="第3章-相遇.html">第3章 相遇</a>
     </li>
     <li>
-      <span class="read-status unread"></span>
-      <a href="第4章-往事.html">第4章 :</a>
+      <span class="read-status unread" data-chapter-id="chapter-4"></span>
+      <a class="chapter-link" href="#" data-chapter-id="chapter-4" data-file-name="第4章-往事.html">第4章 往事</a>
     </li>
     <li>
-      <span class="read-status unread"></span>
-      <a href="第5章-抉择.html">第5章 :</a>
+      <span class="read-status unread" data-chapter-id="chapter-5"></span>
+      <a class="chapter-link" href="#" data-chapter-id="chapter-5" data-file-name="第5章-抉择.html">第5章 抉择</a>
     </li>
-    <!-- 新增章节：复制上面<li>块，改状态/名称/文件名即可 -->
+    <!-- 新增章节请在上面这行之前复制模板 -->
   </ul>
 
   <!-- 返回顶部按钮 -->
   <div id="back-to-top" onclick="backToTop()">↑</div>
 
   <script>
-    // 1. 暗黑模式切换逻辑
-    function toggleDarkMode() {
-      document.body.classList.toggle('dark');
-      // 可选：记住暗黑模式状态（刷新不重置）
-      const isDark = document.body.classList.contains('dark');
-      localStorage.setItem('novelDarkMode', isDark);
-    }
-    // 页面加载时恢复暗黑模式状态
+    // ====================== 核心路径配置（改这里就可以适配所有目录，不用改每个链接）======================
+    // 章节文件所在的文件夹路径，当前是同级content文件夹，已经配置好，不用改
+    const CHAPTER_BASE_PATH = '../content/';
+    // 首页文件路径，主目录的index.html，已经配置好
+    const HOME_PAGE_PATH = '../index.html';
+
+    // ====================== 1. 页面初始化 ======================
     window.onload = function() {
+      // 恢复暗黑模式状态
       const isDark = localStorage.getItem('novelDarkMode') === 'true';
       if (isDark) {
         document.body.classList.add('dark');
+        document.querySelector('.dark-mode-btn').textContent = '日间模式';
       }
-      // 初始化滚动监听（返回顶部按钮）
+
+      // 恢复章节已读状态
+      initReadStatus();
+
+      // 绑定章节点击事件
+      bindChapterClick();
+
+      // 绑定滚动监听（返回顶部按钮）
       window.onscroll = handleScroll;
     };
 
-    // 2. 返回顶部逻辑
+    // ====================== 2. 路径跳转核心逻辑 ======================
+    // 绑定章节链接点击事件，自动拼接路径跳转
+    function bindChapterClick() {
+      const chapterLinks = document.querySelectorAll('.chapter-link');
+      chapterLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault(); // 阻止默认跳转
+          const chapterId = this.getAttribute('data-chapter-id');
+          const fileName = this.getAttribute('data-file-name');
+          
+          // 标记章节为已读
+          markAsRead(chapterId);
+          
+          // 自动拼接基础路径+文件名，跳转章节
+          window.location.href = CHAPTER_BASE_PATH + fileName;
+        });
+      });
+    }
+
+    // 返回首页
+    function goToHome() {
+      window.location.href = HOME_PAGE_PATH;
+    }
+
+    // ====================== 3. 已读/未读状态管理 ======================
+    // 初始化已读状态
+    function initReadStatus() {
+      const readChapters = JSON.parse(localStorage.getItem('novelReadChapters') || '[]');
+      readChapters.forEach(chapterId => {
+        // 更改标记点颜色
+        const statusDot = document.querySelector(`.read-status[data-chapter-id="${chapterId}"]`);
+        if (statusDot) {
+          statusDot.classList.remove('unread');
+          statusDot.classList.add('read');
+        }
+      });
+    }
+
+    // 标记章节为已读
+    function markAsRead(chapterId) {
+      const readChapters = JSON.parse(localStorage.getItem('novelReadChapters') || '[]');
+      // 避免重复添加
+      if (!readChapters.includes(chapterId)) {
+        readChapters.push(chapterId);
+        localStorage.setItem('novelReadChapters', JSON.stringify(readChapters));
+        
+        // 实时更新页面标记
+        const statusDot = document.querySelector(`.read-status[data-chapter-id="${chapterId}"]`);
+        if (statusDot) {
+          statusDot.classList.remove('unread');
+          statusDot.classList.add('read');
+        }
+      }
+    }
+
+    // ====================== 4. 暗黑模式切换 ======================
+    function toggleDarkMode() {
+      const body = document.body;
+      const btn = document.querySelector('.dark-mode-btn');
+      body.classList.toggle('dark');
+      
+      // 切换按钮文字
+      const isDark = body.classList.contains('dark');
+      btn.textContent = isDark ? '日间模式' : '暗黑模式';
+      
+      // 保存状态到本地，刷新不重置
+      localStorage.setItem('novelDarkMode', isDark);
+    }
+
+    // ====================== 5. 返回顶部逻辑 ======================
     function handleScroll() {
       const backBtn = document.getElementById('back-to-top');
       // 滚动超过100px显示按钮
@@ -236,26 +401,22 @@
         backBtn.style.display = 'none';
       }
     }
+
     function backToTop() {
-      // 平滑滚动到顶部（更友好）
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       });
     }
 
-    // 3. 章节搜索逻辑（模糊匹配，不区分大小写）
+    // ====================== 6. 章节搜索逻辑 ======================
     document.getElementById('chapter-search').addEventListener('input', function(e) {
       const keyword = e.target.value.trim().toLowerCase();
       const chapterItems = document.querySelectorAll('.chapter-list li');
       
       chapterItems.forEach(item => {
         const chapterName = item.textContent.toLowerCase();
-        if (keyword === '' || chapterName.includes(keyword)) {
-          item.style.display = 'flex'; // 匹配则显示
-        } else {
-          item.style.display = 'none'; // 不匹配则隐藏
-        }
+        item.style.display = (keyword === '' || chapterName.includes(keyword)) ? 'flex' : 'none';
       });
     });
   </script>
