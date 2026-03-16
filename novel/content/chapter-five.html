@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《灵弦华夏》- 第五章 学术质疑</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 核心阅读样式 */
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", "SimSun", sans-serif;
+            background-color: #f8f5f0;
+            color: #2b2b2b;
+            line-height: 1.85;
+            letter-spacing: 0.5px;
+            padding-bottom: 100px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* 夜间模式 */
+        body.night-mode {
+            background-color: #1a1a1a;
+            color: #d0d0d0;
+        }
+
+        /* 标题区域 */
+        header {
+            text-align: center;
+            padding: 40px 20px 30px;
+            border-bottom: 1px solid #e0d8c8;
+            margin-bottom: 25px;
+        }
+
+        .night-mode header {
+            border-bottom-color: #333;
+        }
+
+        .novel-title {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .chapter-title {
+            font-size: 20px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .night-mode .chapter-title {
+            color: #aaa;
+        }
+
+        /* 阅读控制面板 */
+        .control-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background-color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .night-mode .control-btn {
+            background-color: #2d2d2d;
+            border-color: #444;
+            color: #d0d0d0;
+        }
+
+        .control-btn:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-1px);
+        }
+
+        .night-mode .control-btn:hover {
+            background-color: #3d3d3d;
+        }
+
+        /* 正文区域 */
+        .chapter-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+            font-size: 17px;
+            text-align: justify;
+            text-justify: inter-ideograph;
+        }
+
+        /* 字体大小切换 */
+        .font-sm {
+            font-size: 15px;
+        }
+
+        .font-default {
+            font-size: 17px;
+        }
+
+        .font-lg {
+            font-size: 19px;
+        }
+
+        /* 段落样式 */
+        .chapter-content p {
+            text-indent: 2em;
+            margin-bottom: 18px;
+            word-break: break-all;
+            overflow-wrap: break-word;
+        }
+
+        /* 翻页按钮 */
+        .pager {
+            display: flex;
+            justify-content: space-between;
+            max-width: 800px;
+            margin: 50px auto 0;
+            padding: 0 24px;
+            gap: 20px;
+        }
+
+        .page-btn {
+            flex: 1;
+            padding: 12px 0;
+            border: none;
+            border-radius: 6px;
+            background-color: #4a86e8;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background-color: #3971d8;
+            transform: translateY(-2px);
+        }
+
+        .page-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .night-mode .page-btn {
+            background-color: #3a5a8a;
+        }
+
+        .night-mode .page-btn:disabled {
+            background-color: #444;
+        }
+
+        .night-mode .page-btn:hover:not(:disabled) {
+            background-color: #4a6a9a;
+        }
+
+        /* 回到顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: #4a86e8;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 18px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: #3971d8;
+            transform: translateY(-3px);
+        }
+
+        .night-mode .back-to-top {
+            background-color: #3a5a8a;
+        }
+
+        .night-mode .back-to-top:hover {
+            background-color: #4a6a9a;
+        }
+
+        /* 返回目录按钮 */
+        .back-to-list {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .list-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 6px;
+            background-color: #e74c3c;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .list-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-1px);
+        }
+
+        .night-mode .list-btn {
+            background-color: #2c3e50;
+        }
+
+        .night-mode .list-btn:hover {
+            background-color: #34495e;
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            font-size: 13px;
+            color: #999;
+            padding: 20px;
+        }
+
+        .night-mode footer {
+            color: #666;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            header {
+                padding: 30px 15px 20px;
+            }
+
+            .novel-title {
+                font-size: 22px;
+            }
+
+            .chapter-title {
+                font-size: 18px;
+            }
+
+            .control-bar {
+                gap: 10px;
+            }
+
+            .control-btn {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+
+            .chapter-content {
+                padding: 0 18px;
+                font-size: 16px;
+            }
+
+            .font-sm {
+                font-size: 14px;
+            }
+
+            .font-lg {
+                font-size: 18px;
+            }
+
+            .pager {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 标题区域 -->
+    <header>
+        <div class="novel-title">《灵弦华夏》</div>
+        <div class="chapter-title">第五章 学术质疑</div>
+    </header>
+
+    <!-- 阅读控制 -->
+    <div class="control-bar">
+        <button class="control-btn" id="font-sm">字体减小</button>
+        <button class="control-btn" id="font-default">默认字体</button>
+        <button class="control-btn" id="font-lg">字体增大</button>
+        <button class="control-btn" id="night-toggle">夜间模式</button>
+    </div>
+
+    <!-- 返回目录 -->
+    <div class="back-to-list">
+        <button class="list-btn" id="back-to-list-btn">返回章节目录</button>
+    </div>
+
+    <!-- 正文内容 -->
+    <div class="chapter-content" id="novel-content">
+        <p>当他沉浸在对灵识的修炼中，十几天的时光很快流逝而过，他此时站在答辩现场上，心中说不紧张那是假的。</p>
+        <p>台下坐着五位评委。三个物理系的，一个数学系的，还有一个是外校请来的——引力波领域的专家，姓周，头发花白，眼神很利。</p>
+        <p>李子许深吸一口气，点开第一页PPT。</p>
+        <p>“各位老师好，我的论文题目是《双黑洞并合引力波信号的参数估计与贝叶斯分析》。”</p>
+        <p>前二十分钟很顺。</p>
+        <p>数据来源、处理方法、参数估计结果——这些都是他做了三年的东西，闭着眼都能讲。评委们偶尔低头记笔记，偶尔点头。</p>
+        <p>第二十五分钟，他点开了第七页。</p>
+        <p>那7个异常事件的波形图。</p>
+        <p>会议室里的空气好像变稠了。</p>
+        <p>“这是我在GWTC-3数据中识别出的7个系统性偏离事件。”他尽量让声音平稳，“与标准模板相比，它们的互相关系数明显偏低，且偏离集中在并合后0.1到0.3秒区间。”</p>
+        <p>周教授抬起头。</p>
+        <p>“你用了什么噪声模型？”</p>
+        <p>“LIGO官方的PSD模型，以及他们推荐的一套备选模型。两组结果一致。”</p>
+        <p>“多重比较校正做了吗？”</p>
+        <p>“做了。P值小于0.01，背景估计也支持。”</p>
+        <p>周教授低头看了一眼手里的论文，又抬起头。</p>
+        <p>“这7个事件的红移分布，你说是集中在0.3以上？”</p>
+        <p>“是。”</p>
+        <p>“但GWTC-3里红移大于0.3的事件不止这7个。为什么只有它们异常？”</p>
+        <p>李子许的手指在讲台边缘轻轻敲了一下。</p>
+        <p>“我目前没法回答这个问题。”他顿了顿，“样本量太小，任何关于‘为什么’的结论都只是推测。论文里只描述了现象，没有给出解释。”</p>
+        <p>另一个评委接话：“那你觉得是什么？噪声？还是仪器问题？”</p>
+        <p>“不是噪声。”李子许的声音比刚才更稳了，“我对比过LIGO和Virgo的独立数据，也排除了已知的仪器异常时间段。如果是噪声，不应该在两个探测器里呈现相同的结构。”</p>
+        <p>“那就是物理现象？”</p>
+        <p>“可能是。”</p>
+        <p>“什么物理现象？”</p>
+        <p>李子许沉默了一秒。</p>
+        <p>他想起了掌心里那个洞。想起了罗沫笔记里的那行字：“引力，只是它在投影世界里的影子。”</p>
+        <p>但他不能这么说。</p>
+        <p>“我不知道。”他说，“论文里写得很清楚——‘有待后续观测验证’。如果O4数据里出现更多类似事件，我们也许能提出假说。现在，我只能说：这些异常是真实的，但我不知道它们是什么。”</p>
+        <p>会议室里安静了几秒。</p>
+        <p>周教授把手里的笔放下，靠在椅背上。</p>
+        <p>“小李，我问你个问题，不是答辩内容，就是想听听你的想法。”</p>
+        <p>李子许点头。</p>
+        <p>“你做了三年引力波分析，碰过几百个事件。这7个——你盯着它们的时间，比其他事件加起来都多吧？”</p>
+        <p>“……是。”</p>
+        <p>“你有没有一种感觉，”周教授顿了顿，“它们不是随机的？”</p>
+        <p>李子许没有立刻回答。</p>
+        <p>他能感觉到台下五双眼睛都在看他。</p>
+        <p>“有。”他说。</p>
+        <p>“那你觉得它们是什么？为什么？”</p>
+        <p>又是那个问题。</p>
+        <p>李子许忽然想起十几天的那个晚上——他关掉张先维的邮件，靠在椅背上，第一次真正下定决心：必须突破玄境。不是因为想变强，是因为下次有人问“它们为什么是这样”的时候，他想自己能回答。</p>
+        <p>但现在，他还回答不了。</p>
+        <p>“周老师，”他听见自己的声音，“如果我知道，我就不站在这里答辩了。我会直接去领诺贝尔奖。”</p>
+        <p>台下有人轻笑了一声。</p>
+        <p>周教授也笑了，但那笑容很快收住。</p>
+        <p>“行，答辩继续。”</p>
+        <p>后面的二十分钟，问题密集但常规。</p>
+        <p>信噪比分布、质量比的影响、自旋参数的置信区间——他都答了，答得不算惊艳，但扎实。</p>
+        <p>最后，答辩委员会让他暂时回避。</p>
+        <p>他站在走廊里，靠着墙，掌心微微发烫。</p>
+        <p>十分钟后，门开了。</p>
+        <p>周教授走出来，经过他身边的时候停了一下。</p>
+        <p>“那7个事件，”他压低声音，“我回去也会跑一遍。如果复现成功——”</p>
+        <p>他没说完，拍了拍李子许的肩膀，走了。</p>
+        <p>李子许站在原地，看着他的背影消失在走廊尽头。</p>
+        <p>掌心又烫了一下。</p>
+        <p>他想起了罗沫笔记里的另一句话：</p>
+        <p>“探索的路上，最难的不是找不到答案，是所有人都等着你给出答案，而你自己也不知道。”</p>
+        <p>两天后，结果公布。</p>
+        <p>全票通过。</p>
+        <p>李向国那天晚上多喝了两杯，什么都没说，只是把空酒杯往桌上一放，起身回了卧室。</p>
+        <p>李子许坐在客厅里，看着手机屏幕上那封刚收到的邮件。</p>
+        <p>发件人：张先维。</p>
+        <p>标题：关于GWTC-3那7个事件——复现成功，想和你聊聊。</p>
+        <p>他盯着那行字，很久。</p>
+        <p>然后关掉手机，起身走向床头。</p>
+        <p>罗沫的笔记安静地躺在那里。</p>
+        <p>他翻开最后一页，拿起笔，在空白处写下一行字：</p>
+        <p>“答辩过了。但真正的考试，刚刚开始。”</p>
+        <p>两周后，arXiv上多了一篇预印本。</p>
+        <p>标题：《GWTC-3中七个引力波事件的波形异常分析》</p>
+        <p>作者：李子许，李向国</p>
+        <p>编号：2504.12345</p>
+        <p>第三天，评论区第一条：</p>
+        <p>“作者声称发现了7个系统性偏离，但我用同样的数据跑了三遍，没有发现任何统计显著的异常。怀疑是作者的代码有bug，或者筛选标准有问题。建议作者开源代码。”</p>
+        <p>匿名。</p>
+        <p>李子许盯着那行字，看了三分钟。</p>
+        <p>然后他打开电脑，把完整的数据处理脚本打包上传，在预印本页面加了个链接：“代码已开源，欢迎复现。”</p>
+        <p>一周后，邮件开始涌进来。</p>
+        <p>第一封，德国马普所：</p>
+        <p>“李同学，感谢开源代码。我用你们的脚本跑了一遍，复现成功。这7个事件确实存在。想请教一下，你们有没有考虑过……”</p>
+        <p>第二封，加州理工：</p>
+        <p>“复现失败。我们的环境好像不对，你们的脚本似乎是更高版本写的，有些依赖库版本冲突。能提供一下完整的依赖列表吗？”</p>
+        <p>第三封，中科院某所：</p>
+        <p>“复现成功。但我不确定你们的背景估计方法是否足够严格。建议用Bootstrap再跑一遍。”</p>
+        <p>第四封，匿名邮箱：</p>
+        <p>“你这7个事件，我复现不出来。你是不是手动挑的？数据有没有经过筛选？建议你撤回文章重新检查。”</p>
+        <p>李子许把手机扔在床上，仰头看着天花板。</p>
+        <p>掌心烫得发疼。</p>
+        <p>张先维的电话是晚上打来的。</p>
+        <p>“你看到那个匿名评论了吗？”</p>
+        <p>“看到了。”</p>
+        <p>“别理他。”张先维的声音很稳，“我帮你回了一条，说我复现成功了，用的是你开源的代码。他再跳，让他来找我对线。”</p>
+        <p>李子许没说话。</p>
+        <p>“还有，”张先维顿了顿，“我这边有几个同事也想加入。这7个事件，值得深入搞。你愿不愿意——组个小团队？”</p>
+        <p>李子许愣了一下。</p>
+        <p>“我？”</p>
+        <p>“你发现的，你不牵头谁牵头？李老师那边我回头跟他说，你要是同意，咱们拉个群，先把O4的数据准备工作做起来。”</p>
+        <p>李子许握着手机，看着窗外已经黑透的天。</p>
+        <p>两周前，他还在担心答辩能不能过。一周前，他还在焦虑有没有人复现。现在，有人要和他组队。</p>
+        <p>“行。”他说。</p>
+        <p>群名叫“GW7”。</p>
+        <p>七个人：张先维、李子许、马普所那个博士后、中科院那个建议Bootstrap的研究员、还有三个张先维拉来的——一个做统计的，一个做信号处理的，一个做数值相对论的。</p>
+        <p>每天消息99+。</p>
+        <p>李子许第一次发现，原来“合作”比“单干”累多了。</p>
+        <p>——你的Bootstrap跑了多少层？</p>
+        <p>——那个事件的信噪比能不能再算一遍？</p>
+        <p>——LIGO那边新出了一个噪声模型，要不要试试？</p>
+        <p>——有人发了一篇新预印本，引用了咱们的文章，说“有待进一步验证”……</p>
+        <p>他白天回消息，晚上修炼。</p>
+        <p>掌心的洞越来越小，但进度越来越慢。好像越接近完全愈合，阻力越大。</p>
+        <p>罗沫笔记里有一句话，之前没注意，现在再看：</p>
+        <p>“灵修如逆水行舟。越往上，越难。不是因为路变窄了，是因为你开始碰到‘自己’了。”</p>
+        <p>他不太懂什么叫“碰到自己”。</p>
+        <p>但他知道，每次他想深入感知那个空洞深处的东西，就会有一种莫名的阻力——不是疼，是……被挡回来的感觉。</p>
+        <p>好像有什么东西，不想让他进去。</p>
+        <p>又一周后，arXiv上多了第二条匿名评论：</p>
+        <p>“作者团队声称复现成功，但据我所知，至少有三个独立研究者尝试复现失败。所谓的‘异常’，很可能只是数据选择偏误。建议作者团队公布完整的筛选日志。”</p>
+        <p>这一次，张先维直接在评论区回：</p>
+        <p>“我是复现成功者之一。如果哪位复现失败的同行愿意公开自己的代码和处理流程，我们可以一起找问题所在。否则，空口说‘失败’，对学术讨论没有帮助。”</p>
+        <p>底下一片沉默。</p>
+        <p>但李子许知道，沉默不代表结束。</p>
+        <p>因为那三个“复现失败”的人，一定还在某个角落里，继续跑着数据，继续找着他的漏洞。</p>
+        <p>晚上，他坐在出租屋里，翻开罗沫的笔记。</p>
+        <p>扉页那句话已经快被他翻烂了：</p>
+        <p>“探索，而不是书写真理。”</p>
+        <p>他忽然有点明白。</p>
+        <p>所谓“书写真理”，就是试图让所有人相信你。</p>
+        <p>所谓“探索”，就是自己先走进去，不管别人信不信。</p>
+        <p>他现在太在意那些人信不信了。</p>
+        <p>张先维的认可，他高兴。匿名评论的质疑，他焦虑。复现成功的人数，他数着。复现失败的邮件，他记着。</p>
+        <p>他把自己活成了一个“等待被验证的人”。</p>
+        <p>但罗沫不是这样。</p>
+        <p>她写下这本笔记的时候，根本没人信她。她知道会死，还是写。</p>
+        <p>因为她不需要别人验证。</p>
+        <p>她只需要自己知道。</p>
+        <p>李子许把笔记合上，闭上眼睛。</p>
+        <p>这一次，他没有去想那些邮件，那些评论，那些质疑。</p>
+        <p>他只是沉进那个洞。</p>
+        <p>暗红色的光在深处流动。他能感觉到，那个“挡住他”的东西，还在那里。</p>
+        <p>但他不再试图冲过去。</p>
+        <p>他就那么待着，和它一起待着。</p>
+        <p>很久。</p>
+        <p>然后他睁开眼睛，看了一眼手机。</p>
+        <p>张先维在群里发了条消息：</p>
+        <p>“O4第一波数据提前发布了，谁有空先跑个预览？”</p>
+        <p>他回了一个字：</p>
+        <p>“我。”</p>
+        <p>几天后，有人加他微信。</p>
+        <p>头像是一面红旗下，一个人逆着光吹着风。验证消息只有三个字：</p>
+        <p>“有事聊。”</p>
+        <p>他盯着那三个字，看了很久。</p>
+        <p>然后点了“通过”。</p>
+        <p>窗外，梧桐叶落了一地。</p>
+    </div>
+
+    <!-- 翻页按钮 -->
+    <div class="pager">
+        <button class="page-btn" id="prev-chapter">上一章</button>
+        <button class="page-btn" id="next-chapter">下一章</button>
+    </div>
+
+    <!-- 回到顶部 -->
+    <div class="back-to-top" id="back-to-top">↑</div>
+
+    <!-- 页脚 -->
+    <footer>
+        © 2026 《灵弦华夏》 版权所有
+    </footer>
+
+    <script>
+        // 核心元素获取
+        const content = document.getElementById('novel-content');
+        const fontSmBtn = document.getElementById('font-sm');
+        const fontDefaultBtn = document.getElementById('font-default');
+        const fontLgBtn = document.getElementById('font-lg');
+        const nightToggleBtn = document.getElementById('night-toggle');
+        const body = document.body;
+        const backToTopBtn = document.getElementById('back-to-top');
+        const prevChapterBtn = document.getElementById('prev-chapter');
+        const nextChapterBtn = document.getElementById('next-chapter');
+        const backToListBtn = document.getElementById('back-to-list-btn');
+
+        // 路径配置（适配你的目录结构）
+        const PREV_CHAPTER_PATH = 'chapter-four.html'; // 上一章是第四章
+        const NEXT_CHAPTER_PATH = '#'; // 下一章预留
+        const CHAPTER_LIST_PATH = '../contents/list.html'; // 目录页路径
+
+        // 1. 字体大小调整
+        fontSmBtn.addEventListener('click', () => {
+            content.classList.remove('font-default', 'font-lg');
+            content.classList.add('font-sm');
+        });
+
+        fontDefaultBtn.addEventListener('click', () => {
+            content.classList.remove('font-sm', 'font-lg');
+            content.classList.add('font-default');
+        });
+
+        fontLgBtn.addEventListener('click', () => {
+            content.classList.remove('font-sm', 'font-default');
+            content.classList.add('font-lg');
+        });
+
+        // 2. 夜间模式切换（保存状态）
+        nightToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('night-mode');
+            nightToggleBtn.textContent = body.classList.contains('night-mode') ? '日间模式' : '夜间模式';
+            localStorage.setItem('novelDarkMode', body.classList.contains('night-mode'));
+        });
+
+        // 3. 回到顶部
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 4. 章节跳转
+        prevChapterBtn.addEventListener('click', () => {
+            window.location.href = PREV_CHAPTER_PATH;
+        });
+
+        nextChapterBtn.addEventListener('click', () => {
+            alert('后续章节正在更新中，敬请期待');
+        });
+
+        // 5. 返回目录
+        backToListBtn.addEventListener('click', () => {
+            window.location.href = CHAPTER_LIST_PATH;
+        });
+
+        // 6. 页面初始化（恢复夜间模式）
+        window.onload = function() {
+            const isDark = localStorage.getItem('novelDarkMode') === 'true';
+            if (isDark) {
+                body.classList.add('night-mode');
+                nightToggleBtn.textContent = '日间模式';
+            }
+            window.onscroll(); // 初始化回到顶部按钮状态
+        };
+
+        // 7. 移动端禁止双击缩放
+        document.addEventListener('touchstart', function(event) {
+            if (event.touches.length > 1) event.preventDefault();
+        }, { passive: false });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) event.preventDefault();
+            lastTouchEnd = now;
+        }, { passive: false });
+    </script>
+</body>
+</html>
