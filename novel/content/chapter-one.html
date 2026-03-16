@@ -1,517 +1,276 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>《灵弦体系》- 第一章 罗沫</title>
-    <style>
-        /* 全局样式重置与基础规范 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* 核心阅读样式 - 专为中文长篇小说优化 */
-        body {
-            font-family: "PingFang SC", "Microsoft YaHei", "SimSun", sans-serif;
-            background-color: #f8f5f0;
-            color: #2b2b2b;
-            line-height: 1.85;
-            letter-spacing: 0.5px;
-            padding-bottom: 100px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* 夜间模式护眼配色 */
-        body.night-mode {
-            background-color: #1a1a1a;
-            color: #d0d0d0;
-        }
-
-        /* 头部标题区域 */
-        header {
-            text-align: center;
-            padding: 40px 20px 30px;
-            border-bottom: 1px solid #e0d8c8;
-            margin-bottom: 25px;
-        }
-
-        .night-mode header {
-            border-bottom-color: #333;
-        }
-
-        .novel-title {
-            font-size: 26px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            letter-spacing: 2px;
-        }
-
-        .chapter-title {
-            font-size: 20px;
-            color: #666;
-            font-weight: 400;
-        }
-
-        .night-mode .chapter-title {
-            color: #aaa;
-        }
-
-        /* 阅读控制面板 */
-        .control-bar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
-            padding: 0 20px;
-            flex-wrap: wrap;
-        }
-
-        .control-btn {
-            padding: 8px 16px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            background-color: #fff;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s ease;
-            user-select: none;
-        }
-
-        .night-mode .control-btn {
-            background-color: #2d2d2d;
-            border-color: #444;
-            color: #d0d0d0;
-        }
-
-        .control-btn:hover {
-            background-color: #f0f0f0;
-            transform: translateY(-1px);
-        }
-
-        .night-mode .control-btn:hover {
-            background-color: #3d3d3d;
-        }
-
-        /* 章节内容核心区域 */
-        .chapter-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 24px;
-            font-size: 17px;
-            text-align: justify;
-            text-justify: inter-ideograph;
-        }
-
-        /* 字体大小预设 */
-        .font-sm {
-            font-size: 15px;
-        }
-
-        .font-default {
-            font-size: 17px;
-        }
-
-        .font-lg {
-            font-size: 19px;
-        }
-
-        /* 中文段落规范 - 首行缩进2字符，段落间距优化 */
-        .chapter-content p {
-            text-indent: 2em;
-            margin-bottom: 18px;
-            word-break: break-all;
-            overflow-wrap: break-word;
-        }
-
-        /* 翻页按钮区域 */
-        .pager {
-            display: flex;
-            justify-content: space-between;
-            max-width: 800px;
-            margin: 50px auto 0;
-            padding: 0 24px;
-            gap: 20px;
-        }
-
-        .page-btn {
-            flex: 1;
-            padding: 12px 0;
-            border: none;
-            border-radius: 6px;
-            background-color: #4a86e8;
-            color: #fff;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.2s ease;
-        }
-
-        .page-btn:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        .page-btn:hover:not(:disabled) {
-            background-color: #3971d8;
-            transform: translateY(-2px);
-        }
-
-        .night-mode .page-btn {
-            background-color: #3a5a8a;
-        }
-
-        .night-mode .page-btn:disabled {
-            background-color: #444;
-        }
-
-        .night-mode .page-btn:hover:not(:disabled) {
-            background-color: #4a6a9a;
-        }
-
-        /* 回到顶部悬浮按钮 */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background-color: #4a86e8;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            font-size: 18px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            user-select: none;
-            z-index: 999;
-        }
-
-        .back-to-top.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .back-to-top:hover {
-            background-color: #3971d8;
-            transform: translateY(-3px);
-        }
-
-        .night-mode .back-to-top {
-            background-color: #3a5a8a;
-        }
-
-        .night-mode .back-to-top:hover {
-            background-color: #4a6a9a;
-        }
-
-        /* 页脚版权区域 */
-        footer {
-            text-align: center;
-            margin-top: 60px;
-            font-size: 13px;
-            color: #999;
-            padding: 20px;
-        }
-
-        .night-mode footer {
-            color: #666;
-        }
-
-        /* 移动端响应式适配 */
-        @media (max-width: 768px) {
-            header {
-                padding: 30px 15px 20px;
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        yuan: '#ef4444',
+                        novel: {
+                            text: '#2b2b2b',
+                            bg: '#f8f5f0',
+                            nightText: '#e0e0e0',
+                            nightBg: '#121212',
+                            greenBg: '#f0f7ee',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"PingFang SC"', '"Microsoft YaHei"', '"SimSun"', 'sans-serif'],
+                    },
+                }
             }
-
-            .novel-title {
-                font-size: 22px;
-            }
-
-            .chapter-title {
-                font-size: 18px;
-            }
-
-            .control-bar {
-                gap: 10px;
-            }
-
-            .control-btn {
-                padding: 6px 12px;
-                font-size: 13px;
-            }
-
-            .chapter-content {
-                padding: 0 18px;
-                font-size: 16px;
-            }
-
-            .font-sm {
-                font-size: 14px;
-            }
-
-            .font-lg {
-                font-size: 18px;
-            }
-
-            .pager {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .back-to-top {
-                bottom: 20px;
-                right: 20px;
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-indent { text-indent: 2em; }
         }
     </style>
 </head>
-<body>
-    <!-- 小说标题与章节头部 -->
-    <header>
-        <div class="novel-title">《灵弦体系》</div>
-        <div class="chapter-title">第一章 罗沫</div>
-    </header>
+<body id="novel-body" class="font-sans bg-novel-bg text-novel-text transition-all duration-300 min-h-screen">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 pb-24">
+        <!-- 顶部导航 -->
+        <nav class="py-6 flex justify-between items-center border-b border-gray-200 dark:border-gray-700 mb-8">
+            <a href="../soul-string-system-index.html" class="text-gray-600 dark:text-gray-400 hover:text-yuan transition-colors">
+                <i class="fa-solid fa-book mr-2"></i>目录
+            </a>
+            <h1 class="text-lg font-bold">《灵弦体系》</h1>
+            <div class="w-16"></div>
+        </nav>
 
-    <!-- 阅读控制面板 -->
-    <div class="control-bar">
-        <button class="control-btn" id="font-sm">字体减小</button>
-        <button class="control-btn" id="font-default">默认字体</button>
-        <button class="control-btn" id="font-lg">字体增大</button>
-        <button class="control-btn" id="night-toggle">夜间模式</button>
+        <!-- 阅读控制栏 -->
+        <div class="flex flex-wrap justify-center items-center gap-4 mb-8 sticky top-4 z-40">
+            <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur rounded-full shadow border border-gray-200 dark:border-gray-700 px-5 py-2 flex items-center gap-4">
+                <!-- 字体大小 -->
+                <button id="font-sm" class="text-sm hover:text-yuan transition-colors">A-</button>
+                <button id="font-default" class="text-base hover:text-yuan transition-colors font-medium">A</button>
+                <button id="font-lg" class="text-lg hover:text-yuan transition-colors">A+</button>
+                
+                <div class="h-4 w-px bg-gray-300 dark:bg-gray-600"></div>
+
+                <!-- 背景切换 -->
+                <button id="bg-default" class="w-5 h-5 rounded-full bg-novel-bg border border-gray-400 ring-2 ring-transparent ring-offset-1 hover:ring-yuan transition-all"></button>
+                <button id="bg-green" class="w-5 h-5 rounded-full bg-novel-greenBg border border-gray-400 ring-2 ring-transparent ring-offset-1 hover:ring-yuan transition-all"></button>
+                
+                <div class="h-4 w-px bg-gray-300 dark:bg-gray-600"></div>
+
+                <!-- 夜间模式 -->
+                <button id="night-toggle" class="hover:text-yuan transition-colors">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 章节标题 -->
+        <header class="text-center mb-10">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200">第一章 罗沫</h2>
+        </header>
+
+        <!-- 正文内容 -->
+        <article id="novel-content" class="text-base leading-loose text-justify">
+            <p class="text-indent mb-4">李子许翻开笔记。熟悉的笔触，密密麻麻，一整本。</p>
+            <p class="text-indent mb-4">关于宇宙的真相。</p>
+            <p class="text-indent mb-4">但这绝不完全是她的思想——因为她能守住理性的边界。可他从那天起，已无法固守在内。那道光矢，将他与她永隔于生死两端。</p>
+            <p class="text-indent mb-4">笔记里最让他意外的，是她预告了自己的死亡。但她坦言，这只是预感。</p>
+            <p class="text-indent mb-4">她，罗沫，华科生物物理保研，研究意识科学。绝对理性。</p>
+            <p class="text-indent mb-4">那天下午，他和罗沫边走边聊课题，和往常一样。</p>
+            <p class="text-indent mb-4">他忽有所感，扭头看向一处虚空。一道光矢从空间的褶皱里探出，朝自己射来。</p>
+            <p class="text-indent mb-4">时间变慢了。</p>
+            <p class="text-indent mb-4">思维解除凝滞时，他下意识伸手，想推远她。</p>
+            <p class="text-indent mb-4">光矢洞穿他的掌心，穿透她的胸膛。</p>
+            <p class="text-indent mb-4">他脸上沾了血，膝盖撞在地上。周围的惊呼声像隔着水。</p>
+            <p class="text-indent mb-4">光矢穿透她后，逐渐暗淡——一瞬间不到。</p>
+            <p class="text-indent mb-4">现在，他手里关于她最重要的遗物，只剩这本笔记。</p>
+            <p class="text-indent mb-4">第一句：探索，而不是书写真理。</p>
+            <p class="text-indent mb-4">不是她写的。字迹是她的，但她不会写箴言。她从哪抄的？网络小说？</p>
+            <p class="text-indent mb-4">三年来，他几乎翻烂了这本笔记。透过她的思想，他仿佛看到一座宫殿。</p>
+            <p class="text-indent mb-4">可真的有真理吗？她为这“真理”而死。他不得不信。</p>
+            <p class="text-indent mb-4">合上笔记。抬眼看向天花板。纯白。</p>
+            <p class="text-indent mb-4">一夜未眠。</p>
+            <p class="text-indent mb-4">他撑着身子离开出租房，顺手多买了份包子，叫了辆车，去一个不知名的荒墓园。</p>
+            <p class="text-indent mb-4">在墓碑前站定，最后一口包子咽进肚里。</p>
+            <p class="text-indent mb-4">那道光矢明明不可能。可她平白无故死去，应该更不可能。</p>
+            <p class="text-indent mb-4">一切都成了现实。浑浑噩噩三年，他终于学会接受。</p>
+            <p class="text-indent mb-4">目光扫过碑上一个新刻的符号。</p>
+            <p class="text-indent mb-4">等等。这什么时候有的？谁刻的？</p>
+            <p class="text-indent mb-4">他怔住。空虚被疑惑填满。</p>
+            <p class="text-indent mb-4">伸左手去摸。指尖探进凹痕——没有缝隙，没有卡顿。手指落进去，刚刚好。</p>
+            <p class="text-indent mb-4">沿着痕迹缓缓移动。每一处转弯都准确卡住指腹的弧度，严丝合缝。</p>
+            <p class="text-indent mb-4">划完最后一笔，手指停在原处，忘了收回来。</p>
+            <p class="text-indent mb-4">右手掌心缠着绷带的地方，疼痛加剧。</p>
+            <p class="text-indent mb-4">脑海里突然冒出一个概念名：</p>
+            <p class="text-indent mb-4">灵弦。</p>
+            <p class="text-indent mb-4">这个符号给他的感觉，就像她笔记里描述的那个东西——本源的样子，她管它叫灵弦。</p>
+            <p class="text-indent mb-4">那本笔记，除了她的思考，几乎满篇写的都是灵弦。</p>
+            <p class="text-indent mb-4">弦论是自己最熟悉的领域。可“灵”为什么能与“弦”挂钩？</p>
+            <p class="text-indent mb-4">她的思考里，灵弦与物理中的弦不是同一种事物。但在各自的体系中，都扮演着基础建构者的角色。</p>
+            <p class="text-indent mb-4">不过，灵弦多了一个维度——意识。</p>
+            <p class="text-indent mb-4">她研究意识科学。他终于理解，她为什么会对这个体系如此着迷。</p>
+            <p class="text-indent mb-4">笔记本里，她的笔迹：</p>
+            <p class="text-indent mb-4">“弦论是我唯一能借来用的语言。灵字加上去，是想说意识也是基底——但基底这个词本身就不对，基底之上还有什么？”</p>
+            <p class="text-indent mb-4">“给这个假说起名叫灵弦——要是让他看见，肯定说‘你网络小说看多了’。但他不知道，这是我唯一能用的语言。”</p>
+            <p class="text-indent mb-4">“不知道对不对，但想下去很有意思。”</p>
+            <p class="text-indent mb-4">他决定带着这个符号离开墓地。</p>
+            <p class="text-indent mb-4">那道光矢是冲自己来的。可为什么最后射向了她？</p>
+            <p class="text-indent mb-4">他必须弄清楚光矢被射出的前因后果。</p>
+            <p class="text-indent mb-4">这股力量降临现实，究竟意欲何为？</p>
+            <p class="text-indent mb-4">回到华科。拨通导师的电话——也是他父亲。</p>
+            <p class="text-indent mb-4">“爸，今天有消息吗？”</p>
+            <p class="text-indent mb-4">电话那头顿了一下。“他们今晚来咱家吃饭，说说沫沫的事。”李向国的声音压得很低，但李子许听出了一点——不是欣喜，是终于等到什么的……松口气。</p>
+            <p class="text-indent mb-4">“嗯。”</p>
+            <p class="text-indent mb-4">挂完电话，三年的沉郁终于裂开一道口子。她写笔记时，除了自己，还经常提到对父母的感受。现在他们沉默了三年，终于愿意开口。</p>
+            <p class="text-indent mb-4">他想多了解她。哪怕多一分。</p>
+            <p class="text-indent mb-4">顶着黑眼圈上完一天的课。出校门，准备打车。</p>
+            <p class="text-indent mb-4">一只手拍了拍他肩膀。扭头——罗默。旁边龙泠。三年没见，两人像老了十岁。罗默没笑，只是点头，朝街边抬了抬下巴。李向国的车停在那。</p>
+            <p class="text-indent mb-4">李子许顺着望去，透过车窗看见自己的父亲。心想：省了一笔车费。</p>
+            <p class="text-indent mb-4">“叔叔阿姨，这些年，你们都还好吗？”</p>
+            <p class="text-indent mb-4">龙泠开口：“子许，我们都还好。只是很久没去她那里看，今天下午才去看过。谢谢你经常去看她。”</p>
+            <p class="text-indent mb-4">罗默只是点头。</p>
+            <p class="text-indent mb-4">李子许有些不好意思，歪歪头：“没什么，这是我应该的。”</p>
+            <p class="text-indent mb-4">“叔叔阿姨，上车吧。你们是客人，反而来接我，我真的有些受宠若惊。”</p>
+            <p class="text-indent mb-4">他自然地靠近他们，陪着上车。</p>
+            <p class="text-indent mb-4">这两位，华科生物物理领域最负盛名的伴侣。三年前突然销声匿迹，连自己家也不常来。</p>
+            <p class="text-indent mb-4">他在心里悄悄叹了一口气。</p>
+            <p class="text-indent mb-4">其实他也想过去看望他们，但不知现居地址，电话也换了。</p>
+            <p class="text-indent mb-4">车上，龙泠一直看着窗外。罗默的手放在膝盖上，轻轻敲着什么。</p>
+            <p class="text-indent mb-4">车停。门开。罗落英笑着走过来，挽起龙泠的手臂。两人宛如昔日闺蜜，一同进门。</p>
+            <p class="text-indent mb-4">李子许和罗默下了车，进门前轻声交谈了几句。</p>
+            <p class="text-indent mb-4">李向国停好车，原地驻足，望着昔日好友如今消瘦的背影，深深叹了一口气。</p>
+            <p class="text-indent mb-4">不过好在，他终于要走出来了。</p>
+            <p class="text-indent mb-4">还有，罗沫究竟经历了什么，为什么会突然逝世？子许连半句都不肯说。看他日渐消沉，自己也不好逼问。这么久了，只能等，一直等。</p>
+            <p class="text-indent mb-4">进门时，饭菜已然摆好。所有人落座。</p>
+            <p class="text-indent mb-4">李子许先动筷，夹了一块罗沫最喜欢吃的糖醋排骨，放到一个空位前的碗里。</p>
+            <p class="text-indent mb-4">龙泠眼眶瞬间红了。要了张纸巾，轻声掩泣。</p>
+            <p class="text-indent mb-4">其他人心中都不好受。尤其是罗默，他与李向国碰了一杯，一口饮尽。</p>
+            <p class="text-indent mb-4">罗默率先开口：“关于沫儿……她把现在这个世界当成一层投影。意识是一个需要成长的管理者，收回投影的同时再投射出下一轮投影，也就是创造下一个世界。”</p>
+            <p class="text-indent mb-4">“她接触到了一个神秘的理论体系，完全沉迷其中。她甚至预言自己很快会死于探寻真理的路上……她仿佛入了魔……”</p>
+            <p class="text-indent mb-4">李向国打断：“沫儿她究竟怎么死的？”</p>
+            <p class="text-indent mb-4">罗默摇头。他也不知道。</p>
+            <p class="text-indent mb-4">所有人看向李子许。</p>
+            <p class="text-indent mb-4">李子许看着罗默，想起三年前这个男人红着眼冲过来，把一个本子摔到自己脚边。眼中近乎满是悲愤，但还是给了自己一点信任与期待的神情。</p>
+            <p class="text-indent mb-4">“罗沫的死，和我有关。”</p>
+            <p class="text-indent mb-4">这一天还是到来了。李子许闭上眼睛。</p>
+            <p class="text-indent mb-4">他想起进门前罗默对自己说的那些话——</p>
+            <p class="text-indent mb-4">“沫儿让我不要怪你。我当时不明白为什么我要怪你，三年前的那一天我才明白。”</p>
+            <p class="text-indent mb-4">“她说，如果有一天你怪她瞒着你，让我帮她解释一句。现在我直接告诉你：她不是不想告诉你，而是怕你有危险。”</p>
+            <p class="text-indent mb-4">“我希望你能带着她的遗志，走下去。”</p>
+            <p class="text-indent mb-4">知道这些，他对这位父亲的感激已不是文字可以说尽。明知自己没有保护好她，不仅没有诘问，还能告知自己她想说的话。</p>
+            <p class="text-indent mb-4">“杀死罗沫的，是超自然力量。但据我所感，那股力量的落点本应是我——我不知道为什么最后却选择了她。”</p>
+            <p class="text-indent mb-4">李子许探出右手，解开绷带，展开手掌。</p>
+            <p class="text-indent mb-4">掌心那道贯穿的伤痕还在。不是敞开的创口，而是一个无法愈合的孔洞。三年来，它就这样敞着，像刚刚留下的一样。边缘泛着异样的苍白，没有丝毫愈合的迹象。</p>
+            <p class="text-indent mb-4">所有科学医治手段他都试过。没用。</p>
+            <p class="text-indent mb-4">这已不只是伤痕。这是某种肉眼可见的诡异。</p>
+            <p class="text-indent mb-4">看到这一幕，李向国感觉像在做梦。罗落英眼中满是担忧。罗默和龙泠对视一眼，随即继续听。</p>
+            <p class="text-indent mb-4">“罗沫是替我而死的。”</p>
+            <p class="text-indent mb-4">罗默眼神复杂。龙泠悲伤。</p>
+            <p class="text-indent mb-4">李向国闷头吃饭。他没想到一切是这样。这个世界他不认识了。他怀疑自己出现幻觉，吃了没几口便离开饭桌。</p>
+            <p class="text-indent mb-4">罗落英连忙去安抚，也离开了。</p>
+            <p class="text-indent mb-4">现在，饭桌上只有李子许与罗沫父母三人。</p>
+            <p class="text-indent mb-4">“子许，我们这三年来一直在验证沫沫笔记里她没验证成的东西。”</p>
+            <p class="text-indent mb-4">罗默的声音很平，像在讲学术报告。但手在桌下微微发抖，龙泠把手覆上去，按住了。</p>
+            <p class="text-indent mb-4">“最开始只是想弄明白，她最后那段时间到底在研究什么。”罗默顿了顿，“后来发现，有些东西……确实存在。”</p>
+            <p class="text-indent mb-4">他从公文包里取出一个文件夹，很厚，边角翻毛了。翻开第一页，是一张拉曼光谱图。</p>
+            <p class="text-indent mb-4">“这是沫沫的笔记本，我们测了三年。这是对照组，同款新笔记本。”</p>
+            <p class="text-indent mb-4">两根曲线叠在一起，大部分重合，但在三个波峰位置，罗沫那根明显偏离。</p>
+            <p class="text-indent mb-4">“换了三台仪器，一样的结果。测她的笔、她的水杯、她戴过的项链——都有类似偏差。测其他旧书、旧物，没有。”</p>
+            <p class="text-indent mb-4">罗默翻到下一页，是一串数据表格。</p>
+            <p class="text-indent mb-4">“量子随机数发生器。实验条件：让你龙泠阿姨进入思念沫沫的状态。两年多，重复了三百多次。这是统计结果——”</p>
+            <p class="text-indent mb-4">他用指尖点了点表格底部的数值。</p>
+            <p class="text-indent mb-4">“P值小于0.001。统计显著。”</p>
+            <p class="text-indent mb-4">龙泠开口，声音轻得像怕惊扰什么：“只有我。只有我想她的时候。换别人操作，换我想别的事，就正常。”</p>
+            <p class="text-indent mb-4">她看着李子许，眼眶还红着，但眼神里有种奇怪的光。</p>
+            <p class="text-indent mb-4">“你龙泠阿姨试了三百多次。只有她想沫沫的时候。”罗默顿了顿，“我们老家的说法，叫‘心诚则灵’。我以为自己这辈子都不会信这种话。”</p>
+            <p class="text-indent mb-4">龙泠点头，声音很轻：“但现在我不知道该信什么了。”</p>
+            <p class="text-indent mb-4">李子许低头看着那些图谱和数字。他看不懂拉曼光谱，但他看懂了罗默和龙泠的眼睛——那是学者的眼睛，是看见了无法否认的证据、却无法解释的眼睛。</p>
+            <p class="text-indent mb-4">和他自己一模一样。</p>
+            <p class="text-indent mb-4">他抬起右手，掌心朝上。那道贯穿的孔洞在灯光下泛着苍白的边缘。</p>
+            <p class="text-indent mb-4">罗默看着那道伤，沉默很久。</p>
+            <p class="text-indent mb-4">然后他伸手，从文件夹最底层抽出一张照片，推到李子许面前。</p>
+            <p class="text-indent mb-4">照片上是罗沫的笔记本，还有她专心致志往上面写着什么的场景。</p>
+            <p class="text-indent mb-4">“三年了。”他说，“我们不知道接下来该怎么办。但这些东西——”</p>
+            <p class="text-indent mb-4">他看了一眼龙泠。龙泠点头。</p>
+            <p class="text-indent mb-4">“——交给你了。”</p>
+            <p class="text-indent mb-4">李子许久久不语。</p>
+            <p class="text-indent mb-4">她的父母没有沉沦三年，而是去验证她的想法。</p>
+            <p class="text-indent mb-4">他想起那年夏天，她第一次让他叫她“沫子”。他说太肉麻，叫不出口。她追着他打了半条街。</p>
+            <p class="text-indent mb-4">后来叫顺口了，就再也没改过。</p>
+            <p class="text-indent mb-4">沫子。我好想你。</p>
+        </article>
+
+        <!-- 翻页按钮 -->
+        <div class="mt-16 grid grid-cols-2 gap-4">
+            <button class="py-4 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-400 cursor-not-allowed" disabled>
+                上一章
+            </button>
+            <a href="./chapter-two.html" class="py-4 rounded-lg bg-yuan text-white text-center font-medium hover:bg-yuan/90 transition-colors active:scale-95">
+                下一章
+            </a>
+        </div>
+
+        <footer class="mt-16 text-center text-sm text-gray-400">
+            <p>© 2026.3.17 贪文笔著</p>
+        </footer>
     </div>
 
-    <!-- 章节正文内容 - 原文一字未改完整嵌入 -->
-    <div class="chapter-content" id="novel-content">
-        <p>李子许翻开笔记。熟悉的笔触，密密麻麻，一整本。</p>
-        <p>关于宇宙的真相。</p>
-        <p>但这绝不完全是她的思想——因为她能守住理性的边界。可他从那天起，已无法固守在内。那道光矢，将他与她永隔于生死两端。</p>
-        <p>笔记里最让他意外的，是她预告了自己的死亡。但她坦言，这只是预感。</p>
-        <p>她，罗沫，华科生物物理保研，研究意识科学。绝对理性。</p>
-        <p>那天下午，他和罗沫边走边聊课题，和往常一样。</p>
-        <p>他忽有所感，扭头看向一处虚空。一道光矢从空间的褶皱里探出，朝自己射来。</p>
-        <p>时间变慢了。</p>
-        <p>思维解除凝滞时，他下意识伸手，想推远她。</p>
-        <p>光矢洞穿他的掌心，穿透她的胸膛。</p>
-        <p>他脸上沾了血，膝盖撞在地上。周围的惊呼声像隔着水。</p>
-        <p>光矢穿透她后，逐渐暗淡——一瞬间不到。</p>
-        <p>现在，他手里关于她最重要的遗物，只剩这本笔记。</p>
-        <p>第一句：探索，而不是书写真理。</p>
-        <p>不是她写的。字迹是她的，但她不会写箴言。她从哪抄的？网络小说？</p>
-        <p>三年来，他几乎翻烂了这本笔记。透过她的思想，他仿佛看到一座宫殿。</p>
-        <p>可真的有真理吗？她为这“真理”而死。他不得不信。</p>
-        <p>合上笔记。抬眼看向天花板。纯白。</p>
-        <p>一夜未眠。</p>
-        <p>他撑着身子离开出租房，顺手多买了份包子，叫了辆车，去一个不知名的荒墓园。</p>
-        <p>在墓碑前站定，最后一口包子咽进肚里。</p>
-        <p>那道光矢明明不可能。可她平白无故死去，应该更不可能。</p>
-        <p>一切都成了现实。浑浑噩噩三年，他终于学会接受。</p>
-        <p>目光扫过碑上一个新刻的符号。</p>
-        <p>等等。这什么时候有的？谁刻的？</p>
-        <p>他怔住。空虚被疑惑填满。</p>
-        <p>伸左手去摸。指尖探进凹痕——没有缝隙，没有卡顿。手指落进去，刚刚好。</p>
-        <p>沿着痕迹缓缓移动。每一处转弯都准确卡住指腹的弧度，严丝合缝。</p>
-        <p>划完最后一笔，手指停在原处，忘了收回来。</p>
-        <p>右手掌心缠着绷带的地方，疼痛加剧。</p>
-        <p>脑海里突然冒出一个概念名：</p>
-        <p>灵弦。</p>
-        <p>这个符号给他的感觉，就像她笔记里描述的那个东西——本源的样子，她管它叫灵弦。</p>
-        <p>那本笔记，除了她的思考，几乎满篇写的都是灵弦。</p>
-        <p>弦论是自己最熟悉的领域。可“灵”为什么能与“弦”挂钩？</p>
-        <p>她的思考里，灵弦与物理中的弦不是同一种事物。但在各自的体系中，都扮演着基础建构者的角色。</p>
-        <p>不过，灵弦多了一个维度——意识。</p>
-        <p>她研究意识科学。他终于理解，她为什么会对这个体系如此着迷。</p>
-        <p>笔记本里，她的笔迹：</p>
-        <p>“弦论是我唯一能借来用的语言。灵字加上去，是想说意识也是基底——但基底这个词本身就不对，基底之上还有什么？”</p>
-        <p>“给这个假说起名叫灵弦——要是让他看见，肯定说‘你网络小说看多了’。但他不知道，这是我唯一能用的语言。”</p>
-        <p>“不知道对不对，但想下去很有意思。”</p>
-        <p>他决定带着这个符号离开墓地。</p>
-        <p>那道光矢是冲自己来的。可为什么最后射向了她？</p>
-        <p>他必须弄清楚光矢被射出的前因后果。</p>
-        <p>这股力量降临现实，究竟意欲何为？</p>
-        <p>回到华科。拨通导师的电话——也是他父亲。</p>
-        <p>“爸，今天有消息吗？”</p>
-        <p>电话那头顿了一下。“他们今晚来咱家吃饭，说说沫沫的事。”李向国的声音压得很低，但李子许听出了一点——不是欣喜，是终于等到什么的……松口气。</p>
-        <p>“嗯。”</p>
-        <p>挂完电话，三年的沉郁终于裂开一道口子。她写笔记时，除了自己，还经常提到对父母的感受。现在他们沉默了三年，终于愿意开口。</p>
-        <p>他想多了解她。哪怕多一分。</p>
-        <p>顶着黑眼圈上完一天的课。出校门，准备打车。</p>
-        <p>一只手拍了拍他肩膀。扭头——罗默。旁边龙泠。三年没见，两人像老了十岁。罗默没笑，只是点头，朝街边抬了抬下巴。李向国的车停在那。</p>
-        <p>李子许顺着望去，透过车窗看见自己的父亲。心想：省了一笔车费。</p>
-        <p>“叔叔阿姨，这些年，你们都还好吗？”</p>
-        <p>龙泠开口：“子许，我们都还好。只是很久没去她那里看，今天下午才去看过。谢谢你经常去看她。”</p>
-        <p>罗默只是点头。</p>
-        <p>李子许有些不好意思，歪歪头：“没什么，这是我应该做的。”</p>
-        <p>“叔叔阿姨，上车吧。你们是客人，反而来接我，我真的有些受宠若惊。”</p>
-        <p>他自然地靠近他们，陪着上车。</p>
-        <p>这两位，华科生物物理领域最负盛名的伴侣。三年前突然销声匿迹，连自己家也不常来。</p>
-        <p>他在心里悄悄叹了一口气。</p>
-        <p>其实他也想过去看望他们，但不知现居地址，电话也换了。</p>
-        <p>车上，龙泠一直看着窗外。罗默的手放在膝盖上，轻轻敲着什么。</p>
-        <p>车停。门开。罗落英笑着走过来，挽起龙泠的手臂。两人宛如昔日闺蜜，一同进门。</p>
-        <p>李子许和罗默下了车，进门前轻声交谈了几句。</p>
-        <p>李向国停好车，原地驻足，望着昔日好友如今消瘦的背影，深深叹了一口气。</p>
-        <p>不过好在，他终于要走出来了。</p>
-        <p>还有，罗沫究竟经历了什么，为什么会突然逝世？子许连半句都不肯说。看他日渐消沉，自己也不好逼问。这么久了，只能等，一直等。</p>
-        <p>进门时，饭菜已然摆好。所有人落座。</p>
-        <p>李子许先动筷，夹了一块罗沫最喜欢吃的糖醋排骨，放到一个空位前的碗里。</p>
-        <p>龙泠眼眶瞬间红了。要了张纸巾，轻声掩泣。</p>
-        <p>其他人心中都不好受。尤其是罗默，他与李向国碰了一杯，一口饮尽。</p>
-        <p>罗默率先开口：“关于沫儿……她把现在这个世界当成一层投影。意识是一个需要成长的管理者，收回投影的同时再投射出下一轮投影，也就是创造下一个世界。”</p>
-        <p>“她接触到了一个神秘的理论体系，完全沉迷其中。她甚至预言自己很快会死于探寻真理的路上……她仿佛入了魔……”</p>
-        <p>李向国打断：“沫儿她究竟怎么死的？”</p>
-        <p>罗默摇头。他也不知道。</p>
-        <p>所有人看向李子许。</p>
-        <p>李子许看着罗默，想起三年前这个男人红着眼冲过来，把一个本子摔到自己脚边。眼中近乎满是悲愤，但还是给了自己一点信任与期待的神情。</p>
-        <p>“罗沫的死，和我有关。”</p>
-        <p>这一天还是到来了。李子许闭上眼睛。</p>
-        <p>他想起进门前罗默对自己说的那些话——</p>
-        <p>“沫儿让我不要怪你。我当时不明白为什么我要怪你，三年前的那一天我才明白。”</p>
-        <p>“她说，如果有一天你怪她瞒着你，让我帮她解释一句。现在我直接告诉你：她不是不想告诉你，而是怕你有危险。”</p>
-        <p>“我希望你能带着她的遗志，走下去。”</p>
-        <p>知道这些，他对这位父亲的感激已不是文字可以说尽。明知自己没有保护好她，不仅没有诘问，还能告知自己她想说的话。</p>
-        <p>“杀死罗沫的，是超自然力量。但据我所感，那股力量的落点本应是我——我不知道为什么最后却选择了她。”</p>
-        <p>李子许探出右手，解开绷带，展开手掌。</p>
-        <p>掌心那道贯穿的伤痕还在。不是敞开的创口，而是一个无法愈合的孔洞。三年来，它就这样敞着，像刚刚留下的一样。边缘泛着异样的苍白，没有丝毫愈合的迹象。</p>
-        <p>所有科学医治手段他都试过。没用。</p>
-        <p>这已不只是伤痕。这是某种肉眼可见的诡异。</p>
-        <p>看到这一幕，李向国感觉像在做梦。罗落英眼中满是担忧。罗默和龙泠对视一眼，随即继续听。</p>
-        <p>“罗沫是替我而死的。”</p>
-        <p>罗默眼神复杂。龙泠悲伤。</p>
-        <p>李向国闷头吃饭。他没想到一切是这样。这个世界他不认识了。他怀疑自己出现幻觉，吃了没几口便离开饭桌。</p>
-        <p>罗落英连忙去安抚，也离开了。</p>
-        <p>现在，饭桌上只有李子许与罗沫父母三人。</p>
-        <p>“子许，我们这三年来一直在验证沫沫笔记里她没验证成的东西。”</p>
-        <p>罗默的声音很平，像在讲学术报告。但手在桌下微微发抖，龙泠把手覆上去，按住了。</p>
-        <p>“最开始只是想弄明白，她最后那段时间到底在研究什么。”罗默顿了顿，“后来发现，有些东西……确实存在。”</p>
-        <p>他从公文包里取出一个文件夹，很厚，边角翻毛了。翻开第一页，是一张拉曼光谱图。</p>
-        <p>“这是沫沫的笔记本，我们测了三年。这是对照组，同款新笔记本。”</p>
-        <p>两根曲线叠在一起，大部分重合，但在三个波峰位置，罗沫那根明显偏离。</p>
-        <p>“换了三台仪器，一样的结果。测她的笔、她的水杯、她戴过的项链——都有类似偏差。测其他旧书、旧物，没有。”</p>
-        <p>罗默翻到下一页，是一串数据表格。</p>
-        <p>“量子随机数发生器。实验条件：让你龙泠阿姨进入思念沫沫的状态。两年多，重复了三百多次。这是统计结果——”</p>
-        <p>他用指尖点了点表格底部的数值。</p>
-        <p>“P值小于0.001。统计显著。”</p>
-        <p>龙泠开口，声音轻得像怕惊扰什么：“只有我。只有我想她的时候。换别人操作，换我想别的事，就正常。”</p>
-        <p>她看着李子许，眼眶还红着，但眼神里有种奇怪的光。</p>
-        <p>“你龙泠阿姨试了三百多次。只有她想沫沫的时候。”罗默顿了顿，“我们老家的说法，叫‘心诚则灵’。我以为自己这辈子都不会信这种话。”</p>
-        <p>龙泠点头，声音很轻：“但现在我不知道该信什么了。”</p>
-        <p>李子许低头看着那些图谱和数字。他看不懂拉曼光谱，但他看懂了罗默和龙泠的眼睛——那是学者的眼睛，是看见了无法否认的证据、却无法解释的眼睛。</p>
-        <p>和他自己一模一样。</p>
-        <p>他抬起右手，掌心朝上。那道贯穿的孔洞在灯光下泛着苍白的边缘。</p>
-        <p>罗默看着那道伤，沉默很久。</p>
-        <p>然后他伸手，从文件夹最底层抽出一张照片，推到李子许面前。</p>
-        <p>照片上是罗沫的笔记本，还有她专心致志往上面写着什么的场景。</p>
-        <p>“三年了。”他说，“我们不知道接下来该怎么办。但这些东西——”</p>
-        <p>他看了一眼龙泠。龙泠点头。</p>
-        <p>“——交给你了。”</p>
-        <p>李子许久久不语。</p>
-        <p>她的父母没有沉沦三年，而是去验证她的想法。</p>
-        <p>他想起那年夏天，她第一次让他叫她“沫子”。他说太肉麻，叫不出口。她追着他打了半条街。</p>
-        <p>后来叫顺口了，就再也没改过。</p>
-        <p>沫子。我好想你。</p>
-    </div>
+    <!-- 回到顶部 -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 w-11 h-11 rounded-full bg-yuan text-white shadow-lg opacity-0 invisible transition-all duration-300 z-40">
+        <i class="fa-solid fa-chevron-up"></i>
+    </button>
 
-    <!-- 章节翻页按钮 -->
-    <div class="pager">
-        <button class="page-btn" id="prev-chapter" disabled>上一章</button>
-        <button class="page-btn" id="next-chapter">下一章</button>
-    </div>
-
-    <!-- 回到顶部按钮 -->
-    <div class="back-to-top" id="back-to-top">↑</div>
-
-    <!-- 页脚版权 -->
-    <footer>
-        © 2026.3.15 贪文笔著 
-    </footer>
-
-    <!-- 交互功能JS脚本 -->
     <script>
-        // 核心元素获取
+        const body = document.getElementById('novel-body');
         const content = document.getElementById('novel-content');
-        const fontSmBtn = document.getElementById('font-sm');
-        const fontDefaultBtn = document.getElementById('font-default');
-        const fontLgBtn = document.getElementById('font-lg');
-        const nightToggleBtn = document.getElementById('night-toggle');
-        const body = document.body;
-        const backToTopBtn = document.getElementById('back-to-top');
-        const prevChapterBtn = document.getElementById('prev-chapter');
-        const nextChapterBtn = document.getElementById('next-chapter');
+        const backToTop = document.getElementById('back-to-top');
 
-        // 1. 字体大小调整功能
-        fontSmBtn.addEventListener('click', () => {
-            content.classList.remove('font-default', 'font-lg');
-            content.classList.add('font-sm');
-        });
+        // 1. 字体大小
+        document.getElementById('font-sm').onclick = () => {
+            content.classList.remove('text-base', 'text-lg');
+            content.classList.add('text-sm');
+        };
+        document.getElementById('font-default').onclick = () => {
+            content.classList.remove('text-sm', 'text-lg');
+            content.classList.add('text-base');
+        };
+        document.getElementById('font-lg').onclick = () => {
+            content.classList.remove('text-sm', 'text-base');
+            content.classList.add('text-lg');
+        };
 
-        fontDefaultBtn.addEventListener('click', () => {
-            content.classList.remove('font-sm', 'font-lg');
-            content.classList.add('font-default');
-        });
+        // 2. 背景切换
+        document.getElementById('bg-default').onclick = () => {
+            body.className = 'font-sans bg-novel-bg text-novel-text transition-all duration-300 min-h-screen';
+        };
+        document.getElementById('bg-green').onclick = () => {
+            body.className = 'font-sans bg-novel-greenBg text-novel-text transition-all duration-300 min-h-screen';
+        };
 
-        fontLgBtn.addEventListener('click', () => {
-            content.classList.remove('font-sm', 'font-default');
-            content.classList.add('font-lg');
-        });
-
-        // 2. 夜间/日间模式切换
-        nightToggleBtn.addEventListener('click', () => {
-            body.classList.toggle('night-mode');
-            nightToggleBtn.textContent = body.classList.contains('night-mode') ? '日间模式' : '夜间模式';
-        });
-
-        // 3. 回到顶部功能
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 400) {
-                backToTopBtn.classList.add('show');
+        // 3. 夜间模式
+        document.getElementById('night-toggle').onclick = () => {
+            body.classList.toggle('dark');
+            if (body.classList.contains('dark')) {
+                body.className = 'font-sans bg-novel-nightBg text-novel-nightText transition-all duration-300 min-h-screen dark';
             } else {
-                backToTopBtn.classList.remove('show');
+                body.className = 'font-sans bg-novel-bg text-novel-text transition-all duration-300 min-h-screen';
+            }
+        };
+
+        // 4. 回到顶部
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) {
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                backToTop.classList.add('opacity-0', 'invisible');
+                backToTop.classList.remove('opacity-100', 'visible');
             }
         });
-
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // 4. 章节翻页功能（可直接替换为真实章节链接）
-        prevChapterBtn.addEventListener('click', () => {
-            alert('当前已是第一章，无上一章内容');
-        });
-
-        nextChapterBtn.addEventListener('click', () => {
-            window.location.href = 'chapter-two.html';
-            // 后续更新章节后，替换上面的alert为下方代码即可
-            // window.location.href = 'chapter2.html';
-        });
-
-        // 5. 移动端优化：禁止双击缩放
-        document.addEventListener('touchstart', function(event) {
-            if (event.touches.length > 1) {
-                event.preventDefault();
-            }
-        }, { passive: false });
-
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function(event) {
-            const now = Date.now();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, { passive: false });
+        backToTop.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
     </script>
 </body>
 </html>
