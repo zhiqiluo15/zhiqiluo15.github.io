@@ -1,1 +1,72 @@
+<div class="content-section">
 
+  <!-- ===== 第一屏：核心钩子 ===== -->
+  <div style="text-align:center; margin-bottom:3rem;">
+    <h2 style="font-size:2.5rem; color:#e0e6ff; margin-bottom:0.5rem;">
+      你以为世界由物质构成。<br>你错了。
+    </h2>
+    <p style="font-size:1.2rem; color:#a8b2d1; margin-bottom:1.5rem;">
+      世界是一张关系网络。过去从未消失，只是沉睡。
+    </p>
+    <a href="#/chapter/001" style="display:inline-block; padding:0.8rem 2rem; background:rgba(0,212,255,0.1); border:1px solid #00d4ff; border-radius:8px; color:#00d4ff; font-size:1.1rem; text-decoration:none; transition:0.3s;"
+       onmouseover="this.style.background='rgba(0,212,255,0.2)'"
+       onmouseout="this.style.background='rgba(0,212,255,0.1)'">
+      → 进入灵弦
+    </a>
+  </div>
+
+  <!-- ===== 第二屏：核心设定铁律 ===== -->
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:3rem;">
+    <div class="card" style="text-align:center;">
+      <h3 style="color:#00d4ff; margin-bottom:0.5rem;">关系先于实体</h3>
+      <p style="color:#a8b2d1; margin:0;">万物由连接定义，而非孤立的粒子。灵弦就像编织关系的丝线。</p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <h3 style="color:#ff00ff; margin-bottom:0.5rem;">痕迹永不删除</h3>
+      <p style="color:#a8b2d1; margin:0;">每一次意识震颤都在宇宙中留下刻痕。逝去之人，依旧以灵弦的形态存在。</p>
+    </div>
+  </div>
+
+  <!-- ===== 第三屏：主角钩子 ===== -->
+  <div style="text-align:center; margin-bottom:3rem;">
+    <h3 style="color:#b8c7ff;">主角 · 李子许</h3>
+    <a href="#/characters" style="color:#00d4ff;">查看人物档案 →</a>
+  </div>
+
+  <!-- ===== 第四屏：最新更新 ===== -->
+  <div class="card" style="border-color: rgba(138,43,226,0.4); text-align:center; margin-bottom:1.5rem;">
+    <p style="margin:0; color:#b8c7ff;">📢 最新更新</p>
+    <a href="#/chapter/001" style="font-size:1.2rem; font-weight:600; color:#00d4ff;">第一章 · 弦之初触</a>
+  </div>
+
+  <!-- ===== 第五屏：体系入口 ===== -->
+  <div style="text-align:center; margin-bottom:3rem;">
+    <a href="#/systems" style="display:inline-block; padding:0.6rem 1.5rem; background:rgba(138,43,226,0.1); border:1px solid #8a2be2; border-radius:8px; color:#b8c7ff; text-decoration:none; transition:0.3s;"
+       onmouseover="this.style.background='rgba(138,43,226,0.2)'"
+       onmouseout="this.style.background='rgba(138,43,226,0.1)'">
+      ⚛️ 灵弦体系
+    </a>
+  </div>
+
+  <!-- ===== 继续阅读按钮（自动从记忆生成） ===== -->
+  <div id="continue-reading" style="text-align:center;"></div>
+
+</div>
+
+<script>
+  (function() {
+    const container = document.getElementById('continue-reading');
+    if (!container) return;
+    const lastChapter = localStorage.getItem('last-chapter');
+    if (lastChapter) {
+      container.innerHTML = `
+        <a href="#${lastChapter}" 
+           style="display:inline-block; padding:0.8rem 2rem; background:rgba(255,0,255,0.1); border:1px solid #ff00ff; border-radius:8px; color:#ff00ff; font-size:1.1rem; text-decoration:none; transition:0.3s;"
+           onmouseover="this.style.background='rgba(255,0,255,0.2)'" 
+           onmouseout="this.style.background='rgba(255,0,255,0.1)'">
+          📖 继续阅读
+        </a>
+      `;
+    }
+  })();
+</script>
