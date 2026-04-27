@@ -1,757 +1,888 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>《灵弦华夏》</title>
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif;
-      background: #0a0a1a;
-      color: #e0e6ff;
-      overflow-x: hidden;
-      min-height: 100vh;
-      transition: background 0.4s, color 0.4s;
-    }
-    body.light-mode {
-      background: #f0f4ff;
-      color: #1a1a2e;
-    }
-    body.light-mode .stars {
-      background: radial-gradient(ellipse at bottom, #e2e8ff 0%, #cbd5e1 100%);
-    }
-    body.light-mode .star {
-      background: #0f172a;
-    }
-    body.light-mode .app-shell header h1 {
-      background: linear-gradient(90deg, #1e3a8a, #7e22ce, #be185d);
-      -webkit-background-clip: text;
-      background-clip: text;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《灵弦华夏》</title>
+    <style>
+        :root {
+            --bg: #0a0a1a;
+            --text: #e0e6ff;
+            --muted: #8892b0;
+            --accent: #00d4ff;
+            --accent2: #8a2be2;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(0, 212, 255, 0.2);
+            --nav-border: rgba(136, 146, 176, 0.2);
+            --btn-bg: rgba(255, 255, 255, 0.08);
+            --btn-border: rgba(255, 255, 255, 0.15);
+            --overlay-bg: rgba(0, 0, 0, 0.7);
+            --search-bg: rgba(10, 10, 26, 0.95);
+            --input-bg: rgba(255, 255, 255, 0.05);
+            --star-color: white;
+            --stars-bg: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            --title-gradient: linear-gradient(90deg, #00d4ff, #8a2be2, #ff00ff);
+        }
 
-    .stars {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-    }
-    .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      animation: twinkle 2s infinite alternate;
-    }
-    @keyframes twinkle {
-      0% { opacity: 0.3; transform: scale(0.8); }
-      100% { opacity: 1; transform: scale(1.2); }
-    }
+        body.light-mode {
+            --bg: #f0f4ff;
+            --text: #1a1a2e;
+            --muted: #5a6070;
+            --accent: #1e6fcf;
+            --accent2: #7c3aed;
+            --card-bg: rgba(0, 0, 0, 0.02);
+            --card-border: rgba(30, 111, 207, 0.25);
+            --nav-border: rgba(90, 96, 112, 0.2);
+            --btn-bg: rgba(0, 0, 0, 0.05);
+            --btn-border: rgba(0, 0, 0, 0.12);
+            --overlay-bg: rgba(240, 244, 255, 0.75);
+            --search-bg: rgba(255, 255, 255, 0.95);
+            --input-bg: rgba(0, 0, 0, 0.04);
+            --star-color: #0f172a;
+            --stars-bg: radial-gradient(ellipse at bottom, #e2e8ff 0%, #cbd5e1 100%);
+            --title-gradient: linear-gradient(90deg, #1e3a8a, #7e22ce, #be185d);
+        }
 
-    #strings {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .app-shell {
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 5vh 5% 3rem;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+        body {
+            font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: background 0.4s, color 0.4s;
+        }
 
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    h1 {
-      font-size: 3.5rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      background: linear-gradient(90deg, #00d4ff, #8a2be2, #ff00ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: 0 0 20px rgba(0,212,255,0.5);
-      animation: titleGlow 3s ease-in-out infinite alternate;
-    }
-    @keyframes titleGlow {
-      0% { text-shadow: 0 0 15px rgba(0,212,255,0.4); }
-      100% { text-shadow: 0 0 30px rgba(138,43,226,0.6); }
-    }
-    .subtitle {
-      color: #8892b0;
-      margin-top: 0.5rem;
-      font-size: 1.1rem;
-      letter-spacing: 0.05em;
-    }
+        /* 星空背景 */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--stars-bg);
+            pointer-events: none;
+        }
+        .star {
+            position: absolute;
+            background: var(--star-color);
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+        @keyframes twinkle {
+            0% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
 
-    .toolbar {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      display: flex;
-      gap: 0.8rem;
-      z-index: 10;
-    }
-    .tool-btn {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.2rem;
-      color: #8892b0;
-      transition: all 0.3s;
-      backdrop-filter: blur(8px);
-    }
-    .tool-btn:hover {
-      background: rgba(0,212,255,0.15);
-      color: #00d4ff;
-      border-color: #00d4ff;
-    }
+        /* 弦线画布 */
+        #strings {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
 
-    .search-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(8px);
-      z-index: 100;
-      display: none;
-      align-items: flex-start;
-      justify-content: center;
-      padding-top: 15vh;
-    }
-    .search-overlay.open { display: flex; }
-    .search-box {
-      background: rgba(10,10,26,0.95);
-      border: 1px solid rgba(0,212,255,0.3);
-      border-radius: 20px;
-      width: 90%;
-      max-width: 600px;
-      padding: 1.2rem;
-      box-shadow: 0 0 40px rgba(0,0,0,0.5);
-    }
-    .search-input {
-      width: 100%;
-      padding: 0.8rem 1rem;
-      border: none;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.05);
-      color: #e0e6ff;
-      font-size: 1.1rem;
-      outline: none;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .search-input:focus {
-      border-color: #00d4ff;
-    }
-    .search-results {
-      max-height: 60vh;
-      overflow-y: auto;
-      margin-top: 1rem;
-    }
-    .search-item {
-      padding: 0.6rem 0.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .search-item:hover { background: rgba(0,212,255,0.1); }
-    .search-item .item-title {
-      font-weight: 600;
-      color: #00d4ff;
-    }
-    .search-item .item-snippet {
-      font-size: 0.9rem;
-      color: #8892b0;
-    }
-    .search-close {
-      float: right;
-      background: none;
-      border: none;
-      color: #8892b0;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
+        /* 主容器 */
+        .app-shell {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4vh 5% 2.5rem;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-    nav {
-      border-top: 1px solid rgba(136,146,176,0.2);
-      border-bottom: 1px solid rgba(136,146,176,0.2);
-      padding: 1rem 0;
-      margin: 1.5rem 0;
-      text-align: center;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.8rem;
-    }
-    nav a {
-      color: #8892b0;
-      text-decoration: none;
-      font-size: 1rem;
-      transition: all 0.3s;
-      position: relative;
-      cursor: pointer;
-      padding: 0.2rem 0;
-    }
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: #00d4ff;
-      transition: width 0.3s;
-    }
-    nav a:hover, nav a.active {
-      color: #00d4ff;
-    }
-    nav a:hover::after, nav a.active::after {
-      width: 100%;
-    }
+        /* 头部 */
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            background: var(--title-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+        @keyframes titleGlow {
+            0% {
+                filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.35));
+            }
+            100% {
+                filter: drop-shadow(0 0 24px rgba(138, 43, 226, 0.5));
+            }
+        }
+        .subtitle {
+            color: var(--muted);
+            margin-top: 0.4rem;
+            font-size: 1rem;
+            letter-spacing: 0.04em;
+        }
 
-    main {
-      flex: 1;
-    }
+        /* 工具栏 */
+        .toolbar {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.6rem;
+            z-index: 10;
+        }
+        .tool-btn {
+            background: var(--btn-bg);
+            border: 1px solid var(--btn-border);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: var(--muted);
+            transition: all 0.3s;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .tool-btn:hover {
+            background: rgba(0, 212, 255, 0.12);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
 
-    .content-section h2 {
-      font-size: 2rem;
-      color: #00d4ff;
-      margin-bottom: 1rem;
-    }
-    .content-section h3 {
-      color: #b8c7ff;
-      margin: 1.5rem 0 0.5rem;
-    }
-    .content-section p {
-      line-height: 1.8;
-      color: #a8b2d1;
-      margin-bottom: 1rem;
-    }
-    .content-section a {
-      color: #00d4ff;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .content-section a:hover {
-      color: #ff00ff;
-    }
-    .card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(0,212,255,0.2);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      backdrop-filter: blur(4px);
-      transition: border-color 0.3s;
-    }
-    .card:hover {
-      border-color: rgba(0,212,255,0.5);
-    }
+        /* 导航栏 */
+        nav {
+            border-top: 1px solid var(--nav-border);
+            border-bottom: 1px solid var(--nav-border);
+            padding: 0.8rem 0;
+            margin: 1rem 0 1.5rem;
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+        }
+        nav a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            padding: 0.2rem 0;
+            position: relative;
+            white-space: nowrap;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+            border-radius: 1px;
+        }
+        nav a:hover,
+        nav a.active {
+            color: var(--accent);
+        }
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
 
-    .reading-progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 3px;
-      background: linear-gradient(90deg, #00d4ff, #8a2be2);
-      z-index: 200;
-      transition: width 0.1s linear;
-    }
+        /* 主内容 */
+        main {
+            flex: 1;
+        }
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        .content-section h3 {
+            color: #b8c7ff;
+            margin: 1.4rem 0 0.4rem;
+            font-weight: 500;
+        }
+        body.light-mode .content-section h3 {
+            color: #3a4a6e;
+        }
+        .content-section p {
+            line-height: 1.8;
+            color: #a8b2d1;
+            margin-bottom: 0.8rem;
+        }
+        body.light-mode .content-section p {
+            color: #4a5568;
+        }
+        .content-section a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .content-section a:hover {
+            color: var(--accent2);
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 1.3rem;
+            margin-bottom: 1.2rem;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            transition: border-color 0.3s;
+        }
+        .card:hover {
+            border-color: rgba(0, 212, 255, 0.45);
+        }
 
-    footer {
-      text-align: center;
-      color: #4a5568;
-      margin-top: 2rem;
-      font-size: 0.9rem;
-    }
+        /* 阅读进度条 */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #00d4ff, #8a2be2);
+            z-index: 200;
+            transition: width 0.1s linear;
+            border-radius: 0 2px 2px 0;
+        }
 
-    @media (max-width: 768px) {
-      h1 { font-size: 2.2rem; }
-      nav a { font-size: 0.9rem; }
-      .toolbar { top: 0.5rem; right: 0.5rem; gap: 0.4rem; }
-      .tool-btn { width: 36px; height: 36px; font-size: 1rem; }
-    }
-  </style>
+        /* 搜索覆盖层 */
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--overlay-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 100;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 14vh;
+        }
+        .search-overlay.open {
+            display: flex;
+        }
+        .search-box {
+            background: var(--search-bg);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 520px;
+            padding: 1rem 1.2rem;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: var(--input-bg);
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-input:focus {
+            border-color: var(--accent);
+        }
+        .search-results {
+            max-height: 55vh;
+            overflow-y: auto;
+            margin-top: 0.8rem;
+        }
+        .search-item {
+            padding: 0.5rem 0.4rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: background 0.2s;
+            border-radius: 6px;
+        }
+        .search-item:hover {
+            background: rgba(0, 212, 255, 0.08);
+        }
+        .search-item .item-title {
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.95rem;
+        }
+        .search-item .item-snippet {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.15rem;
+        }
+        .search-close {
+            float: right;
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+        .search-close:hover {
+            color: var(--accent);
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            color: #4a5568;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.03em;
+        }
+        body.light-mode footer {
+            color: #7a8599;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            nav {
+                gap: 0.7rem;
+            }
+            nav a {
+                font-size: 0.9rem;
+            }
+            .toolbar {
+                top: 0.4rem;
+                right: 0.4rem;
+                gap: 0.35rem;
+            }
+            .tool-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 1rem;
+            }
+            .app-shell {
+                padding-top: 3vh;
+            }
+            .content-section h2 {
+                font-size: 1.5rem;
+            }
+        }
+        @media (max-width: 400px) {
+            nav {
+                gap: 0.5rem;
+            }
+            nav a {
+                font-size: 0.82rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="reading-progress" id="progress-bar"></div>
-  <div class="stars" id="stars"></div>
-  <canvas id="strings"></canvas>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="progress-bar"></div>
 
-  <div class="search-overlay" id="search-overlay">
-    <div class="search-box">
-      <button class="search-close" id="search-close">&times;</button>
-      <input type="text" class="search-input" id="search-input" placeholder="搜索章节、人物、术语...">
-      <div class="search-results" id="search-results"></div>
-    </div>
-  </div>
+    <!-- 星空背景 -->
+    <div class="stars" id="stars"></div>
 
-  <div class="app-shell">
-    <header>
-      <h1>《灵弦华夏》</h1>
-      <p class="subtitle"> 作者：贪文笔</p>
-    </header>
+    <!-- 弦线粒子画布 -->
+    <canvas id="strings"></canvas>
 
-    <div class="toolbar">
-      <button class="tool-btn" id="mode-toggle" title="切换亮色/暗色模式">🌓</button>
-      <button class="tool-btn" id="search-toggle" title="搜索">🔍</button>
+    <!-- 搜索覆盖层 -->
+    <div class="search-overlay" id="search-overlay">
+        <div class="search-box">
+            <button class="search-close" id="search-close" aria-label="关闭搜索">&times;</button>
+            <input type="text" class="search-input" id="search-input" placeholder="搜索章节、人物、术语…">
+            <div class="search-results" id="search-results"></div>
+        </div>
     </div>
 
-    <!-- 导航栏：新增“继续阅读”链接 -->
-    <nav id="main-nav">
-      <a href="#/home" data-route="/home">首页</a>
-      <a id="continue-reading" style="display:none;">继续阅读</a>
-      <a href="#/chapters" data-route="/chapters">章节</a>
-      <a href="#/characters" data-route="/characters">人物</a>
-      <a href="#/world" data-route="/world">世界观</a>
-      <a href="#/systems" data-route="/systems">设定体系</a>
-      <a href="#/about" data-route="/about">关于</a>
-    </nav>
+    <!-- 主容器 -->
+    <div class="app-shell">
+        <header>
+            <h1>《灵弦华夏》</h1>
+            <p class="subtitle">作者：贪文笔</p>
+        </header>
 
-    <main id="view"></main>
+        <!-- 工具栏 -->
+        <div class="toolbar">
+            <button class="tool-btn" id="mode-toggle" title="切换亮色/暗色模式" aria-label="切换模式">🌓</button>
+            <button class="tool-btn" id="search-toggle" title="搜索" aria-label="搜索">🔍</button>
+        </div>
 
-    <!-- Giscus 评论区（放在 footer 上方，仅首页显示） -->
-    <div id="comments-section" style="text-align:left; max-width:700px; margin:2rem auto 0 auto; padding:0 5%;">
-      <h3 style="color:#b8c7ff; margin-bottom:1rem;">读者评论区</h3>
-      <div class="giscus"></div>
+        <!-- 导航栏：4个条目 -->
+        <nav id="main-nav">
+            <a data-route="/chapters">目录</a>
+            <a data-route="/chapter/001">开始阅读</a>
+            <a data-route="/world">设定</a>
+            <a id="continue-reading" data-route="/chapter/001">继续阅读</a>
+        </nav>
+
+        <!-- 内容视图 -->
+        <main id="view"></main>
+
+        <!-- 页脚 -->
+        <footer>
+            &copy; 2026/4/26 贪文笔 · 灵弦华夏
+        </footer>
     </div>
 
-    <footer>
-      &copy; 2026/4/26 贪文笔 · 灵弦华夏
-    </footer>
-  </div>
+    <script>
+        (function() {
+            // ==================== 全局配置 ====================
+            const DEFAULT_ROUTE = '/home';
+            const SEARCH_INDEX_URL = 'content/search-index.json';
+            let TOTAL_CHAPTERS = 0;
+            let currentChapterNum = null;
 
-  <script>
-    // ===================== 全局配置 =====================
-    const DEFAULT_ROUTE = '/home';
+            // 路由映射表 —— 对应 GitHub 仓库 content 目录下的文件
+            const routes = {
+                '/home': 'content/home.html',
+                '/chapters': 'content/chapters.html',
+                '/characters': 'content/characters/index.html',
+                '/world': 'content/world/index.html',
+                '/systems': 'content/world/soulstring.html',
+                '/about': 'content/about.html'
+            };
 
-    const routes = {
-      '/home': 'content/home.html',
-      '/chapters': 'content/chapters.html',
-      '/characters': 'content/characters/index.html',
-      '/world': 'content/world/index.html',
-      '/systems': 'content/world/soulstring.html',
-      '/about': 'content/about.html'
-    };
+            // ==================== DOM 引用 ====================
+            const view = document.getElementById('view');
+            const progressBar = document.getElementById('progress-bar');
+            const navLinks = document.querySelectorAll('#main-nav a');
+            const continueReadingLink = document.getElementById('continue-reading');
+            const searchOverlay = document.getElementById('search-overlay');
+            const searchToggle = document.getElementById('search-toggle');
+            const searchClose = document.getElementById('search-close');
+            const searchInput = document.getElementById('search-input');
+            const searchResults = document.getElementById('search-results');
+            const modeToggleBtn = document.getElementById('mode-toggle');
+            const starsContainer = document.getElementById('stars');
+            const canvas = document.getElementById('strings');
+            const ctx = canvas.getContext('2d');
 
-    const SEARCH_INDEX_URL = 'content/search-index.json';
-    let TOTAL_CHAPTERS = 0;
-
-    // ===================== 星空生成 =====================
-    (function generateStars() {
-      const starsContainer = document.getElementById('stars');
-      for (let i = 0; i < 500; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.width = Math.random() * 2 + 'px';
-        star.style.height = star.style.width;
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.animationDelay = Math.random() * 2 + 's';
-        starsContainer.appendChild(star);
-      }
-    })();
-
-    // ===================== 弦线粒子动画 =====================
-    (function stringAnimation() {
-      const canvas = document.getElementById('strings');
-      const ctx = canvas.getContext('2d');
-      let particles = [];
-      const mouse = { x: null, y: null, radius: 120 };
-
-      function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        initParticles();
-      }
-      function initParticles() {
-        particles = [];
-        const count = Math.min(80, Math.floor(canvas.width / 15));
-        for (let i = 0; i < count; i++) {
-          particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 0.5,
-            vy: (Math.random() - 0.5) * 0.5,
-            r: Math.random() * 1.5 + 0.5
-          });
-        }
-      }
-
-      window.addEventListener('resize', resizeCanvas);
-      resizeCanvas();
-
-      window.addEventListener('mousemove', e => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-      });
-      window.addEventListener('touchmove', e => {
-        if (e.touches.length) {
-          mouse.x = e.touches[0].clientX;
-          mouse.y = e.touches[0].clientY;
-        }
-      }, { passive: true });
-      window.addEventListener('touchend', () => {
-        mouse.x = null;
-        mouse.y = null;
-      });
-
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let p of particles) {
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(0,212,255,0.5)';
-          ctx.fill();
-
-          for (let q of particles) {
-            const dx = p.x - q.x;
-            const dy = p.y - q.y;
-            const d = Math.sqrt(dx * dx + dy * dy);
-            if (d < 100) {
-              ctx.beginPath();
-              ctx.moveTo(p.x, p.y);
-              ctx.lineTo(q.x, q.y);
-              ctx.strokeStyle = `rgba(138,43,226,${1 - d / 100})`;
-              ctx.lineWidth = 0.5;
-              ctx.stroke();
+            // ==================== 星空生成 ====================
+            function generateStars() {
+                const fragment = document.createDocumentFragment();
+                for (let i = 0; i < 400; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    const size = Math.random() * 2 + 0.5;
+                    star.style.width = size + 'px';
+                    star.style.height = size + 'px';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.animationDelay = Math.random() * 2 + 's';
+                    star.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+                    fragment.appendChild(star);
+                }
+                starsContainer.appendChild(fragment);
             }
-          }
+            generateStars();
 
-          if (mouse.x && mouse.y) {
-            const dx = p.x - mouse.x;
-            const dy = p.y - mouse.y;
-            const d = Math.sqrt(dx * dx + dy * dy);
-            if (d < mouse.radius) {
-              const force = (mouse.radius - d) / mouse.radius;
-              p.vx += (dx / d) * force * 0.5;
-              p.vy += (dy / d) * force * 0.5;
+            // ==================== 弦线粒子动画 ====================
+            let particles = [];
+            const mouse = { x: null, y: null, radius: 120 };
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                initParticles();
             }
-          }
-        }
-        requestAnimationFrame(animate);
-      }
-      animate();
-    })();
 
-    // ===================== 暗色/亮色模式 =====================
-    (function themeToggle() {
-      const btn = document.getElementById('mode-toggle');
-      const body = document.body;
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'light') {
-        body.classList.add('light-mode');
-      }
-      btn.addEventListener('click', () => {
-        body.classList.toggle('light-mode');
-        const isLight = body.classList.contains('light-mode');
-        localStorage.setItem('theme', isLight ? 'light' : 'dark');
-        btn.textContent = isLight ? '☀️' : '🌓';
-      });
-      if (body.classList.contains('light-mode')) {
-        btn.textContent = '☀️';
-      }
-    })();
-
-    // ===================== 搜索功能 =====================
-    (function searchModule() {
-      const overlay = document.getElementById('search-overlay');
-      const toggleBtn = document.getElementById('search-toggle');
-      const closeBtn = document.getElementById('search-close');
-      const input = document.getElementById('search-input';
-      const resultsDiv = document.getElementById('search-results');
-      let searchData = [];
-
-      async function loadSearchIndex() {
-        try {
-          const resp = await fetch(SEARCH_INDEX_URL);
-          if (resp.ok) {
-            searchData = await resp.json();
-          }
-        } catch (e) {}
-      }
-      loadSearchIndex();
-
-      toggleBtn.addEventListener('click', () => {
-        overlay.classList.add('open');
-        input.focus();
-      });
-      closeBtn.addEventListener('click', () => {
-        overlay.classList.remove('open');
-        input.value = '';
-        resultsDiv.innerHTML = '';
-      });
-      overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) {
-          overlay.classList.remove('open');
-          input.value = '';
-          resultsDiv.innerHTML = '';
-        }
-      });
-
-      input.addEventListener('input', () => {
-        const query = input.value.trim().toLowerCase();
-        if (!query || searchData.length === 0) {
-          resultsDiv.innerHTML = '';
-          return;
-        }
-        const filtered = searchData.filter(item =>
-          item.title.toLowerCase().includes(query) ||
-          (item.keywords && item.keywords.some(k => k.toLowerCase().includes(query))) ||
-          (item.snippet && item.snippet.toLowerCase().includes(query))
-        ).slice(0, 20);
-
-        if (filtered.length === 0) {
-          resultsDiv.innerHTML = '<p style="color:#8892b0; padding:1rem;">没有找到相关内容</p>';
-          return;
-        }
-        resultsDiv.innerHTML = filtered.map(item => `
-          <div class="search-item" data-route="${item.route}">
-            <div class="item-title">${item.type ? '[' + item.type + '] ' : ''}${item.title}</div>
-            <div class="item-snippet">${item.snippet || ''}</div>
-          </div>
-        `).join('');
-
-        document.querySelectorAll('.search-item').forEach(el => {
-          el.addEventListener('click', () => {
-            const route = el.dataset.route;
-            if (route) {
-              window.location.hash = route;
-              overlay.classList.remove('open');
-              input.value = '';
-              resultsDiv.innerHTML = '';
+            function initParticles() {
+                particles = [];
+                const count = Math.min(70, Math.floor((canvas.width * canvas.height) / 15000));
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.45,
+                        vy: (Math.random() - 0.5) * 0.45,
+                        r: Math.random() * 1.4 + 0.4
+                    });
+                }
             }
-          });
-        });
-      });
-    })();
 
-    // ===================== SPA 路由与内容加载 =====================
-    (function router() {
-      const view = document.getElementById('view');
-      const navLinks = document.querySelectorAll('#main-nav a');
-      const progressBar = document.getElementById('progress-bar');
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
 
-      async function fetchTotalChapters() {
-        try {
-          const resp = await fetch('content/chapters-index.json');
-          if (resp.ok) {
-            const data = await resp.json();
-            TOTAL_CHAPTERS = data.length;
-          }
-        } catch (e) {}
-      }
-      fetchTotalChapters();
+            window.addEventListener('mousemove', e => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+            window.addEventListener('touchmove', e => {
+                if (e.touches.length) {
+                    mouse.x = e.touches[0].clientX;
+                    mouse.y = e.touches[0].clientY;
+                }
+            }, { passive: true });
+            window.addEventListener('touchend', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
 
-      function generateChapterNav(currentNum) {
-        const prev = currentNum - 1;
-        const next = currentNum + 1;
-        let html = '<div style="display:flex; justify-content:space-between; margin-top:2rem; padding-top:1rem; border-top:1px solid rgba(136,146,176,0.2);">';
-        if (prev > 0) {
-          html += `<a href="#/chapter/${String(prev).padStart(3,'0')}" style="color:#00d4ff;">← 上一章</a>`;
-        } else {
-          html += '<span></span>';
-        }
-        html += '<a href="#/chapters" style="color:#00d4ff;">📖 目录</a>';
-        if (next <= TOTAL_CHAPTERS) {
-          html += `<a href="#/chapter/${String(next).padStart(3,'0')}" style="color:#00d4ff;">下一章 →</a>`;
-        } else {
-          html += '<span></span>';
-        }
-        html += '</div>';
-        return html;
-      }
+            function animateStrings() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-      // 新增：更新“继续阅读”链接
-      function updateContinueReadingLink() {
-        const lastRoute = localStorage.getItem('last-chapter');
-        const link = document.getElementById('continue-reading');
-        if (lastRoute && link) {
-          link.href = '#' + lastRoute;
-          link.style.display = 'inline';
-        }
-      }
+                    // 绘制粒子
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(0,212,255,0.45)';
+                    ctx.fill();
 
-      // 新增：键盘翻页状态
-      let currentChapterNum = null;
-      document.addEventListener('keydown', function(e) {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-        if (currentChapterNum === null) return;
-        if (e.key === 'ArrowLeft' && currentChapterNum > 1) {
-          window.location.hash = `#/chapter/${String(currentChapterNum - 1).padStart(3, '0')}`;
-        } else if (e.key === 'ArrowRight' && currentChapterNum < TOTAL_CHAPTERS) {
-          window.location.hash = `#/chapter/${String(currentChapterNum + 1).padStart(3, '0')}`;
-        }
-      });
+                    // 粒子间连线
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const q = particles[j];
+                        const dx = p.x - q.x;
+                        const dy = p.y - q.y;
+                        const d = Math.sqrt(dx * dx + dy * dy);
+                        if (d < 100) {
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(q.x, q.y);
+                            ctx.strokeStyle = `rgba(138,43,226,${(1 - d / 100) * 0.6})`;
+                            ctx.lineWidth = 0.4;
+                            ctx.stroke();
+                        }
+                    }
 
-      async function loadPage(route) {
-        let file = routes[route];
-
-        if (!file) {
-          if (route.startsWith('/chapter/')) {
-            const slug = route.split('/chapter/')[1];
-            file = `content/chapters/chapter-${slug}.html`;
-          } else if (route.startsWith('/character/')) {
-            const slug = route.split('/character/')[1];
-            file = `content/characters/${slug}.html`;
-          } else if (route.startsWith('/world/')) {
-            const slug = route.replace('/world/', '');
-            file = `content/world/${slug}.html`;
-          }
-        }
-
-        if (!file) {
-          file = routes[DEFAULT_ROUTE];
-          route = DEFAULT_ROUTE;
-        }
-
-        try {
-          const resp = await fetch(file);
-          if (!resp.ok) throw new Error('Not found');
-          const html = await resp.text();
-          view.innerHTML = html;
-
-          const chapterMatch = route.match(/^\/chapter\/(\d+)$/);
-          if (chapterMatch) {
-            const num = parseInt(chapterMatch[1], 10);
-            currentChapterNum = num;   // 新增：记录当前章节号
-            const navHTML = generateChapterNav(num);
-            view.insertAdjacentHTML('beforeend', navHTML);
-
-            localStorage.setItem('last-chapter', route);
-            const savedScroll = localStorage.getItem(`scroll-${route}`);
-            if (savedScroll) {
-              window.scrollTo(0, parseInt(savedScroll, 10));
-            } else {
-              window.scrollTo(0, 0);
+                    // 鼠标交互
+                    if (mouse.x !== null && mouse.y !== null) {
+                        const dx = p.x - mouse.x;
+                        const dy = p.y - mouse.y;
+                        const d = Math.sqrt(dx * dx + dy * dy);
+                        if (d < mouse.radius) {
+                            const force = (mouse.radius - d) / mouse.radius;
+                            p.vx += (dx / d) * force * 0.4;
+                            p.vy += (dy / d) * force * 0.4;
+                        }
+                    }
+                }
+                requestAnimationFrame(animateStrings);
             }
-          } else {
-            window.scrollTo(0, 0);
-          }
+            animateStrings();
 
-          const scripts = view.querySelectorAll('script');
-          scripts.forEach(s => {
-            const newScript = document.createElement('script');
-            newScript.textContent = s.textContent;
-            document.body.appendChild(newScript).remove();
-          });
+            // ==================== 暗色/亮色模式 ====================
+            function initTheme() {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'light') {
+                    document.body.classList.add('light-mode');
+                    modeToggleBtn.textContent = '☀️';
+                } else {
+                    modeToggleBtn.textContent = '🌓';
+                }
+            }
+            initTheme();
 
-          progressBar.style.width = '0%';
-        } catch (err) {
-          view.innerHTML = `
-            <div class="content-section">
-              <h2>页面未找到</h2>
-              <p>这个页面可能尚未创建，或者地址有误。</p>
-              <a href="#/home">返回首页</a>
-            </div>`;
-        }
+            modeToggleBtn.addEventListener('click', () => {
+                document.body.classList.toggle('light-mode');
+                const isLight = document.body.classList.contains('light-mode');
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                modeToggleBtn.textContent = isLight ? '☀️' : '🌓';
+            });
 
-        // 更新导航激活状态
-        navLinks.forEach(a => {
-          const href = a.getAttribute('data-route');
-          a.classList.toggle('active', href === route);
-        });
+            // ==================== 搜索功能 ====================
+            let searchData = [];
 
-        // 新增：每次加载页面后刷新“继续阅读”链接
-        updateContinueReadingLink();
-      }
+            async function loadSearchIndex() {
+                try {
+                    const resp = await fetch(SEARCH_INDEX_URL);
+                    if (resp.ok) {
+                        searchData = await resp.json();
+                    }
+                } catch (e) {
+                    // 搜索索引加载失败时静默处理
+                }
+            }
+            loadSearchIndex();
 
-      function onHashChange() {
-        let hash = window.location.hash.slice(1);
-        if (!hash) hash = DEFAULT_ROUTE;
-        loadPage(hash);
-      }
+            function openSearch() {
+                searchOverlay.classList.add('open');
+                searchInput.focus();
+            }
 
-      window.addEventListener('hashchange', onHashChange);
+            function closeSearch() {
+                searchOverlay.classList.remove('open');
+                searchInput.value = '';
+                searchResults.innerHTML = '';
+            }
 
-      navLinks.forEach(a => {
-        a.addEventListener('click', (e) => {
-          e.preventDefault();
-          const route = a.getAttribute('data-route');
-          window.location.hash = route;
-        });
-      });
+            searchToggle.addEventListener('click', openSearch);
+            searchClose.addEventListener('click', closeSearch);
+            searchOverlay.addEventListener('click', (e) => {
+                if (e.target === searchOverlay) closeSearch();
+            });
 
-      window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        if (docHeight > 0) {
-          const progress = (scrollTop / docHeight) * 100;
-          progressBar.style.width = progress + '%';
-        }
-        const currentRoute = window.location.hash.slice(1) || DEFAULT_ROUTE;
-        localStorage.setItem(`scroll-${currentRoute}`, scrollTop);
-      });
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.trim().toLowerCase();
+                if (!query || searchData.length === 0) {
+                    searchResults.innerHTML = '';
+                    return;
+                }
+                const filtered = searchData.filter(item =>
+                    item.title.toLowerCase().includes(query) ||
+                    (item.keywords && item.keywords.some(k => k.toLowerCase().includes(query))) ||
+                    (item.snippet && item.snippet.toLowerCase().includes(query))
+                ).slice(0, 20);
 
-      onHashChange();
-    })();
+                if (filtered.length === 0) {
+                    searchResults.innerHTML =
+                    '<p style="color:var(--muted); padding:0.8rem; font-size:0.9rem;">没有找到相关内容</p>';
+                    return;
+                }
+                searchResults.innerHTML = filtered.map(item => `
+                    <div class="search-item" data-route="${item.route}">
+                        <div class="item-title">${item.type ? '[' + item.type + '] ' : ''}${item.title}</div>
+                        <div class="item-snippet">${item.snippet || ''}</div>
+                    </div>
+                `).join('');
 
-    // ===================== Giscus 评论区加载 =====================
-    (function loadGiscus() {
-      // 只在首页显示评论区
-      function checkRouteAndToggle() {
-        const hash = window.location.hash.slice(1) || '/home';
-        const commentsSection = document.getElementById('comments-section');
-        if (commentsSection) {
-          commentsSection.style.display = (hash === '/home') ? 'block' : 'none';
-        }
-      }
+                // 绑定搜索结果点击
+                searchResults.querySelectorAll('.search-item').forEach(el => {
+                    el.addEventListener('click', () => {
+                        const route = el.dataset.route;
+                        if (route) {
+                            window.location.hash = route;
+                            closeSearch();
+                        }
+                    });
+                });
+            });
 
-      // 监听路由变化
-      window.addEventListener('hashchange', checkRouteAndToggle);
-      checkRouteAndToggle();
+            // ESC 关闭搜索
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && searchOverlay.classList.contains('open')) {
+                    closeSearch();
+                }
+            });
 
-      // 动态加载 Giscus 脚本
-      if (!document.querySelector('.giscus iframe')) {
-        const giscusScript = document.createElement('script');
-        giscusScript.src = 'https://giscus.app/client.js';
-        giscusScript.setAttribute('data-repo', 'zhiqiluo15/zhiqiluo15.github.io');
-        giscusScript.setAttribute('data-repo-id', 'R_kgDORlI47Q');
-        giscusScript.setAttribute('data-category', 'General');
-        giscusScript.setAttribute('data-category-id', 'DIC_kwDORlI47c4C7uCH');
-        giscusScript.setAttribute('data-mapping', 'pathname');
-        giscusScript.setAttribute('data-strict', '0');
-        giscusScript.setAttribute('data-reactions-enabled', '1');
-        giscusScript.setAttribute('data-emit-metadata', '0');
-        giscusScript.setAttribute('data-input-position', 'top');
-        giscusScript.setAttribute('data-theme', 'preferred_color_scheme');
-        giscusScript.setAttribute('data-lang', 'zh-CN');
-        giscusScript.setAttribute('crossorigin', 'anonymous');
-        giscusScript.async = true;
+            // ==================== 获取章节总数 ====================
+            async function fetchTotalChapters() {
+                try {
+                    const resp = await fetch('content/chapters-index.json');
+                    if (resp.ok) {
+                        const data = await resp.json();
+                        TOTAL_CHAPTERS = data.length;
+                    }
+                } catch (e) {
+                    // 静默处理
+                }
+            }
+            fetchTotalChapters();
 
-        const container = document.querySelector('#comments-section .giscus');
-        if (container) {
-          container.appendChild(giscusScript);
-        }
-      }
-    })();
-  </script>
+            // ==================== 章节导航 HTML ====================
+            function generateChapterNav(currentNum) {
+                const prev = currentNum - 1;
+                const next = currentNum + 1;
+                let html =
+                    '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:2rem; padding-top:1rem; border-top:1px solid var(--nav-border); flex-wrap:wrap; gap:0.5rem;">';
+                if (prev > 0) {
+                    html +=
+                        `<a href="#/chapter/${String(prev).padStart(3,'0')}" style="color:var(--accent); text-decoration:none;">← 上一章</a>`;
+                } else {
+                    html += '<span></span>';
+                }
+                html +=
+                    '<a href="#/chapters" style="color:var(--accent); text-decoration:none; font-weight:500;">📖 目录</a>';
+                if (next <= TOTAL_CHAPTERS) {
+                    html +=
+                        `<a href="#/chapter/${String(next).padStart(3,'0')}" style="color:var(--accent); text-decoration:none;">下一章 →</a>`;
+                } else {
+                    html += '<span></span>';
+                }
+                html += '</div>';
+                return html;
+            }
+
+            // ==================== 更新"继续阅读"链接 ====================
+            function updateContinueReadingLink() {
+                const lastRoute = localStorage.getItem('last-chapter');
+                if (lastRoute && continueReadingLink) {
+                    continueReadingLink.href = '#' + lastRoute;
+                    continueReadingLink.dataset.route = lastRoute;
+                    continueReadingLink.style.display = '';
+                    continueReadingLink.textContent = '继续阅读';
+                } else if (continueReadingLink) {
+                    // 无记录时指向第一章
+                    continueReadingLink.href = '#/chapter/001';
+                    continueReadingLink.dataset.route = '/chapter/001';
+                    continueReadingLink.style.display = '';
+                    continueReadingLink.textContent = '继续阅读';
+                }
+            }
+
+            // ==================== 键盘翻页 ====================
+            document.addEventListener('keydown', function(e) {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+                if (searchOverlay.classList.contains('open')) return;
+                if (currentChapterNum === null) return;
+                if (e.key === 'ArrowLeft' && currentChapterNum > 1) {
+                    window.location.hash = `#/chapter/${String(currentChapterNum - 1).padStart(3,'0')}`;
+                } else if (e.key === 'ArrowRight' && currentChapterNum < TOTAL_CHAPTERS) {
+                    window.location.hash = `#/chapter/${String(currentChapterNum + 1).padStart(3,'0')}`;
+                }
+            });
+
+            // ==================== SPA 路由与内容加载 ====================
+            async function loadPage(route) {
+                let file = routes[route];
+
+                // 动态路由：章节页
+                if (!file && route.startsWith('/chapter/')) {
+                    const slug = route.split('/chapter/')[1];
+                    file = `content/chapters/chapter-${slug}.html`;
+                }
+                // 动态路由：人物页
+                if (!file && route.startsWith('/character/')) {
+                    const slug = route.split('/character/')[1];
+                    file = `content/characters/${slug}.html`;
+                }
+                // 动态路由：世界观子页
+                if (!file && route.startsWith('/world/')) {
+                    const slug = route.replace('/world/', '');
+                    file = `content/world/${slug}.html`;
+                }
+
+                // 回退到默认路由
+                if (!file) {
+                    file = routes[DEFAULT_ROUTE];
+                    route = DEFAULT_ROUTE;
+                }
+
+                try {
+                    const resp = await fetch(file);
+                    if (!resp.ok) throw new Error('Not found');
+                    const html = await resp.text();
+                    view.innerHTML = html;
+
+                    // 判断是否为章节页面
+                    const chapterMatch = route.match(/^\/chapter\/(\d+)$/);
+                    if (chapterMatch) {
+                        const num = parseInt(chapterMatch[1], 10);
+                        currentChapterNum = num;
+                        const navHTML = generateChapterNav(num);
+                        view.insertAdjacentHTML('beforeend', navHTML);
+
+                        // 保存阅读进度
+                        localStorage.setItem('last-chapter', route);
+                        const savedScroll = localStorage.getItem(`scroll-${route}`);
+                        if (savedScroll) {
+                            window.scrollTo(0, parseInt(savedScroll, 10));
+                        } else {
+                            window.scrollTo(0, 0);
+                        }
+                    } else {
+                        currentChapterNum = null;
+                        window.scrollTo(0, 0);
+                    }
+
+                    // 执行内容中内嵌的脚本
+                    const scripts = view.querySelectorAll('script');
+                    scripts.forEach(s => {
+                        const newScript = document.createElement('script');
+                        newScript.textContent = s.textContent;
+                        document.body.appendChild(newScript).remove();
+                    });
+
+                    // 重置进度条
+                    progressBar.style.width = '0%';
+                } catch (err) {
+                    view.innerHTML = `
+                        <div class="content-section" style="text-align:center; padding:3rem 0;">
+                            <h2>页面未找到</h2>
+                            <p>这个页面可能尚未创建，或者地址有误。</p>
+                            <a href="#/home">返回首页</a>
+                        </div>`;
+                    currentChapterNum = null;
+                }
+
+                // 更新导航激活状态
+                navLinks.forEach(a => {
+                    const hrefRoute = a.dataset.route;
+                    if (hrefRoute && a.id !== 'continue-reading') {
+                        a.classList.toggle('active', hrefRoute === route);
+                    }
+                });
+                // "继续阅读"特殊处理
+                if (continueReadingLink) {
+                    const continueRoute = continueReadingLink.dataset.route;
+                    continueReadingLink.classList.toggle('active', continueRoute === route);
+                }
+
+                // 刷新"继续阅读"链接
+                updateContinueReadingLink();
+            }
+
+            function onHashChange() {
+                let hash = window.location.hash.slice(1);
+                if (!hash) hash = DEFAULT_ROUTE;
+                loadPage(hash);
+            }
+
+            window.addEventListener('hashchange', onHashChange);
+
+            // 导航链接点击事件
+            navLinks.forEach(a => {
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const route = a.dataset.route;
+                    if (route) {
+                        window.location.hash = route;
+                    }
+                });
+            });
+
+            // 滚动进度条 & 滚动位置记忆
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                if (docHeight > 0) {
+                    const progress = Math.min((scrollTop / docHeight) * 100, 100);
+                    progressBar.style.width = progress + '%';
+                }
+                const currentRoute = window.location.hash.slice(1) || DEFAULT_ROUTE;
+                localStorage.setItem(`scroll-${currentRoute}`, scrollTop);
+            });
+
+            // ==================== 初始加载 ====================
+            updateContinueReadingLink();
+            onHashChange();
+        })();
+    </script>
 </body>
 </html>
