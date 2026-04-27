@@ -1,36 +1,34 @@
+<div class="content-section" style="text-align:center;">
+  <h2 style="font-size:2.5rem; color:#00d4ff; margin-bottom:0.5rem;">欢迎来到灵弦华夏</h2>
+  <p class="subtitle" style="color:#8892b0; margin-bottom:1.5rem;">作者：贪文笔</p>
+  <p style="color:#a8b2d1; margin-bottom:2rem; line-height:1.8; font-size:1.1rem;">
+    世界是一张关系网络。<br>过去从未消失，只是沉睡。
+  </p>
+
+  <!-- 阅读入口卡片 -->
+  <div class="card" style="max-width:500px; margin:0 auto 2rem auto; text-align:center;">
+    <div style="display:flex; flex-direction:column; gap:1rem;">
+      <a href="#/chapter/001" class="tool-btn" style="width:auto; border-radius:8px; padding:0.8rem 1.5rem; text-decoration:none; font-size:1.2rem; display:block;">
+        📖 开始阅读
+      </a>
+      <a id="continue-reading-btn" style="display:none; width:auto; border-radius:8px; padding:0.8rem 1.5rem; text-decoration:none; font-size:1.2rem; background:rgba(0,212,255,0.15); color:#00d4ff; border:1px solid #00d4ff;" href="#">
+        ▶ 继续阅读
+      </a>
+      <a href="#/chapters" class="tool-btn" style="width:auto; border-radius:8px; padding:0.8rem 1.5rem; text-decoration:none; font-size:1.1rem; display:block;">
+        📋 章节目录
+      </a>
+    </div>
+  </div>
+</div>
+
 <script>
-  // 等待页面DOM完全加载后再执行（修复加载时机）
-  document.addEventListener('DOMContentLoaded', function() {
-    // 1. 动态设置“继续阅读”按钮
+  // 动态设置“继续阅读”按钮（直接执行，不需要 DOMContentLoaded）
+  (function() {
     const lastRoute = localStorage.getItem('last-chapter');
     const btn = document.getElementById('continue-reading-btn');
     if (lastRoute && btn) {
       btn.href = '#' + lastRoute;
       btn.style.display = 'block';
     }
-
-    // 2. 动态加载 Giscus（修复版）
-    if (document.querySelector('.giscus iframe')) return;
-
-    const giscusScript = document.createElement('script');
-    giscusScript.src = 'https://giscus.app/client.js';
-    giscusScript.setAttribute('data-repo', 'zhiqiluo15/zhiqiluo15.github.io');
-    giscusScript.setAttribute('data-repo-id', 'R_kgDORlI47Q');
-    giscusScript.setAttribute('data-category', 'General');
-    giscusScript.setAttribute('data-category-id', 'DIC_kwDORlI47c4C7uCH');
-    giscusScript.setAttribute('data-mapping', 'pathname');
-    giscusScript.setAttribute('data-strict', '0');
-    giscusScript.setAttribute('data-reactions-enabled', '1');
-    giscusScript.setAttribute('data-emit-metadata', '0');
-    giscusScript.setAttribute('data-input-position', 'top');
-    giscusScript.setAttribute('data-theme', 'preferred_color_scheme');
-    giscusScript.setAttribute('data-lang', 'zh-CN');
-    giscusScript.setAttribute('crossorigin', 'anonymous');
-    giscusScript.async = true;
-
-    const container = document.querySelector('#comments-section .giscus');
-    if (container) {
-      container.appendChild(giscusScript);
-    }
-  });
+  })();
 </script>
