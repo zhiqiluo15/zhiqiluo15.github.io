@@ -16,9 +16,6 @@
             --nav-border: rgba(136, 146, 176, 0.2);
             --btn-bg: rgba(255, 255, 255, 0.08);
             --btn-border: rgba(255, 255, 255, 0.15);
-            --overlay-bg: rgba(0, 0, 0, 0.7);
-            --search-bg: rgba(10, 10, 26, 0.95);
-            --input-bg: rgba(255, 255, 255, 0.05);
             --star-color: white;
             --stars-bg: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
             --title-gradient: linear-gradient(90deg, #00d4ff, #8a2be2, #ff00ff);
@@ -35,462 +32,264 @@
             --nav-border: rgba(90, 96, 112, 0.2);
             --btn-bg: rgba(0, 0, 0, 0.05);
             --btn-border: rgba(0, 0, 0, 0.12);
-            --overlay-bg: rgba(240, 244, 255, 0.75);
-            --search-bg: rgba(255, 255, 255, 0.95);
-            --input-bg: rgba(0, 0, 0, 0.04);
             --star-color: #0f172a;
             --stars-bg: radial-gradient(ellipse at bottom, #e2e8ff 0%, #cbd5e1 100%);
             --title-gradient: linear-gradient(90deg, #1e3a8a, #7e22ce, #be185d);
         }
 
+        /* ==================== 【已修复】完整全局样式重置 ==================== */
+        /* 清除所有浏览器默认样式，彻底解决后续拓展样式偏差问题 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center, dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+            text-decoration: none;
+            list-style: none;
+        }
+        button, input, select, textarea {
+            font-family: inherit;
+            font-size: inherit;
+            background: transparent;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+        /* ====================================================================== */
 
         body {
-            font-family: 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+            font-family: 'Noto Sans SC', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background: var(--bg);
             color: var(--text);
             overflow-x: hidden;
             min-height: 100vh;
             transition: background 0.4s, color 0.4s;
+            line-height: 1;
         }
 
         /* 星空背景 */
         .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: var(--stars-bg);
-            pointer-events: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background: var(--stars-bg); pointer-events: none;
         }
         .star {
-            position: absolute;
-            background: var(--star-color);
-            border-radius: 50%;
+            position: absolute; background: var(--star-color); border-radius: 50%;
             animation: twinkle 2s infinite alternate;
         }
         @keyframes twinkle {
-            0% {
-                opacity: 0.3;
-                transform: scale(0.8);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1.2);
-            }
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* 弦线画布 */
+        /* 弦线粒子画布 */
         #strings {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
         }
 
         /* 主容器 */
         .app-shell {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-            margin: 0 auto;
+            position: relative; z-index: 1;
+            max-width: 900px; margin: 0 auto;
             padding: 4vh 5% 2.5rem;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            display: flex; flex-direction: column; min-height: 100vh;
         }
 
         /* 头部 */
-        header {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
+        header { text-align: center; margin-bottom: 1.5rem; }
         h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            letter-spacing: 0.04em;
+            font-size: 2.8rem; font-weight: 700; letter-spacing: 0.04em;
             background: var(--title-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: titleGlow 3s ease-in-out infinite alternate;
         }
         @keyframes titleGlow {
-            0% {
-                filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.35));
-            }
-            100% {
-                filter: drop-shadow(0 0 24px rgba(138, 43, 226, 0.5));
-            }
+            0% { filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.35)); }
+            100% { filter: drop-shadow(0 0 24px rgba(138, 43, 226, 0.5)); }
         }
-        .subtitle {
-            color: var(--muted);
-            margin-top: 0.4rem;
-            font-size: 1rem;
-            letter-spacing: 0.04em;
-        }
+        .subtitle { color: var(--muted); margin-top: 0.4rem; font-size: 1rem; letter-spacing: 0.04em; }
 
         /* 工具栏 */
         .toolbar {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            display: flex;
-            gap: 0.6rem;
-            z-index: 10;
+            position: absolute; top: 1rem; right: 1rem;
+            display: flex; gap: 0.6rem; z-index: 10;
         }
         .tool-btn {
-            background: var(--btn-bg);
-            border: 1px solid var(--btn-border);
-            border-radius: 50%;
-            width: 38px;
-            height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.1rem;
-            color: var(--muted);
-            transition: all 0.3s;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: var(--btn-bg); border: 1px solid var(--btn-border);
+            border-radius: 50%; width: 38px; height: 38px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.1rem; color: var(--muted);
+            transition: all 0.3s; backdrop-filter: blur(8px);
         }
         .tool-btn:hover {
             background: rgba(0, 212, 255, 0.12);
-            color: var(--accent);
-            border-color: var(--accent);
+            color: var(--accent); border-color: var(--accent);
         }
 
-        /* 导航栏 */
+        /* ==================== 【升级】超级拓展版导航栏 ==================== */
+        /* 🔥 拓展说明：全维度预留拓展位，支持 内部页面 / 外部链接 / 互动功能
+           分类：1.核心内容页 2.作品拓展页 3.互动功能页 4.外部链接
+           使用规则：
+           1. 内部页面：href="文件名.html" → 新建对应html文件即可
+           2. 外部链接：href="完整网址" ，添加 target="_blank" 新窗口打开
+           3. 高亮当前页：给a标签添加 class="active"
+           4. 不需要的链接直接删除，无需修改样式
+        */
         nav {
             border-top: 1px solid var(--nav-border);
             border-bottom: 1px solid var(--nav-border);
-            padding: 0.8rem 0;
-            margin: 1rem 0 1.5rem;
-            text-align: center;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.2rem;
+            padding: 0.8rem 0; margin: 1rem 0 1.5rem;
+            text-align: center; display: flex; flex-wrap: wrap;
+            justify-content: center; gap: 1.2rem;
         }
         nav a {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 1rem;
-            transition: all 0.3s;
-            cursor: pointer;
-            padding: 0.2rem 0;
-            position: relative;
-            white-space: nowrap;
+            color: var(--muted); text-decoration: none; font-size: 1rem;
+            transition: all 0.3s; padding: 0.2rem 0; position: relative;
         }
         nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s;
-            border-radius: 1px;
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 2px; background: var(--accent);
+            transition: width 0.3s; border-radius: 1px;
         }
-        nav a:hover,
-        nav a.active {
-            color: var(--accent);
-        }
-        nav a:hover::after,
-        nav a.active::after {
-            width: 100%;
-        }
+        nav a:hover, nav a.active { color: var(--accent); }
+        nav a:hover::after, nav a.active::after { width: 100%; }
+        /* ====================================================================== */
 
         /* 主内容 */
-        main {
-            flex: 1;
-        }
+        main { flex: 1; }
         .content-section h2 {
-            font-size: 1.8rem;
-            color: var(--accent);
-            margin-bottom: 0.8rem;
-            font-weight: 600;
+            font-size: 1.8rem; color: var(--accent);
+            margin-bottom: 0.8rem; font-weight: 600;
         }
         .content-section h3 {
-            color: #b8c7ff;
-            margin: 1.4rem 0 0.4rem;
-            font-weight: 500;
+            color: #b8c7ff; margin: 1.4rem 0 0.4rem; font-weight: 500;
         }
-        body.light-mode .content-section h3 {
-            color: #3a4a6e;
-        }
+        body.light-mode .content-section h3 { color: #3a4a6e; }
         .content-section p {
-            line-height: 1.8;
-            color: #a8b2d1;
-            margin-bottom: 0.8rem;
+            line-height: 1.8; color: #a8b2d1; margin-bottom: 0.8rem;
         }
-        body.light-mode .content-section p {
-            color: #4a5568;
-        }
-        .content-section a {
-            color: var(--accent);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        .content-section a:hover {
-            color: var(--accent2);
-        }
+        body.light-mode .content-section p { color: #4a5568; }
+        .content-section a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+        .content-section a:hover { color: var(--accent2); }
         .card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 10px;
-            padding: 1.3rem;
-            margin-bottom: 1.2rem;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            transition: border-color 0.3s;
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 10px; padding: 1.3rem; margin-bottom: 1.2rem;
+            backdrop-filter: blur(4px); transition: border-color 0.3s;
         }
-        .card:hover {
-            border-color: rgba(0, 212, 255, 0.45);
-        }
-
-        /* 阅读进度条 */
-        .reading-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, #00d4ff, #8a2be2);
-            z-index: 200;
-            transition: width 0.1s linear;
-            border-radius: 0 2px 2px 0;
-        }
-
-        /* 搜索覆盖层 */
-        .search-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--overlay-bg);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 100;
-            display: none;
-            align-items: flex-start;
-            justify-content: center;
-            padding-top: 14vh;
-        }
-        .search-overlay.open {
-            display: flex;
-        }
-        .search-box {
-            background: var(--search-bg);
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 16px;
-            width: 90%;
-            max-width: 520px;
-            padding: 1rem 1.2rem;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
-        }
-        .search-input {
-            width: 100%;
-            padding: 0.7rem 0.9rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            background: var(--input-bg);
-            color: var(--text);
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        .search-input:focus {
-            border-color: var(--accent);
-        }
-        .search-results {
-            max-height: 55vh;
-            overflow-y: auto;
-            margin-top: 0.8rem;
-        }
-        .search-item {
-            padding: 0.5rem 0.4rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            cursor: pointer;
-            transition: background 0.2s;
-            border-radius: 6px;
-        }
-        .search-item:hover {
-            background: rgba(0, 212, 255, 0.08);
-        }
-        .search-item .item-title {
-            font-weight: 600;
-            color: var(--accent);
-            font-size: 0.95rem;
-        }
-        .search-item .item-snippet {
-            font-size: 0.85rem;
-            color: var(--muted);
-            margin-top: 0.15rem;
-        }
-        .search-close {
-            float: right;
-            background: none;
-            border: none;
-            color: var(--muted);
-            font-size: 1.4rem;
-            cursor: pointer;
-            transition: color 0.2s;
-            line-height: 1;
-        }
-        .search-close:hover {
-            color: var(--accent);
-        }
+        .card:hover { border-color: rgba(0, 212, 255, 0.45); }
+        .card ul { margin-left: 1.5rem; margin-top: 0.5rem; }
+        .card li { margin-bottom: 0.3rem; color: #a8b2d1; }
+        body.light-mode .card li { color: #4a5568; }
 
         /* 页脚 */
         footer {
-            text-align: center;
-            color: #4a5568;
-            margin-top: 2rem;
-            font-size: 0.85rem;
-            letter-spacing: 0.03em;
+            text-align: center; color: #4a5568;
+            margin-top: 2rem; font-size: 0.85rem; letter-spacing: 0.03em;
         }
-        body.light-mode footer {
-            color: #7a8599;
-        }
+        body.light-mode footer { color: #7a8599; }
 
         /* 响应式 */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            nav {
-                gap: 0.7rem;
-            }
-            nav a {
-                font-size: 0.9rem;
-            }
-            .toolbar {
-                top: 0.4rem;
-                right: 0.4rem;
-                gap: 0.35rem;
-            }
-            .tool-btn {
-                width: 34px;
-                height: 34px;
-                font-size: 1rem;
-            }
-            .app-shell {
-                padding-top: 3vh;
-            }
-            .content-section h2 {
-                font-size: 1.5rem;
-            }
-        }
-        @media (max-width: 400px) {
-            nav {
-                gap: 0.5rem;
-            }
-            nav a {
-                font-size: 0.82rem;
-            }
-            h1 {
-                font-size: 1.6rem;
-            }
+            h1 { font-size: 2rem; }
+            nav { gap: 0.7rem; }
+            .toolbar { top: 0.4rem; right: 0.4rem; }
+            .tool-btn { width: 34px; height: 34px; font-size: 1rem; }
+            .content-section h2 { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
-    <!-- 阅读进度条 -->
-    <div class="reading-progress" id="progress-bar"></div>
-
-    <!-- 星空背景 -->
+    <!-- 星空背景层 -->
     <div class="stars" id="stars"></div>
-
-    <!-- 弦线粒子画布 -->
+    <!-- 弦线粒子画布层 -->
     <canvas id="strings"></canvas>
 
-    <!-- 搜索覆盖层 -->
-    <div class="search-overlay" id="search-overlay">
-        <div class="search-box">
-            <button class="search-close" id="search-close" aria-label="关闭搜索">&times;</button>
-            <input type="text" class="search-input" id="search-input" placeholder="搜索章节、人物、术语…">
-            <div class="search-results" id="search-results"></div>
-        </div>
-    </div>
-
-    <!-- 主容器 -->
     <div class="app-shell">
         <header>
             <h1>《灵弦华夏》</h1>
             <p class="subtitle">作者：贪文笔</p>
         </header>
 
-        <!-- 工具栏 -->
+        <!-- 右上角工具栏（模式切换） -->
         <div class="toolbar">
-            <button class="tool-btn" id="mode-toggle" title="切换亮色/暗色模式" aria-label="切换模式">🌓</button>
-            <button class="tool-btn" id="search-toggle" title="搜索" aria-label="搜索">🔍</button>
+            <button class="tool-btn" id="mode-toggle" title="切换亮色/暗色模式">🌓</button>
         </div>
 
-        <!-- 导航栏：4个条目 -->
-        <nav id="main-nav">
-            <a data-route="/chapters">目录</a>
-            <a data-route="/chapter/001">开始阅读</a>
-            <a data-route="/world">设定</a>
-            <a id="continue-reading" data-route="/chapter/001">继续阅读</a>
+        <!-- ==================== 【终极拓展】导航栏（全品类预留位） ==================== -->
+        <nav>
+            <!-- 🔴 1. 核心页面（必选，网站基础） -->
+            <a href="index.html" class="active">首页</a>
+
+            <!-- 🟢 2. 作品内容页（小说核心拓展） -->
+            <!-- <a href="chapters.html">章节目录</a> -->
+            <!-- <a href="world.html">世界观设定</a> -->
+            <!-- <a href="characters.html">人物图鉴</a> -->
+            <!-- <a href="extra.html">番外合集</a> -->
+
+            <!-- 🟡 3. 作者/互动页（社区功能拓展） -->
+            <!-- <a href="about.html">关于作者</a> -->
+            <!-- <a href="comment.html">留言评论</a> -->
+            <!-- <a href="update.html">更新日志</a> -->
+
+            <!-- 🟣 4. 外部链接（第三方平台拓展，如GitHub、微博、知乎等） -->
+            <!-- <a href="https://github.com/你的ID" target="_blank">GitHub</a> -->
+            <!-- <a href="https://weibo.com/" target="_blank">微博</a> -->
+            <!-- <a href="https://www.zhihu.com/" target="_blank">知乎</a> -->
         </nav>
+        <!-- ====================================================================== -->
 
-        <!-- 内容视图 -->
-        <main id="view"></main>
+        <main>
+            <div class="content-section">
+                <div class="card" style="text-align: center; padding: 3rem 1rem;">
+                    <p>背景板已就绪。</p>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">导航栏已预留全维度拓展位，解锁即可使用</p>
+                </div>
+            </div>
+        </main>
 
-        <!-- 页脚 -->
         <footer>
-            &copy; 2026/4/26 贪文笔 · 灵弦华夏
+            &copy; 2026/4/27 贪文笔 · 灵弦华夏
         </footer>
     </div>
 
     <script>
+        // ==================== 【已修复】JS作用域隔离 + DOM容错判断 ====================
+        // 自执行函数(IIFE)：彻底隔离全局作用域，杜绝变量名冲突
         (function() {
-            // ==================== 全局配置 ====================
-            const DEFAULT_ROUTE = '/home';
-            const SEARCH_INDEX_URL = 'content/search-index.json';
-            let TOTAL_CHAPTERS = 0;
-            let currentChapterNum = null;
+            'use strict'; // 严格模式，规范代码，减少隐性bug
 
-            // 路由映射表 —— 对应 GitHub 仓库 content 目录下的文件
-            const routes = {
-                '/home': 'content/home.html',
-                '/chapters': 'content/chapters.html',
-                '/characters': 'content/characters/index.html',
-                '/world': 'content/world/index.html',
-                '/systems': 'content/world/soulstring.html',
-                '/about': 'content/about.html'
-            };
+            // ========== 工具函数：DOM获取容错（不存在则返回null，不报错） ==========
+            const getEle = (id) => document.getElementById(id) || null;
 
-            // ==================== DOM 引用 ====================
-            const view = document.getElementById('view');
-            const progressBar = document.getElementById('progress-bar');
-            const navLinks = document.querySelectorAll('#main-nav a');
-            const continueReadingLink = document.getElementById('continue-reading');
-            const searchOverlay = document.getElementById('search-overlay');
-            const searchToggle = document.getElementById('search-toggle');
-            const searchClose = document.getElementById('search-close');
-            const searchInput = document.getElementById('search-input');
-            const searchResults = document.getElementById('search-results');
-            const modeToggleBtn = document.getElementById('mode-toggle');
-            const starsContainer = document.getElementById('stars');
-            const canvas = document.getElementById('strings');
-            const ctx = canvas.getContext('2d');
+            // ========== 全局变量（仅作用于当前函数内，不污染window） ==========
+            const starsContainer = getEle('stars');
+            const canvas = getEle('strings');
+            const modeToggleBtn = getEle('mode-toggle');
+            let ctx = null;
+            let particles = [];
+            const mouse = { x: null, y: null, radius: 120 };
 
-            // ==================== 星空生成 ====================
+            // ========== 1. 星空生成（容错：元素存在才执行） ==========
             function generateStars() {
+                if(!starsContainer) return;
                 const fragment = document.createDocumentFragment();
                 for (let i = 0; i < 400; i++) {
                     const star = document.createElement('div');
@@ -506,19 +305,16 @@
                 }
                 starsContainer.appendChild(fragment);
             }
-            generateStars();
 
-            // ==================== 弦线粒子动画 ====================
-            let particles = [];
-            const mouse = { x: null, y: null, radius: 120 };
-
+            // ========== 2. 弦线粒子动画（容错：canvas存在才初始化） ==========
             function resizeCanvas() {
+                if(!canvas) return;
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
                 initParticles();
             }
-
             function initParticles() {
+                if(!canvas) return;
                 particles = [];
                 const count = Math.min(70, Math.floor((canvas.width * canvas.height) / 15000));
                 for (let i = 0; i < count; i++) {
@@ -531,45 +327,23 @@
                     });
                 }
             }
-
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
-
-            window.addEventListener('mousemove', e => {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY;
-            });
-            window.addEventListener('touchmove', e => {
-                if (e.touches.length) {
-                    mouse.x = e.touches[0].clientX;
-                    mouse.y = e.touches[0].clientY;
-                }
-            }, { passive: true });
-            window.addEventListener('touchend', () => {
-                mouse.x = null;
-                mouse.y = null;
-            });
-
             function animateStrings() {
+                if(!canvas || !ctx) return;
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 for (let i = 0; i < particles.length; i++) {
                     const p = particles[i];
-                    p.x += p.vx;
-                    p.y += p.vy;
+                    p.x += p.vx; p.y += p.vy;
                     if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
                     if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-                    // 绘制粒子
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
                     ctx.fillStyle = 'rgba(0,212,255,0.45)';
                     ctx.fill();
 
-                    // 粒子间连线
                     for (let j = i + 1; j < particles.length; j++) {
                         const q = particles[j];
-                        const dx = p.x - q.x;
-                        const dy = p.y - q.y;
+                        const dx = p.x - q.x, dy = p.y - q.y;
                         const d = Math.sqrt(dx * dx + dy * dy);
                         if (d < 100) {
                             ctx.beginPath();
@@ -581,10 +355,8 @@
                         }
                     }
 
-                    // 鼠标交互
                     if (mouse.x !== null && mouse.y !== null) {
-                        const dx = p.x - mouse.x;
-                        const dy = p.y - mouse.y;
+                        const dx = p.x - mouse.x, dy = p.y - mouse.y;
                         const d = Math.sqrt(dx * dx + dy * dy);
                         if (d < mouse.radius) {
                             const force = (mouse.radius - d) / mouse.radius;
@@ -595,293 +367,44 @@
                 }
                 requestAnimationFrame(animateStrings);
             }
-            animateStrings();
 
-            // ==================== 暗色/亮色模式 ====================
+            // ========== 3. 暗黑/亮色模式（容错：按钮存在才绑定事件） ==========
             function initTheme() {
+                if(!modeToggleBtn) return;
                 const savedTheme = localStorage.getItem('theme');
                 if (savedTheme === 'light') {
                     document.body.classList.add('light-mode');
                     modeToggleBtn.textContent = '☀️';
-                } else {
-                    modeToggleBtn.textContent = '🌓';
                 }
             }
-            initTheme();
-
-            modeToggleBtn.addEventListener('click', () => {
-                document.body.classList.toggle('light-mode');
-                const isLight = document.body.classList.contains('light-mode');
-                localStorage.setItem('theme', isLight ? 'light' : 'dark');
-                modeToggleBtn.textContent = isLight ? '☀️' : '🌓';
-            });
-
-            // ==================== 搜索功能 ====================
-            let searchData = [];
-
-            async function loadSearchIndex() {
-                try {
-                    const resp = await fetch(SEARCH_INDEX_URL);
-                    if (resp.ok) {
-                        searchData = await resp.json();
-                    }
-                } catch (e) {
-                    // 搜索索引加载失败时静默处理
-                }
-            }
-            loadSearchIndex();
-
-            function openSearch() {
-                searchOverlay.classList.add('open');
-                searchInput.focus();
-            }
-
-            function closeSearch() {
-                searchOverlay.classList.remove('open');
-                searchInput.value = '';
-                searchResults.innerHTML = '';
-            }
-
-            searchToggle.addEventListener('click', openSearch);
-            searchClose.addEventListener('click', closeSearch);
-            searchOverlay.addEventListener('click', (e) => {
-                if (e.target === searchOverlay) closeSearch();
-            });
-
-            searchInput.addEventListener('input', () => {
-                const query = searchInput.value.trim().toLowerCase();
-                if (!query || searchData.length === 0) {
-                    searchResults.innerHTML = '';
-                    return;
-                }
-                const filtered = searchData.filter(item =>
-                    item.title.toLowerCase().includes(query) ||
-                    (item.keywords && item.keywords.some(k => k.toLowerCase().includes(query))) ||
-                    (item.snippet && item.snippet.toLowerCase().includes(query))
-                ).slice(0, 20);
-
-                if (filtered.length === 0) {
-                    searchResults.innerHTML =
-                    '<p style="color:var(--muted); padding:0.8rem; font-size:0.9rem;">没有找到相关内容</p>';
-                    return;
-                }
-                searchResults.innerHTML = filtered.map(item => `
-                    <div class="search-item" data-route="${item.route}">
-                        <div class="item-title">${item.type ? '[' + item.type + '] ' : ''}${item.title}</div>
-                        <div class="item-snippet">${item.snippet || ''}</div>
-                    </div>
-                `).join('');
-
-                // 绑定搜索结果点击
-                searchResults.querySelectorAll('.search-item').forEach(el => {
-                    el.addEventListener('click', () => {
-                        const route = el.dataset.route;
-                        if (route) {
-                            window.location.hash = route;
-                            closeSearch();
-                        }
-                    });
+            function bindThemeEvent() {
+                if(!modeToggleBtn) return;
+                modeToggleBtn.addEventListener('click', () => {
+                    document.body.classList.toggle('light-mode');
+                    const isLight = document.body.classList.contains('light-mode');
+                    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                    modeToggleBtn.textContent = isLight ? '☀️' : '🌓';
                 });
-            });
-
-            // ESC 关闭搜索
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && searchOverlay.classList.contains('open')) {
-                    closeSearch();
-                }
-            });
-
-            // ==================== 获取章节总数 ====================
-            async function fetchTotalChapters() {
-                try {
-                    const resp = await fetch('content/chapters-index.json');
-                    if (resp.ok) {
-                        const data = await resp.json();
-                        TOTAL_CHAPTERS = data.length;
-                    }
-                } catch (e) {
-                    // 静默处理
-                }
-            }
-            fetchTotalChapters();
-
-            // ==================== 章节导航 HTML ====================
-            function generateChapterNav(currentNum) {
-                const prev = currentNum - 1;
-                const next = currentNum + 1;
-                let html =
-                    '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:2rem; padding-top:1rem; border-top:1px solid var(--nav-border); flex-wrap:wrap; gap:0.5rem;">';
-                if (prev > 0) {
-                    html +=
-                        `<a href="#/chapter/${String(prev).padStart(3,'0')}" style="color:var(--accent); text-decoration:none;">← 上一章</a>`;
-                } else {
-                    html += '<span></span>';
-                }
-                html +=
-                    '<a href="#/chapters" style="color:var(--accent); text-decoration:none; font-weight:500;">📖 目录</a>';
-                if (next <= TOTAL_CHAPTERS) {
-                    html +=
-                        `<a href="#/chapter/${String(next).padStart(3,'0')}" style="color:var(--accent); text-decoration:none;">下一章 →</a>`;
-                } else {
-                    html += '<span></span>';
-                }
-                html += '</div>';
-                return html;
             }
 
-            // ==================== 更新"继续阅读"链接 ====================
-            function updateContinueReadingLink() {
-                const lastRoute = localStorage.getItem('last-chapter');
-                if (lastRoute && continueReadingLink) {
-                    continueReadingLink.href = '#' + lastRoute;
-                    continueReadingLink.dataset.route = lastRoute;
-                    continueReadingLink.style.display = '';
-                    continueReadingLink.textContent = '继续阅读';
-                } else if (continueReadingLink) {
-                    // 无记录时指向第一章
-                    continueReadingLink.href = '#/chapter/001';
-                    continueReadingLink.dataset.route = '/chapter/001';
-                    continueReadingLink.style.display = '';
-                    continueReadingLink.textContent = '继续阅读';
-                }
-            }
+            // ========== 初始化执行 ==========
+            window.addEventListener('load', () => {
+                generateStars();
+                if(canvas) ctx = canvas.getContext('2d');
+                resizeCanvas();
+                initTheme();
+                bindThemeEvent();
+                animateStrings();
 
-            // ==================== 键盘翻页 ====================
-            document.addEventListener('keydown', function(e) {
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-                if (searchOverlay.classList.contains('open')) return;
-                if (currentChapterNum === null) return;
-                if (e.key === 'ArrowLeft' && currentChapterNum > 1) {
-                    window.location.hash = `#/chapter/${String(currentChapterNum - 1).padStart(3,'0')}`;
-                } else if (e.key === 'ArrowRight' && currentChapterNum < TOTAL_CHAPTERS) {
-                    window.location.hash = `#/chapter/${String(currentChapterNum + 1).padStart(3,'0')}`;
-                }
+                // 窗口大小监听
+                window.addEventListener('resize', resizeCanvas);
+                // 鼠标/触屏监听
+                window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+                window.addEventListener('touchmove', e => {
+                    if (e.touches.length) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }
+                }, { passive: true });
+                window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
             });
-
-            // ==================== SPA 路由与内容加载 ====================
-            async function loadPage(route) {
-                let file = routes[route];
-
-                // 动态路由：章节页
-                if (!file && route.startsWith('/chapter/')) {
-                    const slug = route.split('/chapter/')[1];
-                    file = `content/chapters/chapter-${slug}.html`;
-                }
-                // 动态路由：人物页
-                if (!file && route.startsWith('/character/')) {
-                    const slug = route.split('/character/')[1];
-                    file = `content/characters/${slug}.html`;
-                }
-                // 动态路由：世界观子页
-                if (!file && route.startsWith('/world/')) {
-                    const slug = route.replace('/world/', '');
-                    file = `content/world/${slug}.html`;
-                }
-
-                // 回退到默认路由
-                if (!file) {
-                    file = routes[DEFAULT_ROUTE];
-                    route = DEFAULT_ROUTE;
-                }
-
-                try {
-                    const resp = await fetch(file);
-                    if (!resp.ok) throw new Error('Not found');
-                    const html = await resp.text();
-                    view.innerHTML = html;
-
-                    // 判断是否为章节页面
-                    const chapterMatch = route.match(/^\/chapter\/(\d+)$/);
-                    if (chapterMatch) {
-                        const num = parseInt(chapterMatch[1], 10);
-                        currentChapterNum = num;
-                        const navHTML = generateChapterNav(num);
-                        view.insertAdjacentHTML('beforeend', navHTML);
-
-                        // 保存阅读进度
-                        localStorage.setItem('last-chapter', route);
-                        const savedScroll = localStorage.getItem(`scroll-${route}`);
-                        if (savedScroll) {
-                            window.scrollTo(0, parseInt(savedScroll, 10));
-                        } else {
-                            window.scrollTo(0, 0);
-                        }
-                    } else {
-                        currentChapterNum = null;
-                        window.scrollTo(0, 0);
-                    }
-
-                    // 执行内容中内嵌的脚本
-                    const scripts = view.querySelectorAll('script');
-                    scripts.forEach(s => {
-                        const newScript = document.createElement('script');
-                        newScript.textContent = s.textContent;
-                        document.body.appendChild(newScript).remove();
-                    });
-
-                    // 重置进度条
-                    progressBar.style.width = '0%';
-                } catch (err) {
-                    view.innerHTML = `
-                        <div class="content-section" style="text-align:center; padding:3rem 0;">
-                            <h2>页面未找到</h2>
-                            <p>这个页面可能尚未创建，或者地址有误。</p>
-                            <a href="#/home">返回首页</a>
-                        </div>`;
-                    currentChapterNum = null;
-                }
-
-                // 更新导航激活状态
-                navLinks.forEach(a => {
-                    const hrefRoute = a.dataset.route;
-                    if (hrefRoute && a.id !== 'continue-reading') {
-                        a.classList.toggle('active', hrefRoute === route);
-                    }
-                });
-                // "继续阅读"特殊处理
-                if (continueReadingLink) {
-                    const continueRoute = continueReadingLink.dataset.route;
-                    continueReadingLink.classList.toggle('active', continueRoute === route);
-                }
-
-                // 刷新"继续阅读"链接
-                updateContinueReadingLink();
-            }
-
-            function onHashChange() {
-                let hash = window.location.hash.slice(1);
-                if (!hash) hash = DEFAULT_ROUTE;
-                loadPage(hash);
-            }
-
-            window.addEventListener('hashchange', onHashChange);
-
-            // 导航链接点击事件
-            navLinks.forEach(a => {
-                a.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const route = a.dataset.route;
-                    if (route) {
-                        window.location.hash = route;
-                    }
-                });
-            });
-
-            // 滚动进度条 & 滚动位置记忆
-            window.addEventListener('scroll', () => {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                if (docHeight > 0) {
-                    const progress = Math.min((scrollTop / docHeight) * 100, 100);
-                    progressBar.style.width = progress + '%';
-                }
-                const currentRoute = window.location.hash.slice(1) || DEFAULT_ROUTE;
-                localStorage.setItem(`scroll-${currentRoute}`, scrollTop);
-            });
-
-            // ==================== 初始加载 ====================
-            updateContinueReadingLink();
-            onHashChange();
         })();
     </script>
 </body>
