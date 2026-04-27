@@ -14,7 +14,6 @@
       min-height: 100vh;
       transition: background 0.4s, color 0.4s;
     }
-    /* 亮色模式变量 */
     body.light-mode {
       background: #f0f4ff;
       color: #1a1a2e;
@@ -31,7 +30,6 @@
       background-clip: text;
     }
 
-    /* 星空背景 */
     .stars {
       position: fixed;
       top: 0;
@@ -52,7 +50,6 @@
       100% { opacity: 1; transform: scale(1.2); }
     }
 
-    /* 弦线画布 */
     #strings {
       position: fixed;
       top: 0;
@@ -60,10 +57,9 @@
       width: 100%;
       height: 100%;
       z-index: 0;
-      pointer-events: none; /* 让点击穿透到导航 */
+      pointer-events: none;
     }
 
-    /* 应用外壳 */
     .app-shell {
       position: relative;
       z-index: 1;
@@ -75,7 +71,6 @@
       min-height: 100vh;
     }
 
-    /* 头部 */
     header {
       text-align: center;
       margin-bottom: 2rem;
@@ -102,7 +97,6 @@
       letter-spacing: 0.05em;
     }
 
-    /* 工具栏（模式切换、搜索） */
     .toolbar {
       position: absolute;
       top: 1rem;
@@ -132,7 +126,6 @@
       border-color: #00d4ff;
     }
 
-    /* 搜索弹窗 */
     .search-overlay {
       position: fixed;
       top: 0;
@@ -200,7 +193,6 @@
       cursor: pointer;
     }
 
-    /* 导航栏 */
     nav {
       border-top: 1px solid rgba(136,146,176,0.2);
       border-bottom: 1px solid rgba(136,146,176,0.2);
@@ -238,12 +230,10 @@
       width: 100%;
     }
 
-    /* 主内容区 */
     main {
       flex: 1;
     }
 
-    /* 内容通用样式 */
     .content-section h2 {
       font-size: 2rem;
       color: #00d4ff;
@@ -279,7 +269,6 @@
       border-color: rgba(0,212,255,0.5);
     }
 
-    /* 阅读进度条 */
     .reading-progress {
       position: fixed;
       top: 0;
@@ -291,7 +280,6 @@
       transition: width 0.1s linear;
     }
 
-    /* 页脚 */
     footer {
       text-align: center;
       color: #4a5568;
@@ -299,7 +287,6 @@
       font-size: 0.9rem;
     }
 
-    /* 响应式 */
     @media (max-width: 768px) {
       h1 { font-size: 2.2rem; }
       nav a { font-size: 0.9rem; }
@@ -309,16 +296,10 @@
   </style>
 </head>
 <body>
-  <!-- 阅读进度条 -->
   <div class="reading-progress" id="progress-bar"></div>
-
-  <!-- 星空背景 -->
   <div class="stars" id="stars"></div>
-
-  <!-- 弦线画布 -->
   <canvas id="strings"></canvas>
 
-  <!-- 搜索弹窗 -->
   <div class="search-overlay" id="search-overlay">
     <div class="search-box">
       <button class="search-close" id="search-close">&times;</button>
@@ -327,22 +308,21 @@
     </div>
   </div>
 
-  <!-- 应用外壳 -->
   <div class="app-shell">
     <header>
       <h1>《灵弦华夏》</h1>
       <p class="subtitle"> 作者：贪文笔</p>
     </header>
 
-    <!-- 工具栏 -->
     <div class="toolbar">
       <button class="tool-btn" id="mode-toggle" title="切换亮色/暗色模式">🌓</button>
       <button class="tool-btn" id="search-toggle" title="搜索">🔍</button>
     </div>
 
-    <!-- 导航 -->
+    <!-- 导航栏：新增“继续阅读”链接 -->
     <nav id="main-nav">
       <a href="#/home" data-route="/home">首页</a>
+      <a id="continue-reading" style="display:none;">继续阅读</a>
       <a href="#/chapters" data-route="/chapters">章节</a>
       <a href="#/characters" data-route="/characters">人物</a>
       <a href="#/world" data-route="/world">世界观</a>
@@ -350,10 +330,7 @@
       <a href="#/about" data-route="/about">关于</a>
     </nav>
 
-    <!-- 动态内容区 -->
-    <main id="view">
-      <!-- 由 JS 加载内容片段 -->
-    </main>
+    <main id="view"></main>
 
     <footer>
       &copy; 2026/4/26 贪文笔 · 灵弦华夏
@@ -364,21 +341,17 @@
     // ===================== 全局配置 =====================
     const DEFAULT_ROUTE = '/home';
 
-    // 路由映射表 —— 可随时扩展
     const routes = {
       '/home': 'content/home.html',
-      '/chapters': 'content/chapters.html',           // 或改用动态渲染，见 router 逻辑
+      '/chapters': 'content/chapters.html',
       '/characters': 'content/characters/index.html',
       '/world': 'content/world/index.html',
       '/systems': 'content/world/soulstring.html',
       '/about': 'content/about.html'
     };
 
-    // 搜索索引文件路径（后续生成）
     const SEARCH_INDEX_URL = 'content/search-index.json';
-
-    // 总章数（用于自动导航，每新增一卷更新这里，或动态从 chapters-index.json 读取）
-    let TOTAL_CHAPTERS = 0; // 动态获取，见初始化
+    let TOTAL_CHAPTERS = 0;
 
     // ===================== 星空生成 =====================
     (function generateStars() {
@@ -452,7 +425,6 @@
           ctx.fillStyle = 'rgba(0,212,255,0.5)';
           ctx.fill();
 
-          // 连线
           for (let q of particles) {
             const dx = p.x - q.x;
             const dy = p.y - q.y;
@@ -467,7 +439,6 @@
             }
           }
 
-          // 鼠标交互（排斥）
           if (mouse.x && mouse.y) {
             const dx = p.x - mouse.x;
             const dy = p.y - mouse.y;
@@ -488,7 +459,6 @@
     (function themeToggle() {
       const btn = document.getElementById('mode-toggle');
       const body = document.body;
-      // 读取本地存储或系统偏好
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'light') {
         body.classList.add('light-mode');
@@ -497,10 +467,8 @@
         body.classList.toggle('light-mode');
         const isLight = body.classList.contains('light-mode');
         localStorage.setItem('theme', isLight ? 'light' : 'dark');
-        // 更新按钮图标
         btn.textContent = isLight ? '☀️' : '🌓';
       });
-      // 初始图标
       if (body.classList.contains('light-mode')) {
         btn.textContent = '☀️';
       }
@@ -515,16 +483,13 @@
       const resultsDiv = document.getElementById('search-results');
       let searchData = [];
 
-      // 加载搜索索引
       async function loadSearchIndex() {
         try {
           const resp = await fetch(SEARCH_INDEX_URL);
           if (resp.ok) {
             searchData = await resp.json();
           }
-        } catch (e) {
-          // 索引文件不存在时静默
-        }
+        } catch (e) {}
       }
       loadSearchIndex();
 
@@ -555,7 +520,7 @@
           item.title.toLowerCase().includes(query) ||
           (item.keywords && item.keywords.some(k => k.toLowerCase().includes(query))) ||
           (item.snippet && item.snippet.toLowerCase().includes(query))
-        ).slice(0, 20); // 最多显示20条
+        ).slice(0, 20);
 
         if (filtered.length === 0) {
           resultsDiv.innerHTML = '<p style="color:#8892b0; padding:1rem;">没有找到相关内容</p>';
@@ -568,7 +533,6 @@
           </div>
         `).join('');
 
-        // 点击条目跳转
         document.querySelectorAll('.search-item').forEach(el => {
           el.addEventListener('click', () => {
             const route = el.dataset.route;
@@ -589,7 +553,6 @@
       const navLinks = document.querySelectorAll('#main-nav a');
       const progressBar = document.getElementById('progress-bar');
 
-      // 获取总章数（从 chapters-index.json）
       async function fetchTotalChapters() {
         try {
           const resp = await fetch('content/chapters-index.json');
@@ -601,7 +564,6 @@
       }
       fetchTotalChapters();
 
-      // 生成章节导航 HTML
       function generateChapterNav(currentNum) {
         const prev = currentNum - 1;
         const next = currentNum + 1;
@@ -621,11 +583,31 @@
         return html;
       }
 
-      // 加载页面内容
+      // 新增：更新“继续阅读”链接
+      function updateContinueReadingLink() {
+        const lastRoute = localStorage.getItem('last-chapter');
+        const link = document.getElementById('continue-reading');
+        if (lastRoute && link) {
+          link.href = '#' + lastRoute;
+          link.style.display = 'inline';
+        }
+      }
+
+      // 新增：键盘翻页状态
+      let currentChapterNum = null;
+      document.addEventListener('keydown', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (currentChapterNum === null) return;
+        if (e.key === 'ArrowLeft' && currentChapterNum > 1) {
+          window.location.hash = `#/chapter/${String(currentChapterNum - 1).padStart(3, '0')}`;
+        } else if (e.key === 'ArrowRight' && currentChapterNum < TOTAL_CHAPTERS) {
+          window.location.hash = `#/chapter/${String(currentChapterNum + 1).padStart(3, '0')}`;
+        }
+      });
+
       async function loadPage(route) {
         let file = routes[route];
 
-        // 动态路由匹配
         if (!file) {
           if (route.startsWith('/chapter/')) {
             const slug = route.split('/chapter/')[1];
@@ -639,7 +621,6 @@
           }
         }
 
-        // 回退到首页
         if (!file) {
           file = routes[DEFAULT_ROUTE];
           route = DEFAULT_ROUTE;
@@ -651,16 +632,14 @@
           const html = await resp.text();
           view.innerHTML = html;
 
-          // 如果是章节页，自动插入底部导航
           const chapterMatch = route.match(/^\/chapter\/(\d+)$/);
           if (chapterMatch) {
             const num = parseInt(chapterMatch[1], 10);
+            currentChapterNum = num;   // 新增：记录当前章节号
             const navHTML = generateChapterNav(num);
             view.insertAdjacentHTML('beforeend', navHTML);
 
-            // 记忆最后阅读章节
             localStorage.setItem('last-chapter', route);
-            // 恢复滚动位置
             const savedScroll = localStorage.getItem(`scroll-${route}`);
             if (savedScroll) {
               window.scrollTo(0, parseInt(savedScroll, 10));
@@ -671,7 +650,6 @@
             window.scrollTo(0, 0);
           }
 
-          // 执行内容中的内联脚本（如果有）
           const scripts = view.querySelectorAll('script');
           scripts.forEach(s => {
             const newScript = document.createElement('script');
@@ -679,7 +657,6 @@
             document.body.appendChild(newScript).remove();
           });
 
-          // 更新进度条
           progressBar.style.width = '0%';
         } catch (err) {
           view.innerHTML = `
@@ -695,9 +672,11 @@
           const href = a.getAttribute('data-route');
           a.classList.toggle('active', href === route);
         });
+
+        // 新增：每次加载页面后刷新“继续阅读”链接
+        updateContinueReadingLink();
       }
 
-      // 监听 hash 变化
       function onHashChange() {
         let hash = window.location.hash.slice(1);
         if (!hash) hash = DEFAULT_ROUTE;
@@ -706,7 +685,6 @@
 
       window.addEventListener('hashchange', onHashChange);
 
-      // 阻止导航默认行为
       navLinks.forEach(a => {
         a.addEventListener('click', (e) => {
           e.preventDefault();
@@ -715,7 +693,6 @@
         });
       });
 
-      // 监听滚动以更新进度条和保存位置
       window.addEventListener('scroll', () => {
         const scrollTop = window.scrollY;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -723,12 +700,10 @@
           const progress = (scrollTop / docHeight) * 100;
           progressBar.style.width = progress + '%';
         }
-        // 保存当前页滚动位置
         const currentRoute = window.location.hash.slice(1) || DEFAULT_ROUTE;
         localStorage.setItem(`scroll-${currentRoute}`, scrollTop);
       });
 
-      // 初始加载
       onHashChange();
     })();
   </script>
