@@ -332,6 +332,12 @@
 
     <main id="view"></main>
 
+    <!-- Giscus 评论区（放在 footer 上方，仅首页显示） -->
+    <div id="comments-section" style="text-align:left; max-width:700px; margin:2rem auto 0 auto; padding:0 5%;">
+      <h3 style="color:#b8c7ff; margin-bottom:1rem;">读者评论区</h3>
+      <div class="giscus"></div>
+    </div>
+
     <footer>
       &copy; 2026/4/26 贪文笔 · 灵弦华夏
     </footer>
@@ -479,7 +485,7 @@
       const overlay = document.getElementById('search-overlay');
       const toggleBtn = document.getElementById('search-toggle');
       const closeBtn = document.getElementById('search-close');
-      const input = document.getElementById('search-input');
+      const input = document.getElementById('search-input';
       const resultsDiv = document.getElementById('search-results');
       let searchData = [];
 
@@ -705,6 +711,46 @@
       });
 
       onHashChange();
+    })();
+
+    // ===================== Giscus 评论区加载 =====================
+    (function loadGiscus() {
+      // 只在首页显示评论区
+      function checkRouteAndToggle() {
+        const hash = window.location.hash.slice(1) || '/home';
+        const commentsSection = document.getElementById('comments-section');
+        if (commentsSection) {
+          commentsSection.style.display = (hash === '/home') ? 'block' : 'none';
+        }
+      }
+
+      // 监听路由变化
+      window.addEventListener('hashchange', checkRouteAndToggle);
+      checkRouteAndToggle();
+
+      // 动态加载 Giscus 脚本
+      if (!document.querySelector('.giscus iframe')) {
+        const giscusScript = document.createElement('script');
+        giscusScript.src = 'https://giscus.app/client.js';
+        giscusScript.setAttribute('data-repo', 'zhiqiluo15/zhiqiluo15.github.io');
+        giscusScript.setAttribute('data-repo-id', 'R_kgDORlI47Q');
+        giscusScript.setAttribute('data-category', 'General');
+        giscusScript.setAttribute('data-category-id', 'DIC_kwDORlI47c4C7uCH');
+        giscusScript.setAttribute('data-mapping', 'pathname');
+        giscusScript.setAttribute('data-strict', '0');
+        giscusScript.setAttribute('data-reactions-enabled', '1');
+        giscusScript.setAttribute('data-emit-metadata', '0');
+        giscusScript.setAttribute('data-input-position', 'top');
+        giscusScript.setAttribute('data-theme', 'preferred_color_scheme');
+        giscusScript.setAttribute('data-lang', 'zh-CN');
+        giscusScript.setAttribute('crossorigin', 'anonymous');
+        giscusScript.async = true;
+
+        const container = document.querySelector('#comments-section .giscus');
+        if (container) {
+          container.appendChild(giscusScript);
+        }
+      }
     })();
   </script>
 </body>
