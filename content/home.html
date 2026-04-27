@@ -1,63 +1,54 @@
-<div class="content-section" style="max-width:800px; margin:0 auto;">
+<div class="content-section" style="text-align:center;">
+  <h2 style="font-size:2.5rem; color:#00d4ff; margin-bottom:0.5rem;">欢迎来到灵弦华夏</h2>
+  <p class="subtitle" style="color:#8892b0; margin-bottom:1.5rem;">作者：贪文笔</p>
+  <p style="color:#a8b2d1; margin-bottom:2rem; line-height:1.8; font-size:1.1rem;">
+    世界是一张关系网络。<br>过去从未消失，只是沉睡。
+  </p>
 
-  <!-- 最新章节入口 -->
-  <div id="latest-chapter" style="margin-bottom:1.5rem;"></div>
-
-  <!-- 继续阅读 -->
-  <div id="continue-reading" style="text-align:center; margin-bottom:2rem;"></div>
-
-  <!-- 标题 -->
-  <h2 style="font-size:1.5rem; color:#b8c7ff; margin-bottom:0.5rem;">💬 讨论区</h2>
-  <p style="color:#8892b0; margin-bottom:1.5rem; font-size:0.95rem;">欢迎对《灵弦华夏》的剧情和世界观留言讨论。</p>
+  <!-- 阅读入口卡片 -->
+  <div class="card" style="max-width:500px; margin:0 auto 2rem auto; text-align:center;">
+    <div style="display:flex; flex-direction:column; gap:1rem;">
+      <a href="#/chapter/001" class="tool-btn" style="width:auto; border-radius:8px; padding:0.8rem 1.5rem; text-decoration:none; font-size:1.2rem; display:block;">
+        📖 开始阅读
+      </a>
+      <a id="continue-reading-btn" style="display:none; width:auto; border-radius:8px; padding:0.8rem 1.5rem; text-decoration:none; font-size:1.2rem; background:rgba(0,212,255,0.15); color:#00d4ff; border:1px solid #00d4ff;" href="#">
+        ▶ 继续阅读
+      </a>
+      <a href="#/chapters" class="tool-btn" style="width:auto; border-radius:8px; padding:0.8rem 1.5rem; text-decoration:none; font-size:1.1rem; display:block;">
+        📋 章节目录
+      </a>
+    </div>
+  </div>
 
   <!-- Giscus 评论区 -->
-  <script src="https://giscus.app/client.js"
-    data-repo="zhiqiluo15/zhiqiluo15.github.io"
-    data-repo-id="R_kgDORlI47Q"
-    data-category="Announcements"
-    data-category-id="DIC_kwDORlI47c4C7uCG"
-    data-mapping="pathname"
-    data-strict="0"
-    data-reactions-enabled="1"
-    data-emit-metadata="0"
-    data-input-position="bottom"
-    data-theme="preferred_color_scheme"
-    data-lang="zh-CN"
-    crossorigin="anonymous"
-    async>
-  </script>
-
-  <p style="text-align:center; color:#4a5568; font-size:0.75rem; margin-top:1.5rem;">
-    评论由 GitHub Discussions 驱动 · 登录 GitHub 即可发言
-  </p>
+  <div id="comments-section" style="text-align:left; max-width:700px; margin:0 auto;">
+    <h3 style="color:#b8c7ff; margin-bottom:1rem;">读者评论区</h3>
+    <script src="https://giscus.app/client.js"
+            data-repo="zhiqiluo15/zhiqiluo15.github.io"
+            data-repo-id="R_kgDORlI47Q"
+            data-category="General"
+            data-category-id="DIC_kwDORlI47c4C7uCH"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="preferred_color_scheme"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+    </script>
+  </div>
 </div>
 
 <script>
-(async function() {
-  // 加载最新章节链接
-  try {
-    const resp = await fetch('content/chapters-index.json');
-    if (resp.ok) {
-      const chapters = await resp.json();
-      const latest = chapters[chapters.length - 1];
-      if (latest) {
-        document.getElementById('latest-chapter').innerHTML = `
-          <div class="card" style="text-align:center; border-color: rgba(0,212,255,0.3);">
-            <p style="margin:0; color:#8892b0; font-size:0.85rem;">📢 最新</p>
-            <a href="#${latest.route}" style="font-size:1.1rem; color:#00d4ff;">${latest.title}</a>
-          </div>`;
-      }
+  // 动态设置“继续阅读”按钮
+  (function() {
+    const lastRoute = localStorage.getItem('last-chapter');
+    const btn = document.getElementById('continue-reading-btn');
+    if (lastRoute && btn) {
+      btn.href = '#' + lastRoute;
+      btn.style.display = 'block';
     }
-  } catch(e) {}
-
-  // 继续阅读按钮
-  const lastChapter = localStorage.getItem('last-chapter');
-  if (lastChapter) {
-    document.getElementById('continue-reading').innerHTML = `
-      <a href="#${lastChapter}" 
-         style="display:inline-block; padding:0.4rem 1.2rem; background:rgba(255,0,255,0.08); border:1px solid rgba(255,0,255,0.4); border-radius:20px; color:#ff00ff; text-decoration:none; font-size:0.9rem;">
-        📖 继续阅读
-      </a>`;
-  }
-})();
+  })();
 </script>
