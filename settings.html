@@ -145,6 +145,11 @@ header .actions .btn-html {
   color: #2d5a4a;
 }
 header .actions .btn-html:hover { background: #c8dbcf; }
+header .actions .btn-help {
+  background: #e8f0f5;
+  color: #3d7ab5;
+}
+header .actions .btn-help:hover { background: #d4e4f0; }
 .main-layout {
   display: flex;
   gap: 28px;
@@ -674,6 +679,7 @@ header .actions .btn-html:hover { background: #c8dbcf; }
     <button onclick="showGraph()">🕸 图谱</button>
     <button onclick="exportData()">⬇ 导出JSON</button>
     <button class="btn-html" onclick="exportHTML()">📦 导出HTML</button>
+    <button class="btn-help" onclick="showHelp()">📖 使用说明</button>
     <label>📂 导入JSON<input type="file" accept=".json" style="display:none" onchange="importData(event)"></label>
     <button class="btn-sync" onclick="resetToDefault()" title="加载作者最新发布的数据，本地修改将丢失">🔄 同步</button>
     <button class="btn-danger" onclick="clearAll()">🗑 清空</button>
@@ -722,6 +728,98 @@ header .actions .btn-html:hover { background: #c8dbcf; }
     <div class="btn-row">
       <button class="btn-primary" onclick="createCategory()">发芽</button>
       <button class="btn-ghost" onclick="closeAddCategory()">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- 使用说明覆盖层 -->
+<div class="overlay" id="helpOverlay">
+  <div class="panel" style="max-width:800px;max-height:85vh;">
+    <button class="close" onclick="closeHelp()">&times;</button>
+    <h2>📖 设定树使用指南</h2>
+    <div class="help-content" style="white-space:pre-wrap;line-height:1.8;font-size:0.9rem;">
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+一、基本操作
+
+【查看设定】
+• 点击左侧分类树展开/折叠分类
+• 点击条目卡片查看详细内容
+• 顶部搜索框可实时搜索设定
+
+【添加新设定】
+1. 添加分类：点击左侧「+ 新枝」按钮
+2. 添加条目：点击顶部「➕ 新芽」按钮
+   - 填写标题、内容、状态、标签
+   - 关联：输入已有条目的名称建立关联关系
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+二、如何向作者提交你的设定？
+
+如果你希望你的设定被收录到官方版本中，请按以下步骤操作：
+
+【步骤1】添加你的设定
+• 在本地添加/编辑分类和条目
+• 状态说明：
+  🌱 草稿 - 尚未完善
+  🌿 完善 - 内容完整
+  🍂 废弃 - 不再使用
+
+【步骤2】导出你的数据
+选择以下任意一种方式导出：
+
+方式A：导出JSON（推荐）
+• 点击「⬇ 导出JSON」按钮
+• 将导出的 .json 文件发送给作者
+
+方式B：导出HTML快照
+• 点击「📦 导出HTML」按钮
+• 生成包含你所有修改的独立HTML文件
+• 将此HTML文件发送给作者
+
+【步骤3】等待作者更新
+• 作者收到你的文件后，会将你的设定整合到源码中
+• 作者更新后，你点击「🔄 同步」按钮即可看到更新
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+三、数据管理说明
+
+⚠️ 重要提示：
+• 你的修改保存在浏览器本地存储中
+• 清空浏览器数据会丢失你的修改
+• 建议定期导出备份
+
+【功能说明】
+⬇ 导出JSON  → 下载当前所有设定数据
+📦 导出HTML  → 生成包含数据的独立网页文件
+📂 导入JSON  → 从JSON文件恢复数据
+🔄 同步      → 加载作者最新发布的官方数据（会覆盖本地修改）
+🗑 清空      → 删除所有本地数据
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+四、关系图谱
+
+点击「🕸 图谱」按钮可以查看：
+• 所有条目之间的关联关系
+• 点击节点可查看详细信息
+• 拖拽节点调整布局
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+五、常见问题
+
+Q: 为什么我的修改看不到了？
+A: 可能是浏览器数据被清除，或者点击了「同步」按钮覆盖了本地数据。建议定期导出备份。
+
+Q: 如何与他人分享我的设定？
+A: 使用「导出HTML」功能，生成的HTML文件可以独立打开，包含所有数据。
+
+Q: 我需要什么权限才能添加设定？
+A: 无需权限，任何人都可以在本地添加设定。提交给作者后由作者审核收录。
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+感谢你参与「灵弦华夏」的世界观建设！🌿
+
     </div>
   </div>
 </div>
@@ -1109,6 +1207,12 @@ function showGraph() {
 function closeGraph() {
   document.getElementById('graphOverlay').classList.remove('open');
   if (network) { network.destroy(); network = null; }
+}
+function showHelp() {
+  document.getElementById('helpOverlay').classList.add('open');
+}
+function closeHelp() {
+  document.getElementById('helpOverlay').classList.remove('open');
 }
 function buildGraph() {
   const container = document.getElementById('graphContainer');
