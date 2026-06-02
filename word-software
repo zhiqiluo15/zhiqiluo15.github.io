@@ -403,7 +403,7 @@ button:active {
 </head>
 <body>
 
-<<header>
+<header>
   <h1>📚 分类单词本</h1>
   <p>收录 · 分类 · 拼写复习</p>
 </header>
