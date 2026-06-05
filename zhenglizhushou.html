@@ -336,20 +336,37 @@
         }
 
         function renderDuplicates() {
-            document.getElementById('duplicate-content').innerHTML = duplicates.length ? 
-                duplicates.map((group, idx) => `
-                    <div class="duplicate-section">
-                        <h3>疑似重复组 ${idx + 1}</h3>
-                        <div class="duplicate-group">${group.map(d => `
-                            <div class="duplicate-item">
-                                <span class="duplicate-source">${d.source}</span>
-                                <span class="duplicate-content">${d.content}</span>
-                                <button class="btn btn-secondary btn-small" onclick="removeFromDuplicate(${idx}, ${group.indexOf(d)})">保留</button>
-                            </div>
-                        `).join('')}</div>
-                        <p style="color:#ffc107;font-size:12px;margin-top:10px;">→ 疑似同一设定，请手动判定合并或保留</p>
-                    </div>
-                `).join('') : '<div class="empty-state">暂无疑似重复素材</div>';
+            if (!duplicates.length) {
+                document.getElementById('duplicate-content').innerHTML = '<div class="empty-state">暂无疑似重复素材</div>';
+                return;
+            }
+            let html = '';
+            for (let i = 0; i < duplicates.length; i++) {
+                const group = duplicates[i];
+                html += '<div class="duplicate-section">';
+                html += '<h3>疑似重复组 ' + (i + 1) + '</h3>';
+                html += '<div class="duplicate-group">';
+                for (let j = 0; j < group.length; j++) {
+                    const d = group[j];
+                    html += '<div class="duplicate-item">';
+                    html += '<span class="duplicate-source">' + d.source + '</span>';
+                    html += '<span class="duplicate-content">' + d.content + '</span>';
+                    html += '<button class="btn btn-secondary btn-small" data-group="' + i + '" data-item="' + j + '">保留</button>';
+                    html += '</div>';
+                }
+                html += '</div>';
+                html += '<p style="color:#ffc107;font-size:12px;margin-top:10px;">→ 疑似同一设定，请手动判定合并或保留</p>';
+                html += '</div>';
+            }
+            document.getElementById('duplicate-content').innerHTML = html;
+            
+            document.querySelectorAll('.duplicate-section button').forEach(btn => {
+                btn.onclick = function() {
+                    const groupIdx = parseInt(this.dataset.group);
+                    const itemIdx = parseInt(this.dataset.item);
+                    removeFromDuplicate(groupIdx, itemIdx);
+                };
+            });
         }
 
         function removeFromDuplicate(groupIdx, itemIdx) {
