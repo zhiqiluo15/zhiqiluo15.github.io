@@ -179,12 +179,12 @@
     </div>
 
     <script>
-        let materials = [], corrections = [], duplicates = [];
-        let currentFilter = '', currentSearch = '', inputCount = 0;
+        var materials = [], corrections = [], duplicates = [];
+        var currentFilter = '', currentSearch = '', inputCount = 0;
 
-        const typoMap = {
+        var typoMap = {
             '安剑': '按剑', '在坐': '在座', '以经': '已经', '既将': '即将',
-            '的话': '的话', '地话': '的话', '得话': '的话', '那怕': '哪怕',
+            '地话': '的话', '得话': '的话', '那怕': '哪怕',
             '那吗': '那么', '那末': '那么', '甚麽': '什么', '什麽': '什么',
             '为甚': '为何', '为什麽': '为什么', '怎麽': '怎么', '甚麽样': '什么样',
             '那麽样': '那么样', '那末样': '那么样', '那末些': '那些', '那末个': '那个',
@@ -197,10 +197,10 @@
         };
 
         function loadData() {
-            const saved = localStorage.getItem('novel-materials');
-            const savedCorr = localStorage.getItem('novel-corrections');
-            const savedDup = localStorage.getItem('novel-duplicates');
-            const savedCount = localStorage.getItem('novel-input-count');
+            var saved = localStorage.getItem('novel-materials');
+            var savedCorr = localStorage.getItem('novel-corrections');
+            var savedDup = localStorage.getItem('novel-duplicates');
+            var savedCount = localStorage.getItem('novel-input-count');
             if (saved) materials = JSON.parse(saved);
             if (savedCorr) corrections = JSON.parse(savedCorr);
             if (savedDup) duplicates = JSON.parse(savedDup);
@@ -216,14 +216,14 @@
         }
 
         function addMaterial() {
-            const content = document.getElementById('material-input').value.trim();
-            const category = document.getElementById('category-select').value;
-            const featureTags = document.getElementById('feature-tags').value.trim();
+            var content = document.getElementById('material-input').value.trim();
+            var category = document.getElementById('category-select').value;
+            var featureTags = document.getElementById('feature-tags').value.trim();
             if (!content) { alert('请输入素材内容'); return; }
             
             inputCount++;
-            const material = {
-                id: Date.now(), content, category, featureTags,
+            var material = {
+                id: Date.now(), content: content, category: category, featureTags: featureTags,
                 inputIndex: inputCount, createdAt: new Date().toISOString()
             };
             materials.push(material);
@@ -237,49 +237,51 @@
         }
 
         function checkForCorrections(m) {
-            const errors = [];
-            for (const [wrong, correct] of Object.entries(typoMap)) {
-                if (m.content.includes(wrong) && wrong !== correct) {
+            var errors = [];
+            for (var wrong in typoMap) {
+                var correct = typoMap[wrong];
+                if (m.content.indexOf(wrong) !== -1 && wrong !== correct) {
                     errors.push({ type: '错别字', location: m.content,
-                        problem: `疑为错别字"${wrong}"，通常作"${correct}"`, source: `第${m.inputIndex}次输入` });
+                        problem: '疑为错别字"' + wrong + '"，通常作"' + correct + '"', source: '第' + m.inputIndex + '次输入' });
                 }
             }
-            materials.forEach(mat => {
+            materials.forEach(function(mat) {
                 if (mat.id !== m.id && mat.category === m.category) {
-                    const nameMatch1 = m.content.match(/([\u4e00-\u9fa5]{2,4})\s*(，|,|是|有|在|的)/);
-                    const nameMatch2 = mat.content.match(/([\u4e00-\u9fa5]{2,4})\s*(，|,|是|有|在|的)/);
+                    var nameMatch1 = m.content.match(/([\u4e00-\u9fa5]{2,4})\s*(，|,|是|有|在|的)/);
+                    var nameMatch2 = mat.content.match(/([\u4e00-\u9fa5]{2,4})\s*(，|,|是|有|在|的)/);
                     if (nameMatch1 && nameMatch2 && nameMatch1[1] !== nameMatch2[1]) {
-                        if (nameMatch1[1][0] === nameMatch2[1][0] || nameMatch1[1].includes(nameMatch2[1][0])) {
+                        if (nameMatch1[1][0] === nameMatch2[1][0] || nameMatch1[1].indexOf(nameMatch2[1][0]) !== -1) {
                             errors.push({ type: '名称不统一', location: m.content,
-                                problem: `当前为"${nameMatch1[1]}"，与第${mat.inputIndex}次输入的"${nameMatch2[1]}"可能指同一人`, source: `第${m.inputIndex}次输入` });
+                                problem: '当前为"' + nameMatch1[1] + '"，与第' + mat.inputIndex + '次输入的"' + nameMatch2[1] + '"可能指同一人', source: '第' + m.inputIndex + '次输入' });
                         }
                     }
-                    const numMatch1 = m.content.match(/(\d+)\s*(年|岁|级|重|丈|尺|寸|里|两|钱|分)/);
-                    const numMatch2 = mat.content.match(/(\d+)\s*(年|岁|级|重|丈|尺|寸|里|两|钱|分)/);
+                    var numMatch1 = m.content.match(/(\d+)\s*(年|岁|级|丈|尺|寸|里|两|钱|分)/);
+                    var numMatch2 = mat.content.match(/(\d+)\s*(年|岁|级|丈|尺|寸|里|两|钱|分)/);
                     if (numMatch1 && numMatch2 && numMatch1[2] === numMatch2[2] && numMatch1[1] !== numMatch2[1]) {
                         errors.push({ type: '数值数据冲突', location: m.content,
-                            problem: `当前数值"${numMatch1[1]}${numMatch1[2]}"与第${mat.inputIndex}次输入的"${numMatch2[1]}${numMatch2[2]}"冲突`, source: `第${m.inputIndex}次输入` });
+                            problem: '当前数值"' + numMatch1[1] + numMatch1[2] + '"与第' + mat.inputIndex + '次输入的"' + numMatch2[1] + numMatch2[2] + '"冲突', source: '第' + m.inputIndex + '次输入' });
                     }
                 }
             });
-            errors.forEach(e => {
-                if (!corrections.some(c => c.location === e.location && c.problem === e.problem)) {
-                    corrections.push(e);
-                }
+            errors.forEach(function(e) {
+                var exists = corrections.some(function(c) {
+                    return c.location === e.location && c.problem === e.problem;
+                });
+                if (!exists) corrections.push(e);
             });
         }
 
         function checkForDuplicates(m) {
-            materials.forEach(mat => {
+            materials.forEach(function(mat) {
                 if (mat.id !== m.id && areSimilar(m.content, mat.content)) {
-                    const existingGroup = duplicates.find(g => 
-                        g.some(d => d.id === mat.id || d.id === m.id)
-                    );
-                    const item1 = { id: m.id, content: m.content, source: `第${m.inputIndex}次输入` };
-                    const item2 = { id: mat.id, content: mat.content, source: `第${mat.inputIndex}次输入` };
+                    var existingGroup = duplicates.find(function(g) {
+                        return g.some(function(d) { return d.id === mat.id || d.id === m.id; });
+                    });
+                    var item1 = { id: m.id, content: m.content, source: '第' + m.inputIndex + '次输入' };
+                    var item2 = { id: mat.id, content: mat.content, source: '第' + mat.inputIndex + '次输入' };
                     if (existingGroup) {
-                        if (!existingGroup.some(d => d.id === m.id)) existingGroup.push(item1);
-                        if (!existingGroup.some(d => d.id === mat.id)) existingGroup.push(item2);
+                        if (!existingGroup.some(function(d) { return d.id === m.id; })) existingGroup.push(item1);
+                        if (!existingGroup.some(function(d) { return d.id === mat.id; })) existingGroup.push(item2);
                     } else {
                         duplicates.push([item1, item2]);
                     }
@@ -288,31 +290,34 @@
         }
 
         function areSimilar(s1, s2) {
-            const clean1 = s1.replace(/[，,。.、/\\\s]/g, '');
-            const clean2 = s2.replace(/[，,。.、/\\\s]/g, '');
-            const len1 = clean1.length, len2 = clean2.length;
+            var clean1 = s1.replace(/[，,。.、/\\\s]/g, '');
+            var clean2 = s2.replace(/[，,。.、/\\\s]/g, '');
+            var len1 = clean1.length, len2 = clean2.length;
             if (Math.abs(len1 - len2) > 5) return false;
-            const common = [...clean1].filter(c => clean2.includes(c)).length;
+            var common = 0;
+            for (var i = 0; i < clean1.length; i++) {
+                if (clean2.indexOf(clean1[i]) !== -1) common++;
+            }
             return common / Math.max(len1, len2) > 0.6;
         }
 
         function showTab(tab) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.content-area').forEach(c => c.classList.remove('active'));
-            document.querySelector(`.tab[onclick="showTab('${tab}')"]`).classList.add('active');
-            document.getElementById(`tab-${tab}`).classList.add('active');
+            document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+            document.querySelectorAll('.content-area').forEach(function(c) { c.classList.remove('active'); });
+            document.querySelector('.tab[onclick="showTab(\'' + tab + '\')"]').classList.add('active');
+            document.getElementById('tab-' + tab).classList.add('active');
             if (tab === 'all') renderAllMaterials();
-            else if (['character', 'scene', 'foreshadow', 'idea'].includes(tab)) {
-                const cat = tab === 'character' ? '人物' : tab === 'scene' ? '场景' : tab === 'foreshadow' ? '伏笔' : '点子';
-                renderCategory(cat, `tab-${tab}`);
+            else if (['character', 'scene', 'foreshadow', 'idea'].indexOf(tab) !== -1) {
+                var cat = tab === 'character' ? '人物' : tab === 'scene' ? '场景' : tab === 'foreshadow' ? '伏笔' : '点子';
+                renderCategory(cat, 'tab-' + tab);
             } else if (tab === 'duplicate') renderDuplicates();
             else if (tab === 'correction') renderCorrections();
         }
 
         function filterByCategory(cat) {
             currentFilter = cat;
-            document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
-            document.querySelector(`.filter-tag.${cat || 'all'}`).classList.add('active');
+            document.querySelectorAll('.filter-tag').forEach(function(t) { t.classList.remove('active'); });
+            document.querySelector('.filter-tag.' + (cat || 'all')).classList.add('active');
             renderAllMaterials();
         }
 
@@ -322,16 +327,16 @@
         }
 
         function renderAllMaterials() {
-            let filtered = materials;
-            if (currentFilter) filtered = filtered.filter(m => m.category === currentFilter);
-            if (currentSearch) filtered = filtered.filter(m => m.content.toLowerCase().includes(currentSearch));
+            var filtered = materials.slice();
+            if (currentFilter) filtered = filtered.filter(function(m) { return m.category === currentFilter; });
+            if (currentSearch) filtered = filtered.filter(function(m) { return m.content.toLowerCase().indexOf(currentSearch) !== -1; });
             document.getElementById('all-materials').innerHTML = filtered.length ? 
                 filtered.map(renderMaterialItem).join('') : '<div class="empty-state">暂无素材</div>';
         }
 
         function renderCategory(cat, container) {
-            const items = materials.filter(m => m.category === cat);
-            document.getElementById(`${container.replace('tab-', '')}-materials`).innerHTML = 
+            var items = materials.filter(function(m) { return m.category === cat; });
+            document.getElementById(container.replace('tab-', '') + '-materials').innerHTML = 
                 items.length ? items.map(renderMaterialItem).join('') : '<div class="empty-state">暂无素材</div>';
         }
 
@@ -340,14 +345,14 @@
                 document.getElementById('duplicate-content').innerHTML = '<div class="empty-state">暂无疑似重复素材</div>';
                 return;
             }
-            let html = '';
-            for (let i = 0; i < duplicates.length; i++) {
-                const group = duplicates[i];
+            var html = '';
+            for (var i = 0; i < duplicates.length; i++) {
+                var group = duplicates[i];
                 html += '<div class="duplicate-section">';
                 html += '<h3>疑似重复组 ' + (i + 1) + '</h3>';
                 html += '<div class="duplicate-group">';
-                for (let j = 0; j < group.length; j++) {
-                    const d = group[j];
+                for (var j = 0; j < group.length; j++) {
+                    var d = group[j];
                     html += '<div class="duplicate-item">';
                     html += '<span class="duplicate-source">' + d.source + '</span>';
                     html += '<span class="duplicate-content">' + d.content + '</span>';
@@ -360,10 +365,10 @@
             }
             document.getElementById('duplicate-content').innerHTML = html;
             
-            document.querySelectorAll('.duplicate-section button').forEach(btn => {
+            document.querySelectorAll('.duplicate-section button').forEach(function(btn) {
                 btn.onclick = function() {
-                    const groupIdx = parseInt(this.dataset.group);
-                    const itemIdx = parseInt(this.dataset.item);
+                    var groupIdx = parseInt(this.getAttribute('data-group'));
+                    var itemIdx = parseInt(this.getAttribute('data-item'));
                     removeFromDuplicate(groupIdx, itemIdx);
                 };
             });
@@ -377,46 +382,46 @@
         }
 
         function renderCorrections() {
-            document.getElementById('correction-content').innerHTML = corrections.length ? 
-                corrections.map(c => `
-                    <div class="error-section">
-                        <div class="error-item">
-                            <div class="error-type">⚠️ ${c.type}</div>
-                            <div class="error-content">
-                                <div>位置：${c.location}</div>
-                                <div>问题：${c.problem}</div>
-                                ${c.related ? `<div>关联：${c.related}</div>` : ''}
-                            </div>
-                        </div>
-                    </div>
-                `).join('') : '<div class="empty-state">暂无纠错提醒</div>';
+            if (!corrections.length) {
+                document.getElementById('correction-content').innerHTML = '<div class="empty-state">暂无纠错提醒</div>';
+                return;
+            }
+            var html = '';
+            for (var i = 0; i < corrections.length; i++) {
+                var c = corrections[i];
+                html += '<div class="error-section">';
+                html += '<div class="error-item">';
+                html += '<div class="error-type">⚠️ ' + c.type + '</div>';
+                html += '<div class="error-content">';
+                html += '<div>位置：' + c.location + '</div>';
+                html += '<div>问题：' + c.problem + '</div>';
+                if (c.related) html += '<div>关联：' + c.related + '</div>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+            }
+            document.getElementById('correction-content').innerHTML = html;
         }
 
         function renderMaterialItem(m) {
-            return `
-                <div class="material-item">
-                    <span class="material-tag ${getTagClass(m.category)}">【${m.category}】</span>
-                    <span class="material-content">${m.content}${m.featureTags ? `<span class="feature-tag">[${m.featureTags}]</span>` : ''}</span>
-                    <div class="material-meta">第${m.inputIndex}次输入 · ${formatDate(m.createdAt)}</div>
-                    <div class="material-actions">
-                        <button class="btn-edit" onclick="editMaterial(${m.id})">编辑</button>
-                        <button class="btn-delete" onclick="deleteMaterial(${m.id})">删除</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function getTagClass(cat) {
-            return `tag-${cat}`;
+            return '<div class="material-item">' +
+                '<span class="material-tag tag-' + m.category + '">【' + m.category + '】</span>' +
+                '<span class="material-content">' + m.content + (m.featureTags ? '<span class="feature-tag">[' + m.featureTags + ']</span>' : '') + '</span>' +
+                '<div class="material-meta">第' + m.inputIndex + '次输入 · ' + formatDate(m.createdAt) + '</div>' +
+                '<div class="material-actions">' +
+                '<button class="btn-edit" onclick="editMaterial(' + m.id + ')">编辑</button>' +
+                '<button class="btn-delete" onclick="deleteMaterial(' + m.id + ')">删除</button>' +
+                '</div>' +
+                '</div>';
         }
 
         function formatDate(dateStr) {
-            const d = new Date(dateStr);
-            return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`;
+            var d = new Date(dateStr);
+            return (d.getMonth() + 1) + '/' + d.getDate() + ' ' + d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0');
         }
 
         function editMaterial(id) {
-            const m = materials.find(m => m.id === id);
+            var m = materials.find(function(m) { return m.id === id; });
             if (!m) return;
             document.getElementById('edit-id').value = id;
             document.getElementById('edit-category').value = m.category;
@@ -430,8 +435,8 @@
         }
 
         function saveEdit() {
-            const id = parseInt(document.getElementById('edit-id').value);
-            const m = materials.find(m => m.id === id);
+            var id = parseInt(document.getElementById('edit-id').value);
+            var m = materials.find(function(m) { return m.id === id; });
             if (!m) return;
             m.category = document.getElementById('edit-category').value;
             m.content = document.getElementById('edit-content').value;
@@ -443,9 +448,9 @@
 
         function deleteMaterial(id) {
             if (!confirm('确定要删除这条素材吗？')) return;
-            materials = materials.filter(m => m.id !== id);
-            corrections = corrections.filter(c => !c.location.includes(materials.find(m => m.id === id)?.content || ''));
-            duplicates = duplicates.filter(g => !g.some(d => d.id === id));
+            materials = materials.filter(function(m) { return m.id !== id; });
+            corrections = corrections.filter(function(c) { return c.location.indexOf(materials.find(function(m) { return m.id === id; })?.content || '') === -1; });
+            duplicates = duplicates.filter(function(g) { return !g.some(function(d) { return d.id === id; }); });
             updateDisplay();
             saveData();
         }
@@ -461,31 +466,34 @@
         }
 
         function exportData() {
-            const data = { materials, corrections, duplicates, inputCount };
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
+            var data = { materials: materials, corrections: corrections, duplicates: duplicates, inputCount: inputCount };
+            var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
             a.href = url;
-            a.download = `novel-materials-${new Date().toISOString().split('T')[0]}.json`;
+            a.download = 'novel-materials-' + new Date().toISOString().split('T')[0] + '.json';
             a.click();
             URL.revokeObjectURL(url);
         }
 
         function updateDisplay() {
-            const counts = { 
+            var counts = { 
                 total: materials.length,
-                character: materials.filter(m => m.category === '人物').length,
-                scene: materials.filter(m => m.category === '场景').length,
-                foreshadow: materials.filter(m => m.category === '伏笔').length,
-                idea: materials.filter(m => m.category === '点子').length,
+                character: materials.filter(function(m) { return m.category === '人物'; }).length,
+                scene: materials.filter(function(m) { return m.category === '场景'; }).length,
+                foreshadow: materials.filter(function(m) { return m.category === '伏笔'; }).length,
+                idea: materials.filter(function(m) { return m.category === '点子'; }).length,
                 duplicate: duplicates.length,
                 correction: corrections.length
             };
-            Object.entries(counts).forEach(([k, v]) => {
-                document.getElementById(`stat-${k}`)?.textContent = v;
-                document.getElementById(`count-${k}`)?.textContent = v;
-            });
-            if (document.querySelector('.content-area.active')?.id === 'tab-all') renderAllMaterials();
+            for (var k in counts) {
+                var v = counts[k];
+                var statEl = document.getElementById('stat-' + k);
+                var countEl = document.getElementById('count-' + k);
+                if (statEl) statEl.textContent = v;
+                if (countEl) countEl.textContent = v;
+            }
+            if (document.querySelector('.content-area.active').id === 'tab-all') renderAllMaterials();
         }
 
         document.addEventListener('DOMContentLoaded', loadData);
