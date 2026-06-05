@@ -250,7 +250,10 @@
                 document.getElementById('batch-result').innerHTML = '<span style="color: #dc3545;">请输入要导入的内容</span>';
                 return;
             }
+            processBatchText(text);
+        }
 
+        function processBatchText(text) {
             var categoryPattern = /【(人物|场景|伏笔|点子)】/g;
             var featureTagPattern = /\[([^\]]+)\]/g;
             var lines = text.split(/[\r\n]+/);
@@ -300,16 +303,39 @@
             updateDisplay();
             saveData();
 
-            var resultText = '<span style="color: #28a745;">成功导入 ' + importedCount + ' 条</span>';
-            if (failedCount > 0) {
-                resultText += '<span style="color: #dc3545; margin-left: 10px;">失败 ' + failedCount + ' 条（格式不正确）</span>';
-            }
-            document.getElementById('batch-result').innerHTML = resultText;
-
-            setTimeout(function() {
-                document.getElementById('batch-result').innerHTML = '';
-            }, 5000);
+            return { imported: importedCount, failed: failedCount };
         }
+
+        function importFromURL() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var data = urlParams.get('data');
+            if (data) {
+                try {
+                    var decodedText = decodeURIComponent(data);
+                    var result = processBatchText(decodedText);
+                    console.log('URL导入结果: 成功' + result.imported + '条, 失败' + result.failed + '条');
+                } catch (e) {
+                    console.error('URL导入失败:', e);
+                }
+            }
+        }
+
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'novel_material_import') {
+                var result = processBatchText(event.data.content);
+                if (event.source) {
+                    event.source.postMessage({
+                        type: 'novel_material_import_result',
+                        imported: result.imported,
+                        failed: result.failed
+                    }, event.origin);
+                }
+            }
+        });
+
+        window.addNovelMaterial = function(content) {
+            return processBatchText(content);
+        };
 
         function checkForCorrections(m) {
             var errors = [];
