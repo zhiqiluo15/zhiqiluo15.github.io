@@ -126,6 +126,14 @@
             </div>
         </div>
 
+        <div class="input-section" style="background: rgba(79,172,254,0.08); border-color: rgba(79,172,254,0.3);">
+            <h3 style="color: #4facfe; margin-bottom: 15px; font-size: 1.1em;">📥 批量导入（自动识别标签）</h3>
+            <p style="color: #888; font-size: 13px; margin-bottom: 10px;">格式示例：【人物】空颜子，东胜神州送经客 [核心人物，佛骨道心]</p>
+            <textarea id="batch-input" placeholder="粘贴带有【人物】【场景】【伏笔】【点子】标签的文本，系统会自动识别并分类导入...&#10;&#10;示例：&#10;【人物】孙悟空，花果山大王 [齐天大圣]&#10;【场景】水帘洞，洞天福地 [空颜子筑府处]&#10;【伏笔】送经客三字，空颜子不曾写过 [未解之谜]&#10;【点子】空颜子与猴子对话 [剧情桥段]"></textarea>
+            <button class="btn btn-primary" onclick="batchImport()">开始批量导入</button>
+            <span id="batch-result" style="margin-left: 15px; color: #888; font-size: 14px;"></span>
+        </div>
+
         <div class="tabs">
             <div class="tab active" onclick="showTab('all')">全部素材<span id="count-all">0</span></div>
             <div class="tab" onclick="showTab('character')">人物档案<span id="count-character">0</span></div>
