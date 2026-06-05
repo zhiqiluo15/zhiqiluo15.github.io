@@ -244,6 +244,73 @@
             saveData();
         }
 
+        function batchImport() {
+            var text = document.getElementById('batch-input').value.trim();
+            if (!text) {
+                document.getElementById('batch-result').innerHTML = '<span style="color: #dc3545;">请输入要导入的内容</span>';
+                return;
+            }
+
+            var categoryPattern = /【(人物|场景|伏笔|点子)】/g;
+            var featureTagPattern = /\[([^\]]+)\]/g;
+            var lines = text.split(/[\r\n]+/);
+            var importedCount = 0;
+            var failedCount = 0;
+
+            lines.forEach(function(line) {
+                line = line.trim();
+                if (!line) return;
+
+                var categoryMatch = line.match(categoryPattern);
+                if (!categoryMatch) {
+                    failedCount++;
+                    return;
+                }
+
+                var category = categoryMatch[0].replace(/【|】/g, '');
+                var content = line.replace(categoryPattern, '').trim();
+                var featureTags = '';
+                var featureMatch = content.match(featureTagPattern);
+                if (featureMatch) {
+                    featureTags = featureMatch[0].replace(/\[|\]/g, '');
+                    content = content.replace(featureTagPattern, '').trim();
+                }
+
+                if (!content) {
+                    failedCount++;
+                    return;
+                }
+
+                inputCount++;
+                var material = {
+                    id: Date.now() + importedCount,
+                    content: content,
+                    category: category,
+                    featureTags: featureTags,
+                    inputIndex: inputCount,
+                    createdAt: new Date().toISOString()
+                };
+                materials.push(material);
+                checkForCorrections(material);
+                checkForDuplicates(material);
+                importedCount++;
+            });
+
+            document.getElementById('batch-input').value = '';
+            updateDisplay();
+            saveData();
+
+            var resultText = '<span style="color: #28a745;">成功导入 ' + importedCount + ' 条</span>';
+            if (failedCount > 0) {
+                resultText += '<span style="color: #dc3545; margin-left: 10px;">失败 ' + failedCount + ' 条（格式不正确）</span>';
+            }
+            document.getElementById('batch-result').innerHTML = resultText;
+
+            setTimeout(function() {
+                document.getElementById('batch-result').innerHTML = '';
+            }, 5000);
+        }
+
         function checkForCorrections(m) {
             var errors = [];
             for (var wrong in typoMap) {
