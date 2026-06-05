@@ -213,7 +213,61 @@
             if (savedCorr) corrections = JSON.parse(savedCorr);
             if (savedDup) duplicates = JSON.parse(savedDup);
             if (savedCount) inputCount = parseInt(savedCount);
+            
+            if (materials.length === 0) {
+                importInitialMaterials();
+            }
+            
             updateDisplay();
+        }
+
+        function importInitialMaterials() {
+            var initialMaterials = [
+                { category: '人物', content: '空颜子，东胜神州送经客', featureTags: '核心人物，佛骨道心，曾在花果山筑府，贞观时应劫陨灭' },
+                { category: '人物', content: '孙悟空，花果山大王，已去西天做了尊神佛', featureTags: '被五指山镇压五百年的齐天大圣，天地灵石所化' },
+                { category: '人物', content: '老妇，花果山下村落居民', featureTags: '救助空颜子的凡人' },
+                { category: '人物', content: '持剑者，数人，杀气凛然', featureTags: '血洗花果山的刺客，最后自刎' },
+                { category: '人物', content: '土地，花果山土地神', featureTags: '被削去九成九修为' },
+                { category: '人物', content: '七爷八爷，地府之人', featureTags: '收走屠戮者神魂' },
+                { category: '场景', content: '花果山，福地，有瀑布水帘洞', featureTags: '空颜子早年筑府之处' },
+                { category: '场景', content: '水帘洞，洞天', featureTags: '空颜子曾书写"花果山福地，水帘洞洞天"' },
+                { category: '场景', content: '青石台', featureTags: '空颜子站立之处，天书灵宝遗留地' },
+                { category: '场景', content: '花果山下村落', featureTags: '老妇居住之地' },
+                { category: '场景', content: '东胜神州', featureTags: '空颜子称号相关地域' },
+                { category: '场景', content: '西天', featureTags: '孙悟空成神佛之地' },
+                { category: '场景', content: '瀑布，飞泉玉龙吟啸，山壁怪石嶙峋', featureTags: '空颜子凌空穿出之处' },
+                { category: '伏笔', content: '"东胜神州送经客"，空颜子不曾写过，但字迹笔意与自己如出一辙', featureTags: '未解之谜，疑似他人伪造' },
+                { category: '伏笔', content: '送经？何为经？', featureTags: '空颜子的核心疑问，贯穿全文' },
+                { category: '伏笔', content: '贞观之后已是天宝十二载，空颜子惊觉时间跳跃', featureTags: '时空设定疑问' },
+                { category: '伏笔', content: '空颜子一身法力被封，沦为凡人之躯', featureTags: '力量被封印的原因' },
+                { category: '伏笔', content: '吊睛白额虎拦路，实为幻象试验', featureTags: '神秘力量操控' },
+                { category: '伏笔', content: '天书灵宝，来历非凡，空颜子遗落而久不自知', featureTags: '重要道具，有真经之韵' },
+                { category: '伏笔', content: '花果山生灵屠尽，谁所为？', featureTags: '核心谜团' },
+                { category: '伏笔', content: '某伟力存在注视空颜子，称其为"送经客"', featureTags: '幕后推手' },
+                { category: '伏笔', content: '孙悟空曾受佛骨道心身影密言，留意道号空颜子', featureTags: '关键关联' },
+                { category: '点子', content: '空颜子在瀑中孤影凌空穿出，身畔一卷文书悬于半空，灵流涌动', featureTags: '场景构想' },
+                { category: '点子', content: '空颜子与猴子对话，得知孙悟空已成神佛，时间已是唐朝天宝年间', featureTags: '剧情桥段' },
+                { category: '点子', content: '空颜子遭遇吊睛白额虎幻象攻击，识破后继续前行', featureTags: '动作设计' },
+                { category: '点子', content: '空颜子与持剑者激战，被一剑贯穿后心身亡', featureTags: '冲突桥段' },
+                { category: '点子', content: '孙悟空被唤出，为报答密言嘱托，为空颜子重塑肉身', featureTags: '关键转折' },
+                { category: '点子', content: '空颜子道心引动，借助孙悟空法力自塑肉身苏醒', featureTags: '恢复桥段' },
+                { category: '点子', content: '空颜子告知孙悟空花果山生灵屠尽的真相', featureTags: '剧情推进' },
+                { category: '点子', content: '伟力存在借天书之力唤来被五指山镇压五百年的孙悟空', featureTags: '时空交错' }
+            ];
+            
+            initialMaterials.forEach(function(m) {
+                inputCount++;
+                materials.push({
+                    id: Date.now() + inputCount,
+                    content: m.content,
+                    category: m.category,
+                    featureTags: m.featureTags,
+                    inputIndex: inputCount,
+                    createdAt: new Date().toISOString()
+                });
+            });
+            
+            saveData();
         }
 
         function saveData() {
