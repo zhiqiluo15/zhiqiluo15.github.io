@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创作素材整理台</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); min-height: 100vh; color: #e0e0e0; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { text-align: center; color: #ffd700; margin-bottom: 30px; font-size: 2.2em; text-shadow: 0 0 10px rgba(255,215,0,0.3); }
+        
+        .stats-bar { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+        .stat-item { background: rgba(255,255,255,0.05); padding: 10px 20px; border-radius: 8px; display: flex; align-items: center; gap: 8px; }
+        .stat-value { font-size: 20px; font-weight: bold; color: #ffd700; }
+        .stat-label { font-size: 13px; color: #888; }
+        
+        .input-section { background: rgba(255,255,255,0.05); border-radius: 15px; padding: 25px; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); }
+        .input-section textarea { width: 100%; height: 100px; padding: 15px; border: 2px solid rgba(255,215,0,0.3); border-radius: 10px; background: rgba(0,0,0,0.3); color: #e0e0e0; font-size: 15px; resize: vertical; margin-bottom: 15px; }
+        .input-section textarea:focus { outline: none; border-color: #ffd700; }
+        .input-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .input-actions select, .input-actions input[type="text"] { padding: 10px 15px; border: 2px solid rgba(255,215,0,0.3); border-radius: 8px; background: rgba(0,0,0,0.3); color: #e0e0e0; font-size: 14px; }
+        .btn { padding: 12px 25px; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+        .btn-primary { background: linear-gradient(135deg, #ffd700, #ffb700); color: #1a1a2e; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255,215,0,0.4); }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: #e0e0e0; border: 1px solid rgba(255,255,255,0.2); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+        .btn-danger { background: linear-gradient(135deg, #dc3545, #c82333); color: white; }
+        .btn-small { padding: 6px 12px; font-size: 12px; }
+        
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab { padding: 10px 20px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.05); color: #e0e0e0; cursor: pointer; transition: all 0.3s; font-size: 13px; }
+        .tab.active { background: linear-gradient(135deg, #ffd700, #ffb700); color: #1a1a2e; border-color: #ffd700; }
+        .tab span { margin-left: 5px; background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 11px; }
+        
+        .content-area { display: none; }
+        .content-area.active { display: block; }
+        
+        .category-section { background: rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; margin-bottom: 20px; }
+        .category-section h3 { color: #ffd700; margin-bottom: 15px; font-size: 1.2em; border-bottom: 2px solid rgba(255,215,0,0.3); padding-bottom: 10px; }
+        
+        .material-item { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 15px; margin-bottom: 10px; position: relative; }
+        .material-item:hover { border-color: rgba(255,215,0,0.5); }
+        .material-tag { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-right: 8px; }
+        .tag-人物 { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .tag-场景 { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
+        .tag-伏笔 { background: linear-gradient(135deg, #f093fb, #f5576c); color: white; }
+        .tag-点子 { background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; }
+        .material-content { font-size: 14px; line-height: 1.6; color: #e0e0e0; margin: 8px 0; }
+        .feature-tag { display: inline-block; background: rgba(255,215,0,0.15); color: #ffd700; padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-left: 5px; }
+        .material-meta { font-size: 11px; color: #666; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .material-actions { position: absolute; right: 15px; top: 15px; display: flex; gap: 5px; }
+        .material-actions button { padding: 5px 10px; font-size: 11px; border: none; border-radius: 5px; cursor: pointer; }
+        .btn-edit { background: rgba(255,215,0,0.2); color: #ffd700; }
+        .btn-delete { background: rgba(220,53,69,0.2); color: #dc3545; }
+        
+        .filter-tags { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .filter-tag { padding: 8px 15px; border-radius: 20px; font-size: 12px; cursor: pointer; border: 1px solid transparent; }
+        .filter-tag.all { background: rgba(255,255,255,0.1); color: #e0e0e0; }
+        .filter-tag.人物 { background: rgba(102,126,234,0.2); color: #a78bfa; }
+        .filter-tag.场景 { background: rgba(17,153,142,0.2); color: #10b981; }
+        .filter-tag.伏笔 { background: rgba(240,147,251,0.2); color: #f472b6; }
+        .filter-tag.点子 { background: rgba(79,172,254,0.2); color: #60a5fa; }
+        .filter-tag.active { border-color: #ffd700; }
+        
+        .search-box { display: flex; gap: 10px; margin-bottom: 20px; }
+        .search-box input { flex: 1; padding: 12px; border: 2px solid rgba(255,215,0,0.3); border-radius: 8px; background: rgba(0,0,0,0.3); color: #e0e0e0; font-size: 14px; }
+        .search-box input:focus { outline: none; border-color: #ffd700; }
+        
+        .duplicate-section { background: rgba(255,193,7,0.1); border: 2px dashed rgba(255,193,7,0.3); border-radius: 15px; padding: 20px; margin-bottom: 20px; }
+        .duplicate-section h3 { color: #ffc107; margin-bottom: 15px; font-size: 1.2em; }
+        .duplicate-group { background: rgba(0,0,0,0.3); border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+        .duplicate-item { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 10px; }
+        .duplicate-item:last-child { border-bottom: none; }
+        .duplicate-source { font-size: 11px; color: #ffc107; background: rgba(255,193,7,0.2); padding: 2px 8px; border-radius: 4px; }
+        .duplicate-content { flex: 1; font-size: 14px; color: #e0e0e0; }
+        
+        .error-section { background: rgba(220,53,69,0.1); border: 2px dashed rgba(220,53,69,0.3); border-radius: 15px; padding: 20px; margin-bottom: 20px; }
+        .error-section h3 { color: #dc3545; margin-bottom: 15px; font-size: 1.2em; }
+        .error-item { background: rgba(0,0,0,0.3); border-left: 4px solid #dc3545; border-radius: 0 8px 8px 0; padding: 12px 15px; margin-bottom: 10px; }
+        .error-type { font-size: 11px; color: #dc3545; font-weight: 600; margin-bottom: 5px; }
+        .error-content { font-size: 14px; color: #e0e0e0; line-height: 1.5; }
+        
+        .empty-state { text-align: center; padding: 40px; color: #888; font-size: 15px; }
+        
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 15px; padding: 25px; width: 90%; max-width: 500px; border: 1px solid rgba(255,255,255,0.1); }
+        .modal h3 { color: #ffd700; margin-bottom: 20px; font-size: 1.3em; }
+        .modal select, .modal textarea, .modal input { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid rgba(255,215,0,0.3); border-radius: 8px; background: rgba(0,0,0,0.3); color: #e0e0e0; font-size: 14px; }
+        .modal textarea { height: 80px; resize: vertical; }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 1.7em; }
+            .input-actions { flex-direction: column; align-items: stretch; }
+            .tabs { flex-wrap: wrap; }
+            .tab { padding: 8px 15px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>创作素材整理台</h1>
+        
+        <div class="stats-bar">
+            <div class="stat-item"><span class="stat-value" id="stat-total">0</span><span class="stat-label">总素材</span></div>
+            <div class="stat-item"><span class="stat-value" id="stat-character">0</span><span class="stat-label">人物档案</span></div>
+            <div class="stat-item"><span class="stat-value" id="stat-scene">0</span><span class="stat-label">地域场景</span></div>
+            <div class="stat-item"><span class="stat-value" id="stat-foreshadow">0</span><span class="stat-label">伏笔线索</span></div>
+            <div class="stat-item"><span class="stat-value" id="stat-idea">0</span><span class="stat-label">剧情点子</span></div>
+        </div>
+
+        <div class="input-section">
+            <textarea id="material-input" placeholder="输入碎片素材（长短不限，零乱无妨，原样收录）..."></textarea>
+            <div class="input-actions">
+                <select id="category-select">
+                    <option value="人物">人物档案</option>
+                    <option value="场景">地域场景</option>
+                    <option value="伏笔">伏笔线索</option>
+                    <option value="点子">零散剧情点子</option>
+                </select>
+                <input type="text" id="feature-tags" placeholder="功能标签（可选）">
+                <button class="btn btn-primary" onclick="addMaterial()">添加素材</button>
+                <button class="btn btn-secondary" onclick="clearAllData()" style="margin-left: auto;">清空所有</button>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('all')">全部素材<span id="count-all">0</span></div>
+            <div class="tab" onclick="showTab('character')">人物档案<span id="count-character">0</span></div>
+            <div class="tab" onclick="showTab('scene')">地域场景<span id="count-scene">0</span></div>
+            <div class="tab" onclick="showTab('foreshadow')">伏笔线索<span id="count-foreshadow">0</span></div>
+            <div class="tab" onclick="showTab('idea')">剧情点子<span id="count-idea">0</span></div>
+            <div class="tab" onclick="showTab('duplicate')">待筛选重复<span id="count-duplicate">0</span></div>
+            <div class="tab" onclick="showTab('correction')">纠错提醒<span id="count-correction">0</span></div>
+        </div>
+
+        <div class="content-area active" id="tab-all">
+            <div class="filter-tags">
+                <div class="filter-tag all active" onclick="filterByCategory('')">全部</div>
+                <div class="filter-tag 人物" onclick="filterByCategory('人物')">人物</div>
+                <div class="filter-tag 场景" onclick="filterByCategory('场景')">场景</div>
+                <div class="filter-tag 伏笔" onclick="filterByCategory('伏笔')">伏笔</div>
+                <div class="filter-tag 点子" onclick="filterByCategory('点子')">点子</div>
+            </div>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="搜索素材..." onkeyup="searchMaterial()">
+                <button class="btn btn-secondary btn-small" onclick="exportData()">导出数据</button>
+            </div>
+            <div id="all-materials"></div>
+        </div>
+
+        <div class="content-area" id="tab-character"><div class="category-section"><h3>【人物档案】</h3><div id="character-materials"></div></div></div>
+        <div class="content-area" id="tab-scene"><div class="category-section"><h3>【地域场景】</h3><div id="scene-materials"></div></div></div>
+        <div class="content-area" id="tab-foreshadow"><div class="category-section"><h3>【伏笔线索】</h3><div id="foreshadow-materials"></div></div></div>
+        <div class="content-area" id="tab-idea"><div class="category-section"><h3>【零散剧情点子】</h3><div id="idea-materials"></div></div></div>
+        <div class="content-area" id="tab-duplicate"><div id="duplicate-content"></div></div>
+        <div class="content-area" id="tab-correction"><div id="correction-content"></div></div>
+
+        <div class="modal-overlay" id="edit-modal">
+            <div class="modal">
+                <h3>编辑素材</h3>
+                <input type="hidden" id="edit-id">
+                <select id="edit-category">
+                    <option value="人物">人物档案</option>
+                    <option value="场景">地域场景</option>
+                    <option value="伏笔">伏笔线索</option>
+                    <option value="点子">零散剧情点子</option>
+                </select>
+                <textarea id="edit-content" placeholder="素材内容"></textarea>
+                <input type="text" id="edit-feature-tags" placeholder="功能标签（可选）">
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+                    <button class="btn btn-primary" onclick="saveEdit()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let materials = [], corrections = [], duplicates = [];
+        let currentFilter = '', currentSearch = '', inputCount = 0;
+
+        const typoMap = {
+            '安剑': '按剑', '在坐': '在座', '以经': '已经', '既将': '即将',
+            '的话': '的话', '地话': '的话', '得话': '的话', '那怕': '哪怕',
+            '那吗': '那么', '那末': '那么', '甚麽': '什么', '什麽': '什么',
+            '为甚': '为何', '为什麽': '为什么', '怎麽': '怎么', '甚麽样': '什么样',
+            '那麽样': '那么样', '那末样': '那么样', '那末些': '那些', '那末个': '那个',
+            '这末': '这么', '这麽': '这么', '这麽样': '这么样', '这麽些': '这些',
+            '这麽个': '这个', '那们': '那么', '这们': '这么', '甚的': '什么的',
+            '甚底': '什么的', '甚麽底': '什么的', '甚麽样底': '什么样的',
+            '那等': '那种', '那樣': '那样', '那樣子': '那样子', '這样': '这样',
+            '這樣': '这样', '這樣子': '这样子', '那麽些': '那些', '那麽个': '那个',
+            '那麽样': '那么样', '那麽底': '那么的'
+        };
+
+        function loadData() {
+            const saved = localStorage.getItem('novel-materials');
+            const savedCorr = localStorage.getItem('novel-corrections');
+            const savedDup = localStorage.getItem('novel-duplicates');
+            const savedCount = localStorage.getItem('novel-input-count');
+            if (saved) materials = JSON.parse(saved);
+            if (savedCorr) corrections = JSON.parse(savedCorr);
+            if (savedDup) duplicates = JSON.parse(savedDup);
+            if (savedCount) inputCount = parseInt(savedCount);
+            updateDisplay();
+        }
+
+        function saveData() {
+            localStorage.setItem('novel-materials', JSON.stringify(materials));
+            localStorage.setItem('novel-corrections', JSON.stringify(corrections));
+            localStorage.setItem('novel-duplicates', JSON.stringify(duplicates));
+            localStorage.setItem('novel-input-count', inputCount.toString());
+        }
+
+        function addMaterial() {
+            const content = document.getElementById('material-input').value.trim();
+            const category = document.getElementById('category-select').value;
+            const featureTags = document.getElementById('feature-tags').value.trim();
+            if (!content) { alert('请输入素材内容'); return; }
+            
+            inputCount++;
+            const material = {
+                id: Date.now(), content, category, featureTags,
+                inputIndex: inputCount, createdAt: new Date().toISOString()
+            };
+            materials.push(material);
+            checkForCorrections(material);
+            checkForDuplicates(material);
+            
+            document.getElementById('material-input').value = '';
+            document.getElementById('feature-tags').value = '';
+            updateDisplay();
+            saveData();
+        }
+
+        function checkForCorrections(m) {
+            const errors = [];
+            for (const [wrong, correct] of Object.entries(typoMap)) {
+                if (m.content.includes(wrong) && wrong !== correct) {
+                    errors.push({ type: '错别字', location: m.content,
+                        problem: `疑为错别字"${wrong}"，通常作"${correct}"`, source: `第${m.inputIndex}次输入` });
+                }
+            }
+            materials.forEach(mat => {
+                if (mat.id !== m.id && mat.category === m.category) {
+                    const nameMatch1 = m.content.match(/([\u4e00-\u9fa5]{2,4})\s*(，|,|是|有|在|的)/);
+                    const nameMatch2 = mat.content.match(/([\u4e00-\u9fa5]{2,4})\s*(，|,|是|有|在|的)/);
+                    if (nameMatch1 && nameMatch2 && nameMatch1[1] !== nameMatch2[1]) {
+                        if (nameMatch1[1][0] === nameMatch2[1][0] || nameMatch1[1].includes(nameMatch2[1][0])) {
+                            errors.push({ type: '名称不统一', location: m.content,
+                                problem: `当前为"${nameMatch1[1]}"，与第${mat.inputIndex}次输入的"${nameMatch2[1]}"可能指同一人`, source: `第${m.inputIndex}次输入` });
+                        }
+                    }
+                    const numMatch1 = m.content.match(/(\d+)\s*(年|岁|级|重|丈|尺|寸|里|两|钱|分)/);
+                    const numMatch2 = mat.content.match(/(\d+)\s*(年|岁|级|重|丈|尺|寸|里|两|钱|分)/);
+                    if (numMatch1 && numMatch2 && numMatch1[2] === numMatch2[2] && numMatch1[1] !== numMatch2[1]) {
+                        errors.push({ type: '数值数据冲突', location: m.content,
+                            problem: `当前数值"${numMatch1[1]}${numMatch1[2]}"与第${mat.inputIndex}次输入的"${numMatch2[1]}${numMatch2[2]}"冲突`, source: `第${m.inputIndex}次输入` });
+                    }
+                }
+            });
+            errors.forEach(e => {
+                if (!corrections.some(c => c.location === e.location && c.problem === e.problem)) {
+                    corrections.push(e);
+                }
+            });
+        }
+
+        function checkForDuplicates(m) {
+            materials.forEach(mat => {
+                if (mat.id !== m.id && areSimilar(m.content, mat.content)) {
+                    const existingGroup = duplicates.find(g => 
+                        g.some(d => d.id === mat.id || d.id === m.id)
+                    );
+                    const item1 = { id: m.id, content: m.content, source: `第${m.inputIndex}次输入` };
+                    const item2 = { id: mat.id, content: mat.content, source: `第${mat.inputIndex}次输入` };
+                    if (existingGroup) {
+                        if (!existingGroup.some(d => d.id === m.id)) existingGroup.push(item1);
+                        if (!existingGroup.some(d => d.id === mat.id)) existingGroup.push(item2);
+                    } else {
+                        duplicates.push([item1, item2]);
+                    }
+                }
+            });
+        }
+
+        function areSimilar(s1, s2) {
+            const clean1 = s1.replace(/[，,。.、/\\\s]/g, '');
+            const clean2 = s2.replace(/[，,。.、/\\\s]/g, '');
+            const len1 = clean1.length, len2 = clean2.length;
+            if (Math.abs(len1 - len2) > 5) return false;
+            const common = [...clean1].filter(c => clean2.includes(c)).length;
+            return common / Math.max(len1, len2) > 0.6;
+        }
+
+        function showTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.content-area').forEach(c => c.classList.remove('active'));
+            document.querySelector(`.tab[onclick="showTab('${tab}')"]`).classList.add('active');
+            document.getElementById(`tab-${tab}`).classList.add('active');
+            if (tab === 'all') renderAllMaterials();
+            else if (['character', 'scene', 'foreshadow', 'idea'].includes(tab)) {
+                const cat = tab === 'character' ? '人物' : tab === 'scene' ? '场景' : tab === 'foreshadow' ? '伏笔' : '点子';
+                renderCategory(cat, `tab-${tab}`);
+            } else if (tab === 'duplicate') renderDuplicates();
+            else if (tab === 'correction') renderCorrections();
+        }
+
+        function filterByCategory(cat) {
+            currentFilter = cat;
+            document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.filter-tag.${cat || 'all'}`).classList.add('active');
+            renderAllMaterials();
+        }
+
+        function searchMaterial() {
+            currentSearch = document.getElementById('search-input').value.toLowerCase();
+            renderAllMaterials();
+        }
+
+        function renderAllMaterials() {
+            let filtered = materials;
+            if (currentFilter) filtered = filtered.filter(m => m.category === currentFilter);
+            if (currentSearch) filtered = filtered.filter(m => m.content.toLowerCase().includes(currentSearch));
+            document.getElementById('all-materials').innerHTML = filtered.length ? 
+                filtered.map(renderMaterialItem).join('') : '<div class="empty-state">暂无素材</div>';
+        }
+
+        function renderCategory(cat, container) {
+            const items = materials.filter(m => m.category === cat);
+            document.getElementById(`${container.replace('tab-', '')}-materials`).innerHTML = 
+                items.length ? items.map(renderMaterialItem).join('') : '<div class="empty-state">暂无素材</div>';
+        }
+
+        function renderDuplicates() {
+            document.getElementById('duplicate-content').innerHTML = duplicates.length ? 
+                duplicates.map((group, idx) => `
+                    <div class="duplicate-section">
+                        <h3>疑似重复组 ${idx + 1}</h3>
+                        <div class="duplicate-group">${group.map(d => `
+                            <div class="duplicate-item">
+                                <span class="duplicate-source">${d.source}</span>
+                                <span class="duplicate-content">${d.content}</span>
+                                <button class="btn btn-secondary btn-small" onclick="removeFromDuplicate(${idx}, ${group.indexOf(d)})">保留</button>
+                            </div>
+                        `).join('')}</div>
+                        <p style="color:#ffc107;font-size:12px;margin-top:10px;">→ 疑似同一设定，请手动判定合并或保留</p>
+                    </div>
+                `).join('') : '<div class="empty-state">暂无疑似重复素材</div>';
+        }
+
+        function removeFromDuplicate(groupIdx, itemIdx) {
+            duplicates[groupIdx].splice(itemIdx, 1);
+            if (duplicates[groupIdx].length < 2) duplicates.splice(groupIdx, 1);
+            renderDuplicates();
+            saveData();
+        }
+
+        function renderCorrections() {
+            document.getElementById('correction-content').innerHTML = corrections.length ? 
+                corrections.map(c => `
+                    <div class="error-section">
+                        <div class="error-item">
+                            <div class="error-type">⚠️ ${c.type}</div>
+                            <div class="error-content">
+                                <div>位置：${c.location}</div>
+                                <div>问题：${c.problem}</div>
+                                ${c.related ? `<div>关联：${c.related}</div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `).join('') : '<div class="empty-state">暂无纠错提醒</div>';
+        }
+
+        function renderMaterialItem(m) {
+            return `
+                <div class="material-item">
+                    <span class="material-tag ${getTagClass(m.category)}">【${m.category}】</span>
+                    <span class="material-content">${m.content}${m.featureTags ? `<span class="feature-tag">[${m.featureTags}]</span>` : ''}</span>
+                    <div class="material-meta">第${m.inputIndex}次输入 · ${formatDate(m.createdAt)}</div>
+                    <div class="material-actions">
+                        <button class="btn-edit" onclick="editMaterial(${m.id})">编辑</button>
+                        <button class="btn-delete" onclick="deleteMaterial(${m.id})">删除</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getTagClass(cat) {
+            return `tag-${cat}`;
+        }
+
+        function formatDate(dateStr) {
+            const d = new Date(dateStr);
+            return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`;
+        }
+
+        function editMaterial(id) {
+            const m = materials.find(m => m.id === id);
+            if (!m) return;
+            document.getElementById('edit-id').value = id;
+            document.getElementById('edit-category').value = m.category;
+            document.getElementById('edit-content').value = m.content;
+            document.getElementById('edit-feature-tags').value = m.featureTags;
+            document.getElementById('edit-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('edit-modal').classList.remove('active');
+        }
+
+        function saveEdit() {
+            const id = parseInt(document.getElementById('edit-id').value);
+            const m = materials.find(m => m.id === id);
+            if (!m) return;
+            m.category = document.getElementById('edit-category').value;
+            m.content = document.getElementById('edit-content').value;
+            m.featureTags = document.getElementById('edit-feature-tags').value;
+            closeModal();
+            updateDisplay();
+            saveData();
+        }
+
+        function deleteMaterial(id) {
+            if (!confirm('确定要删除这条素材吗？')) return;
+            materials = materials.filter(m => m.id !== id);
+            corrections = corrections.filter(c => !c.location.includes(materials.find(m => m.id === id)?.content || ''));
+            duplicates = duplicates.filter(g => !g.some(d => d.id === id));
+            updateDisplay();
+            saveData();
+        }
+
+        function clearAllData() {
+            if (!confirm('确定要清空所有素材吗？此操作不可恢复！')) return;
+            materials = [];
+            corrections = [];
+            duplicates = [];
+            inputCount = 0;
+            updateDisplay();
+            saveData();
+        }
+
+        function exportData() {
+            const data = { materials, corrections, duplicates, inputCount };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `novel-materials-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function updateDisplay() {
+            const counts = { 
+                total: materials.length,
+                character: materials.filter(m => m.category === '人物').length,
+                scene: materials.filter(m => m.category === '场景').length,
+                foreshadow: materials.filter(m => m.category === '伏笔').length,
+                idea: materials.filter(m => m.category === '点子').length,
+                duplicate: duplicates.length,
+                correction: corrections.length
+            };
+            Object.entries(counts).forEach(([k, v]) => {
+                document.getElementById(`stat-${k}`)?.textContent = v;
+                document.getElementById(`count-${k}`)?.textContent = v;
+            });
+            if (document.querySelector('.content-area.active')?.id === 'tab-all') renderAllMaterials();
+        }
+
+        document.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>
