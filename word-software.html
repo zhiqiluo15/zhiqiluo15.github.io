@@ -426,7 +426,7 @@ button:active {
     <h2>📝 添加单词</h2>
     <div class="inline">
       <select id="addCatSelect"><option value="">-- 选择类别 --</option></select>
-      <input id="addEn" placeholder="英文单词" onkeydown="if(event.key==='Enter') addWord()">
+      <input id="addEn" placeholder="英文单词" onkeydown="if(event.key==='Enter') {event.preventDefault(); document.getElementById('addZh').focus();}">
       <input id="addZh" placeholder="中文释义" onkeydown="if(event.key==='Enter') addWord()">
       <button onclick="addWord()">➕ 添加</button>
     </div>
