@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>天宝十二载·长安城坊里权力地图 - 设定档案 - 灵弦华夏</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Noto Serif SC', serif;
+      color: #e8e4d9;
+      background: linear-gradient(135deg, #0a0a12 0%, #12121a 30%, #0d0d15 70%, #0a0a12 100%);
+      position: relative;
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle var(--duration) ease-in-out infinite;
+      box-shadow: 0 0 6px 2px rgba(245, 230, 200, 0.3);
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: var(--min-opacity); transform: scale(1); }
+      50% { opacity: var(--max-opacity); transform: scale(1.2); }
+    }
+
+    .header {
+      position: relative;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      border-bottom: 1px solid rgba(201, 196, 181, 0.08);
+    }
+
+    .site-name {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 1.8rem;
+      color: #f5e6c8;
+      letter-spacing: 0.15em;
+      text-shadow: 0 0 25px rgba(245, 230, 200, 0.35);
+    }
+
+    .nav-back {
+      font-size: 0.9rem;
+      color: #c9c4b5;
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      padding: 9px 18px;
+      border: 1px solid rgba(201, 196, 181, 0.2);
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(245, 230, 200, 0.04), transparent);
+      transition: all 0.3s ease;
+    }
+
+    .nav-back:hover {
+      color: #f5e6c8;
+      border-color: rgba(245, 230, 200, 0.45);
+    }
+
+    .main-content {
+      position: relative;
+      z-index: 10;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 32px;
+    }
+
+    .setting-header {
+      text-align: center;
+      padding: 40px 0 50px;
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .setting-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(245, 230, 200, 0.4), transparent);
+    }
+
+    .setting-icon {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2a3a4a, #1a2a38);
+      border: 3px solid rgba(245, 230, 200, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 3.2rem;
+      color: #f5e6c8;
+      margin: 0 auto 24px;
+      box-shadow: 0 8px 35px rgba(0, 0, 0, 0.4), 0 0 40px rgba(245, 230, 200, 0.08);
+      position: relative;
+    }
+
+    .setting-icon::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, rgba(245, 230, 200, 0.3), transparent, rgba(245, 230, 200, 0.15));
+      opacity: 0.6;
+    }
+
+    .setting-name {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 2.4rem;
+      color: #f5e6c8;
+      letter-spacing: 0.15em;
+      margin-bottom: 8px;
+      text-shadow: 0 0 30px rgba(245, 230, 200, 0.4);
+    }
+
+    .setting-category {
+      font-size: 1rem;
+      color: #9a9588;
+      letter-spacing: 0.2em;
+      margin-bottom: 16px;
+    }
+
+    .setting-tags {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .tag {
+      padding: 8px 20px;
+      background: linear-gradient(135deg, rgba(245, 230, 200, 0.06), rgba(245, 230, 200, 0.02));
+      border: 1px solid rgba(245, 230, 200, 0.2);
+      border-radius: 24px;
+      font-size: 0.85rem;
+      color: #d4cfc2;
+      letter-spacing: 0.08em;
+    }
+
+    .section {
+      background: linear-gradient(145deg, rgba(20, 20, 32, 0.9), rgba(12, 12, 20, 0.95));
+      border: 1px solid rgba(201, 196, 181, 0.08);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .section:hover {
+      border-color: rgba(245, 230, 200, 0.18);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .article-content {
+      line-height: 2;
+      font-size: 0.95rem;
+      color: #c8c4b8;
+    }
+
+    .article-content .article-intro {
+      font-size: 1.05rem;
+      color: #e8e4d9;
+      font-style: italic;
+      padding: 24px 28px;
+      background: linear-gradient(135deg, rgba(245, 230, 200, 0.06), rgba(245, 230, 200, 0.02));
+      border-left: 3px solid rgba(245, 230, 200, 0.28);
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 36px;
+      line-height: 2;
+    }
+
+    .article-content h3 {
+      font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
+      font-size: 1.4rem;
+      color: #f5e6c8;
+      font-weight: 400;
+      margin: 40px 0 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(245, 230, 200, 0.15);
+      letter-spacing: 0.06em;
+      text-shadow: 0 0 12px rgba(245, 230, 200, 0.12);
+    }
+
+    .article-content h4 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.08rem;
+      color: #d4cfc2;
+      font-weight: 600;
+      margin: 28px 0 14px;
+      letter-spacing: 0.04em;
+    }
+
+    .article-content p {
+      margin-bottom: 16px;
+      text-indent: 2em;
+      text-align: justify;
+    }
+
+    .article-content p.no-indent {
+      text-indent: 0;
+    }
+
+    .article-content .poem {
+      font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
+      font-size: 1.15rem;
+      color: #f5e6c8;
+      text-align: center;
+      padding: 18px 24px;
+      margin: 20px 0;
+      background: rgba(245, 230, 200, 0.04);
+      border-radius: 10px;
+      letter-spacing: 0.06em;
+      text-indent: 0;
+      line-height: 2;
+    }
+
+    .article-content .highlight-box {
+      background: linear-gradient(135deg, rgba(245, 230, 200, 0.08), rgba(245, 230, 200, 0.02));
+      border: 1px solid rgba(245, 230, 200, 0.15);
+      border-radius: 10px;
+      padding: 18px 24px;
+      margin: 22px 0;
+      font-size: 0.93rem;
+      line-height: 1.9;
+    }
+
+    .article-content .highlight-box strong {
+      color: #f5e6c8;
+      font-weight: 600;
+    }
+
+    .article-content .divider {
+      text-align: center;
+      color: rgba(245, 230, 200, 0.3);
+      margin: 36px 0;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+    }
+
+    .article-content .end-poem {
+      font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
+      font-size: 1.1rem;
+      color: #e8e4d9;
+      text-align: center;
+      padding: 32px 24px;
+      margin: 40px 0 8px;
+      background: linear-gradient(135deg, rgba(245, 230, 200, 0.05), transparent);
+      border-radius: 14px;
+      letter-spacing: 0.04em;
+      line-height: 2.2;
+      border: 1px solid rgba(245, 230, 200, 0.08);
+      text-indent: 0;
+    }
+
+    .article-content .sub-section {
+      margin-left: 18px;
+      padding-left: 18px;
+      border-left: 1px solid rgba(245, 230, 200, 0.1);
+      margin-bottom: 18px;
+    }
+
+    .article-content .sub-section h5 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 0.95rem;
+      color: #c9c0a0;
+      font-weight: 600;
+      margin: 18px 0 10px;
+      letter-spacing: 0.03em;
+    }
+
+    .article-content .sub-section p {
+      text-indent: 2em;
+    }
+
+    .footer-note {
+      text-align: center;
+      padding: 48px 32px;
+      color: #7a7568;
+      font-size: 0.88rem;
+      letter-spacing: 0.1em;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 20px 16px;
+      }
+
+      .site-name {
+        font-size: 1.5rem;
+      }
+
+      .nav-back {
+        font-size: 0.85rem;
+        padding: 8px 16px;
+      }
+
+      .main-content {
+        padding: 32px 16px;
+      }
+
+      .setting-header {
+        padding: 32px 0 40px;
+      }
+
+      .setting-name {
+        font-size: 1.8rem;
+      }
+
+      .setting-icon {
+        width: 100px;
+        height: 100px;
+        font-size: 2.6rem;
+      }
+
+      .section {
+        padding: 24px 20px;
+      }
+
+      .article-content {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-content {
+        padding: 24px 12px;
+      }
+
+      .setting-name {
+        font-size: 1.5rem;
+      }
+
+      .article-content h3 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+
+  <header class="header">
+    <div class="site-name">灵弦华夏</div>
+    <a href="../settings.html" class="nav-back">返回设定</a>
+  </header>
+
+  <main class="main-content">
+    <div class="setting-header">
+      <div class="setting-icon">🗺️</div>
+      <h1 class="setting-name">天宝十二载·长安城坊里权力地图</h1>
+      <div class="setting-category">地理 · 势力分布</div>
+      <div class="setting-tags">
+        <span class="tag">地理</span>
+        <span class="tag">势力分布</span>
+        <span class="tag">冯罗对峙</span>
+        <span class="tag">权力地图</span>
+        <span class="tag">长安城</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="article-content">
+        <div class="article-intro">天宝癸巳，帝城如弈局。宫阙为盘，坊市为子，一百零九坊划分清浊、藏纳股肱。晨昏街鼓八百声，敲出天子脚下的尊卑秩序；金吾铺卒夜呼"金吾"，将宵禁后的长安切成光影交错的棋盘。街西属长安县，街东属万年县，中轴朱雀大街宽一百五十米，正如一道刀痕，把帝国的权力中枢与芸芸众坊劈成东西两半，北端宫禁森严，南端梵音缭绕。</div>
+
+        <p>此时距安史乱起仅隔一岁余，杨国忠正位子午，吉温暗通幽燕，太子李亨困于东宫，而龙首坊马厩里的蹄铁与辅兴坊宫门后的甲胄，都已嗅到了风雨欲来的腥气。</p>
+
+        <h3>一、最北部：皇家禁苑（北衙禁军之肺）</h3>
+        <p class="poem">"北苑连山，霜戈曜日。"</p>
+        <p>位于宫城、大明宫以北的整片园林，东西二十七里、南北三十三里，乃北衙禁军的战略后方、操演总枢。其核心不在亭台楼榭，而在于西内苑、东内苑两片营区，以及南北向的夹城复道。</p>
+
+        <div class="sub-section">
+          <h5>1. 西内苑（太极宫玄武门外）</h5>
+          <p>右龙武军主力大营隐于槐柳之间，御马厩中常年蓄战马千二百匹，蹄声如雷。斗鸡坊表面是帝王玩赏之所，实为禁军捉对训练短兵巷战之处，鸡血与人血同渗黄土。陈玄礼以龙武大将军衔坐镇此地，每日寅时亲登苑墙望楼，巡视太极宫北垣十处暗哨；他是目前北门戍卫体系最后的锚点，冯、罗两家皆不敢轻撼其锋。</p>
+
+          <h5>2. 东内苑（大明宫东南、兴庆宫东北之夹角）</h5>
+          <p>左龙武军、左羽林军别营散列龙首池南北。龙首池引浐水而成，池畔设皇家马球场，玄宗常于此观赛，实为借球赛检阅骑兵阵型。夹城复道自大明宫东垣潜入，经通化门内夹墙直抵兴庆宫、更向南延伸至曲江芙蓉园。复道宽可行马，顶覆青瓦，壁留箭孔，是皇帝潜行城南的秘密通道，也是北衙禁军向南快速投送兵力的唯一路线。罗家骑兵熟谙此道每一处转弯的视角死角。</p>
+        </div>
+
+        <div class="highlight-box"><strong>功能：</strong>帝王射猎、禁军集训、囤积战马军械。所有军户出入宫禁多经此地，北苑诸门于丑时启、寅时闭，菜贩、内侍、巡街郎将皆需验鱼符，口令每日一换，由右龙武军书记官拟定。</div>
+
+        <h3>二、三大宫城：三足鼎立的政治穹顶</h3>
+
+        <h4>1. 西内·太极宫（正统宫城）</h4>
+        <p class="poem">"明月出玄武，苍然万籁空。"</p>
+        <p>南正门承天门：与外朝横街之间隔四百四十米广场，每年元日大朝会在此举行。但天宝以来，大朝会多改在大明宫，承天门外的石础已爬满薄苔。北门玄武门（武德九年事变原址）：双阙高耸，门道可容驷马并行。门内左右驻内廷禁军甲仗库，冯家子弟世代把守此门两掖，除轮值宿卫外，还负责核验进出太监、宫女的"过所"（通行文书），实质上掌控着太极宫最敏感的内廷人流。</p>
+
+        <div class="highlight-box"><strong>辅兴坊关联：</strong>辅兴坊紧贴太极宫西南墙外安福门。坊东冯氏族长宅地下有一条干涸的早期宫城排水渠，传言可容人匍匐潜行至掖庭宫墙角，为冯家提供了一条不记入鱼符系统的"暗门"。冯氏族人明面由安福门入宫轮值，遇急则可通过此渠递送信物。</div>
+
+        <h4>2. 东内·大明宫（东北政治隆起带）</h4>
+        <p class="poem">"绛帻鸡人报晓筹，尚衣方进翠云裘。"</p>
+        <p>南门丹凤门：五门道，外设百官待漏院，东侧院廊挂满各坊里正的灯笼。杨国忠每日卯时在此与党羽交换眼色，而太子东宫属官只能在最偏处呵气成霜。北门玄武—九仙门：北衙四军的核心防区。左·右龙武军、左·右羽林军大营一字排开，军帐延伸至禁苑深处。夜间九仙门外火把如昼，刁斗声与马嘶声构成宫城北界唯一的声音屏障。</p>
+        <p>东宫（太子李亨居所）：位于大明宫东南隅，地形低洼，夏秋积水，宫墙斑驳。太子李亨常年受打压，其东宫僚属出行的路线：东宫 → 延政门 → 下马桥 → 入皇城东侧崇仁坊、永兴坊一带。沿途所有坊角均有金吾卫暗哨，为首者正是左金吾郎将罗家安排的亲信。东宫采买太监出春明门购物，每次皆被搜检两遍——这是杨国忠与罗家之间心照不宣的监视协议。</p>
+
+        <div class="highlight-box"><strong>龙首坊关联：</strong>大明宫南墙外东侧即为虚构坊——龙首坊（见后文），罗氏家族宅邸所在。坊东北隅的龙首渠故道春月蛤蟆聒噪，夏汛时暗沟水涨，能淹没并掩盖某些不可思议的物件。</div>
+
+        <h4>3. 南内·兴庆宫（实际政治心脏）</h4>
+        <p class="poem">"沉香亭北倚阑干，解释春风无限恨。"</p>
+        <p>原为玄宗藩邸，开元十六年大兴土木后改宫。天宝年间，这里是日常起居与最高决策的核心地。龙池东沉香亭、南花萼相辉楼，玄宗与杨贵妃昼夜行乐，政令多由高力士在此拟旨，中书省杨国忠只有承旨之份。高力士宦官集团中枢：内侍省在兴庆宫设"南衙"，高力士每日在此接收各地密折，再呈玄宗批阅。他掌握着所有进入兴庆宫的牌子，包括杨国忠入见也需他点头。杨氏外戚出入通道：虢国夫人等常由兴庆宫北门跃马而入，宫卫不敢拦。兴庆宫东南方向连接乐游原、曲江芙蓉园，这条"游宴动线"上密布杨国忠党羽的庄园别业，暗桩多于柳树。</p>
+
+        <h3>三、皇城（中央官署区）：律令机器日夜轰鸣</h3>
+        <p>位于宫城之南，全为衙署，无民居。左右对称，执掌政令与禁卫：中轴朱雀门，门内为皇城正门，门外即朱雀大街。每年春秋二季，金吾卫在此举行"街鼓交接"仪式，鼓声象征皇权向坊间延伸。</p>
+        <p>东侧：门下省、中书省、尚书六部、御史台、东宫官署等。中书令杨国忠日常在中书省西厅办公，紧邻安上门，进出便捷。其厅壁挂《天下诸州贡赋图》，实际是他调度钱粮、结党营私的沙盘。西侧：十二卫府、太仆寺、鸿胪客馆、诸道进奏院密集区。鸿胪客馆常驻回纥、吐蕃、大食使团，实则为安禄山、哥舒翰等藩镇提供了一条绕过皇城正门的"外交通道"。各进奏院内部设有"捉驿使"，专事截获对手塘报。</p>
+
+        <div class="highlight-box"><strong>左右金吾卫衙署：</strong>设于皇城东西两角。罗家主官为左金吾郎将，掌街东（万年县）全城巡警。每日卯正，他自龙首坊宅邸骑马过丹凤门，顺宫墙西行入延喜门点卯。其属下有街使、街铺、武侯队三百余人，分驻街东三十余所街铺。罗家还私蓄"街鬼"四十八人──皆是退役不良人（捕快），混迹于平康坊酒肆、东市邸店，替罗家盯紧任何可疑的外来武人。</div>
+
+        <h3>四、外郭坊市（居住、商业、权力暗区）</h3>
+
+        <h4>4.1 城北近宫坊区：冯罗两家森然对峙，禁军暗影织成铁网</h4>
+        <p class="poem">"北阙临仙掌，南山对古丘。谁言甲第贵，不及近宸旒。"</p>
+
+        <div class="sub-section">
+          <h5>街西·辅兴坊（冯家巢穴）</h5>
+          <p>辅兴坊居皇城西第一街第二坊，北抵安福门，东望掖庭宫。坊内东南隅有金仙女冠观、玉真女冠观双观并立，但冯氏并不礼佛道。冯家乃武德年间传承至今的宫门宿卫世家，族中多出内侍、守门校尉、符宝郎，以掌管宫内诸门鱼符、门籍为根基。宅第占据坊内东部四分之一的土地，墙高丈八，暗设三层哨楼，可眺望太极宫玄武门城楼。冯家内部用一套"门宦图谱"管理族人──将太极宫、东宫、掖庭等各大小门禁按"上八门、中十二门、下侧门"分级，由族老会分派轮值。每年冬至，冯家会闭门举行"换符礼"，重制门禁暗语，此时连陈玄礼的亲兵都不得进入。坊内杂居的香火道士、老宫人多为冯家眼线，将太极宫及掖庭后宫的日常动态编织成情报网。冯罗两家百年宿怨源于景龙年间一场宫门火并，自此物理隔绝，冯家绝不踏足街东，罗家亦不饮西市之酒。</p>
+
+          <h5>街西·修德坊</h5>
+          <p>左龙武军别部设于此坊北门内，马厩可容三百匹。这支别部名义上隶属陈玄礼，实则常被冯家以"宫城西墙防务"为由调动，形成对辅兴坊侧翼的屏护。夜间坊门关闭后，冯家暗探可通过修德坊与辅兴坊之间的坊墙梯道传递蜡丸。</p>
+
+          <h5>街东·龙首坊（罗家铁骑营垒）⚠ 虚构坊</h5>
+          <p>此坊正史不载，因坊东北旧渠而得名，系安史乱前特殊军户聚落。位处大明宫南墙外东侧，紧邻东内苑西墙。坊北距丹凤门仅一街之隔，坊东墙与龙武骑兵大营之间仅有一条窄巷，名"鸣镝巷"。龙首渠故道从坊东北斜穿而过，明渠早已干涸，但渠底遗留一处天然地窟，罗家辟为地下演武场，传有深达数丈的暗室收藏甲胄、火器硫磺——此乃罗家百年积蓄，以待非常。罗氏宗族占据坊西北整块区域，宅第规模逾百间，门前立戟十二枝（逾制），马厩分东厩、西厩，饲养战马百八十匹。演武场铺以河沙，每日晨间罗家儿郎在此操练陌刀、骑射，喝声震落槐叶。罗氏祖籍陇西，世代与骑兵结缘，武则天时期迁入龙首坊，受赐"世袭左金吾引驾仗"，以节制街东武侯铺为专职。</p>
+        </div>
+
+        <div class="highlight-box"><strong>罗冯对峙：</strong>罗冯两家分踞街东、街西，隔几个坊相望，但恩怨早渗入宫禁每一道门槛。每逢三节两寿，两人鸿胪寺偶遇，仅以"下官/某将"互称，目光却似淬了毒的箭镞。</div>
+
+        <h4>4.2 皇城周边政务坊：密折流转，人心似海</h4>
+        <div class="sub-section">
+          <h5>务本坊（街东·皇城安上门外东侧第一坊）</h5>
+          <p>本为国子监所在，太学生晨诵《春秋》之声可达于街。但坊内靠近国子监东墙的进奏院群中，安禄山的三镇留后院（平卢、范阳、河东）表面赁用邸店三层，挂牌为"范阳邸"，实有死士三十名，日夜焚香译写东北军报。留后院隔壁即是卖笔墨纸砚的铺子，老板吉温族弟，专事窃听进奏院往来的官员交谈。吉温本人则每隔五日从御史台来此，与留后院的奚族暗卫交换信件，将朝中反安言论列成名单，快马递回幽州。</p>
+
+          <h5>崇义坊、永兴坊</h5>
+          <p>二坊邻接东宫南垣，多为东宫属官、失权文官聚居。太子的老师、年老翰林等每日在坊中酒肆赊账买醉，墙角常有匿名诗句斥责杨氏。金吾卫罗家对此地并无明显监控──因太子已无威胁，但冯家的密探仍装作卖梨小贩，记录每一个拜访过崇义坊东宫官邸的外来者。</p>
+        </div>
+
+        <h4>4.3 城中权贵游宴区：烈火烹油，金粉绘皮</h4>
+        <div class="sub-section">
+          <h5>宣阳坊、亲仁坊</h5>
+          <p>杨国忠宅在宣阳坊南街，与虢国夫人、韩国夫人、秦国夫人宅第以复壁暗廊相连，坊间美其名曰"三姨洞"。亲仁坊有安禄山早年受赐之豪宅，此时空置，但府中留有色目老仆，每夜在府后小佛堂点燃三百六十盏油灯——实为信号灯，与龙首坊罗家某一高阁遥相呼应（罗氏暗许安禄山一些边境军械私贩，以换取东北良马）。</p>
+
+          <h5>平康坊</h5>
+          <p>长安昼夜不眠的销金窟。妓家分南北，南妓善谑，北妓善琴。地下暗流却是：杨国忠的心腹常包下北曲最豪奢的"棠棣楼"密晤藩镇使节；安禄山的眼线则偏爱南曲临街小阁，借歌伎的手拍节奏传递暗语。平康坊与罗家"街鬼"活动区高度重合，罗氏在此养线人十二，专司捕捉娱乐间不经意泄露的朝政隐私。</p>
+
+          <h5>曲江·芙蓉园·乐游原</h5>
+          <p>大规模游宴循环：上巳、寒食、重阳，玄宗的游船自兴庆宫夹城水道缓缓南来。每次游宴，左金吾卫需提前清道，罗家主官往往亲带队骑巡，踏过每一座便桥。天宝十二载三月三日，杜甫写下《丽人行》，所刺正是此地风光。而罗家就是从这次游宴的记录中，推断出杨国忠与吐蕃使节私下接触的时间节点。</p>
+        </div>
+
+        <h4>4.4 城南平民寺观坊：清音之下，暗线绵长</h4>
+        <p>明德门周边及城南偏东诸坊（如晋昌坊大慈恩寺·大雁塔、安仁坊小雁塔·荐福寺等），多为中下层官员、平民聚居。坊墙矮小、土围墙多生杂草，井水微咸。大型佛寺与祆祠、景教寺点缀其间，西市的胡商常越过朱雀街，到此区的祆祠祭拜圣火。但城南绝非清静之地：寺院内寄住的落第举子常为藩镇充当文牍教习，借抄经之名行间谍之实。大慈恩寺塔是眺望全城的最佳制高点，罗家密探每月携"功德"入寺，实为登上塔刹，用窥管（原始望远镜）观测太极宫、大明宫的晨昏旗号变化。</p>
+
+        <h3>五、东西两市：财富的阴阳两面</h3>
+        <p><strong>东市：</strong>靠近兴庆宫与权贵坊区，店铺售"阡陌纱""龙香墨""宣州紫毫笔"，顾客多乘犊车、带侍从。坊间盛传东市某邸店地窖，藏有左藏令偷出的国库金银器，与杨国忠有关。<strong>西市：</strong>丝路国际商贸总汇。拂菻、波斯、粟特胡商摩肩接踵，酒肆中胡姬跳袄教舞，钱庄可凭飞钱兑付千里之外的货款。禁军士卒休假时常来此饮三勒浆，挥金如土；罗家骑兵则定期在西市"铁勒邸"采购西域精铁。冯家耳目伪装成粟特商人，在西市开了一间香料铺，以天竺龙脑香为号，专司刺探街东来的骑兵、打手。</p>
+
+        <div class="divider">━ ◇ ━</div>
+
+        <h3>附笺</h3>
+        <p>全城地下水系统分为龙首渠、清明渠、永安渠三条干渠，其中龙首渠部分废弃段正是龙首坊下暗道的由来。传说几条主渠交汇处有大业年间留下的密道枢纽，唯冯家老族长与罗家死士首领各持半张羊皮图。以上诸坊，凡涉及冯罗两家秘辛，皆为绝密口耳相传，书于纸者，阅后即焚。</p>
+
+        <div class="end-poem">帝城九衢，马蹄踏碎霜晨鼓。<br>天宝十二载的月光如一把钝刀，割开了歌舞升平的假象，<br>让隐藏在坊墙后的铁甲与密信微微泛出冷光。<br>而生活其中的人们，尚沉溺于沉香亭的乐曲声里，<br>不知棋局将翻覆，长安将焚。</div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      设定档案 · 天宝十二载（753）唐长安城全域分区
+    </div>
+  </main>
+
+  <script>
+    function generateStars() {
+      const container = document.getElementById('stars');
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = Math.random() * 3 + 1 + 'px';
+        star.style.height = star.style.width;
+        star.style.setProperty('--duration', Math.random() * 4 + 2 + 's');
+        star.style.setProperty('--min-opacity', Math.random() * 0.2 + 0.1);
+        star.style.setProperty('--max-opacity', Math.random() * 0.4 + 0.5);
+        container.appendChild(star);
+      }
+    }
+    generateStars();
+  </script>
+</body>
+</html>
