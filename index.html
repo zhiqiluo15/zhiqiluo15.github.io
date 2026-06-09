@@ -137,8 +137,6 @@
       height: 100%;
     }
 
-
-
     .main-content {
       position: relative;
       z-index: 10;
@@ -280,7 +278,7 @@
     <div class="native-player">
       <audio id="audio-player" controls preload="none" controlsList="nodownload" oncontextmenu="return false;">
         <source src="chunlongxianyue/f812af6cb85e4cf4ad5149a8f774a732.mp3" type="audio/mpeg">
-      
+      </audio>
     </div>
   </div>
 
@@ -332,14 +330,20 @@
         audioPlayer.load();
       });
 
+      // === 全局 Escape 键处理 ===
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-          const activeEl = document.activeElement;
-          if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) {
-            return;
+          // 1. 先关闭所有打开的覆盖层（class="overlay open"）
+          const openOverlays = document.querySelectorAll('.overlay.open');
+          if (openOverlays.length > 0) {
+            openOverlays.forEach(ol => ol.classList.remove('open'));
+            e.preventDefault();
+            return; // 覆盖层优先处理
           }
-          if (!audioPlayer.paused) {
+          // 2. 没有覆盖层时，暂停音乐播放（如果正在播放）
+          if (audioPlayer && !audioPlayer.paused) {
             audioPlayer.pause();
+            e.preventDefault();
           }
         }
       });
