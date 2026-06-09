@@ -88,56 +88,7 @@
       color: #f5e6c8;
     }
 
-    .players {
-      position: fixed;
-      top: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      z-index: 100;
-    }
-
-    .music-list {
-      width: 240px;
-      margin-bottom: 8px;
-    }
-
-    .music-list select {
-      width: 100%;
-      padding: 6px 10px;
-      background: rgba(20, 20, 30, 0.8);
-      border: 1px solid rgba(245, 230, 200, 0.2);
-      border-radius: 4px;
-      color: #c9c4b5;
-      font-family: 'Noto Serif SC', serif;
-      font-size: 0.85rem;
-      outline: none;
-      cursor: pointer;
-    }
-
-    .music-list select:hover {
-      border-color: rgba(245, 230, 200, 0.4);
-    }
-
-    .music-list select option {
-      background: #14141e;
-      color: #c9c4b5;
-    }
-
-    .native-player {
-      width: 240px;
-      height: 30px;
-    }
-
-    .native-player audio {
-      width: 100%;
-      height: 100%;
-    }
-
-
+    /* 播放器模块已完全移除 */
 
     .main-content {
       position: relative;
@@ -147,7 +98,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 120px 80px;
+      padding: 0 20px;
     }
 
     .hero {
@@ -200,16 +151,6 @@
         font-size: 0.85rem;
       }
 
-      .players {
-        top: auto;
-        bottom: 80px;
-        transform: translateX(-50%);
-      }
-
-      .main-content {
-        padding: 100px 40px 160px;
-      }
-
       .hero h1 {
         font-size: 2.4rem;
       }
@@ -239,18 +180,6 @@
         writing-mode: horizontal-tb;
       }
 
-      .players {
-        bottom: 90px;
-      }
-
-      .music-list {
-        width: 200px;
-      }
-
-      .native-player {
-        width: 200px;
-      }
-
       .hero h1 {
         font-size: 2rem;
         letter-spacing: 0.2em;
@@ -268,20 +197,8 @@
     <a href="settings.html" target="_blank">设定</a>
     <a href="role/index.html" target="_blank">人物</a>
     <a href="word-software.html" target="_blank">单词</a>
+    <a href="music.html" target="_blank">音乐</a>
     <a href="#temp">暂定</a>
-  </div>
-
-  <div class="players">
-    <div class="music-list">
-      <select id="song-select">
-        <option value="chunlongxianyue/f812af6cb85e4cf4ad5149a8f774a732.mp3">音乐 - 曲目</option>
-      </select>
-    </div>
-    <div class="native-player">
-      <audio id="audio-player" controls preload="none" controlsList="nodownload" oncontextmenu="return false;">
-        <source src="chunlongxianyue/f812af6cb85e4cf4ad5149a8f774a732.mp3" type="audio/mpeg">
-      
-    </div>
   </div>
 
   <main class="main-content">
@@ -322,14 +239,15 @@
       const day = String(now.getDate()).padStart(2, '0');
       dateEl.textContent = year + '-' + month + '-' + day;
 
-      const songSelect = document.getElementById('song-select');
-      const audioPlayer = document.getElementById('audio-player');
-      const audioSource = audioPlayer.querySelector('source');
-
-      songSelect.addEventListener('change', function() {
-        const selectedSong = this.value;
-        audioSource.src = selectedSong;
-        audioPlayer.load();
+      // 全局 Escape 键（保留，虽然首页没播放器，但子页面可能用到）
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          const openOverlays = document.querySelectorAll('.overlay.open');
+          if (openOverlays.length > 0) {
+            openOverlays.forEach(ol => ol.classList.remove('open'));
+            e.preventDefault();
+          }
+        }
       });
     })();
   </script>
