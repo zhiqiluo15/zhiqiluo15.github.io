@@ -1995,6 +1995,38 @@ function toast(msg) {
 document.getElementById('versionDisplay').textContent = VERSION;
 if (!currentCat && allCategories().length > 0) currentCat = allCategories()[0];
 refreshAll();
+
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'Escape') return;
+
+  if (document.getElementById('graphOverlay').classList.contains('open')) {
+    closeGraph();
+    return;
+  }
+  if (document.getElementById('detailOverlay').classList.contains('open')) {
+    closeDetail();
+    return;
+  }
+  if (document.getElementById('helpOverlay').classList.contains('open')) {
+    closeHelp();
+    return;
+  }
+  if (document.getElementById('entryFormOverlay').classList.contains('open')) {
+    closeEntryForm();
+    return;
+  }
+  if (document.getElementById('addCatOverlay').classList.contains('open')) {
+    closeAddCategory();
+    return;
+  }
+
+  const activeEl = document.activeElement;
+  if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) {
+    return;
+  }
+
+  window.location.href = 'index.html';
+});
 </script>
 </body>
 </html>

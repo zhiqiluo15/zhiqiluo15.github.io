@@ -331,6 +331,18 @@
         audioSource.src = selectedSong;
         audioPlayer.load();
       });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          const activeEl = document.activeElement;
+          if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) {
+            return;
+          }
+          if (!audioPlayer.paused) {
+            audioPlayer.pause();
+          }
+        }
+      });
     })();
   </script>
 </body>

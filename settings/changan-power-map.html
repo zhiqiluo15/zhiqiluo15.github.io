@@ -512,6 +512,16 @@
       }
     }
     generateStars();
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const activeEl = document.activeElement;
+        if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) {
+          return;
+        }
+        window.location.href = '../settings.html';
+      }
+    });
   </script>
 </body>
 </html>
