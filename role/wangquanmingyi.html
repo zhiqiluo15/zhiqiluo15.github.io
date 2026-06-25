@@ -7,48 +7,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/stars.css">
+  <link rel="stylesheet" href="../assets/css/page-role.css">
   <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      width: 100%;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    body {
-      font-family: 'Noto Serif SC', serif;
-      color: #e8e4d9;
-      background: linear-gradient(135deg, #0a0a12 0%, #12121a 30%, #0d0d15 70%, #0a0a12 100%);
-      position: relative;
-    }
-
-    .stars {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .star {
-      position: absolute;
-      background: #fff;
-      border-radius: 50%;
-      animation: twinkle var(--duration) ease-in-out infinite;
-      box-shadow: 0 0 6px 2px rgba(245, 230, 200, 0.3);
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: var(--min-opacity); transform: scale(1); }
-      50% { opacity: var(--max-opacity); transform: scale(1.2); }
-    }
+    /* 角色详情页专属样式（reset/星空/字体由 base.css + stars.css 提供，body 渐变由 page-role.css 提供） */
 
     .header {
       position: relative;
@@ -453,23 +416,6 @@
     </div>
   </main>
 
-  <script>
-    function generateStars() {
-      const container = document.getElementById('stars');
-      for (let i = 0; i < 80; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.width = Math.random() * 2.5 + 1 + 'px';
-        star.style.height = star.style.width;
-        star.style.setProperty('--duration', Math.random() * 4 + 2 + 's');
-        star.style.setProperty('--min-opacity', Math.random() * 0.2 + 0.1);
-        star.style.setProperty('--max-opacity', Math.random() * 0.4 + 0.5);
-        container.appendChild(star);
-      }
-    }
-    generateStars();
-  </script>
+  <script src="../assets/js/common.js" defer></script>
 </body>
 </html>

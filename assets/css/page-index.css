@@ -1,55 +1,24 @@
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-}
+/* ============================================================
+   灵弦华夏 · 首页专属样式（page-index.css）
+   ------------------------------------------------------------
+   依赖：base.css, stars.css
+   布局：左上站点名 / 右侧垂直导航 / 居中主视觉 / 底部页脚
+   ============================================================ */
 
 body {
-  font-family: 'Noto Serif SC', serif;
-  color: #e8e4d9;
-  min-height: 100vh;
-  position: relative;
-  background: #0a0a12;
-}
-
-.stars {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.star {
-  position: absolute;
-  background: #fff;
-  border-radius: 50%;
-  animation: twinkle var(--duration) ease-in-out infinite;
-}
-
-@keyframes twinkle {
-  0%, 100% { opacity: var(--min-opacity); }
-  50% { opacity: var(--max-opacity); }
+  background: var(--bg-base);
 }
 
 .site-name {
   position: fixed;
   top: 24px;
   left: 28px;
-  font-family: 'Ma Shan Zheng', cursive;
+  font-family: var(--font-title);
   font-size: 1.8rem;
-  color: #f5e6c8;
+  color: var(--gold);
   letter-spacing: 0.15em;
-  z-index: 100;
-  text-shadow: 0 0 20px rgba(245, 230, 200, 0.3);
+  z-index: var(--z-header);
+  text-shadow: 0 0 20px var(--gold-soft);
 }
 
 .nav {
@@ -60,27 +29,27 @@ body {
   display: flex;
   flex-direction: column;
   gap: 28px;
-  z-index: 100;
+  z-index: var(--z-header);
 }
 
 .nav a {
-  font-family: 'Noto Serif SC', serif;
+  font-family: var(--font-body);
   font-size: 0.95rem;
-  color: #c9c4b5;
+  color: var(--text-muted);
   text-decoration: none;
   writing-mode: vertical-rl;
   letter-spacing: 0.2em;
-  transition: color 0.3s ease;
+  transition: color var(--transition);
   padding: 8px 4px;
 }
 
 .nav a:hover {
-  color: #f5e6c8;
+  color: var(--gold);
 }
 
 .main-content {
   position: relative;
-  z-index: 10;
+  z-index: var(--z-content);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -94,9 +63,9 @@ body {
 }
 
 .hero h1 {
-  font-family: 'Ma Shan Zheng', cursive;
+  font-family: var(--font-title);
   font-size: 3.5rem;
-  color: #f5e6c8;
+  color: var(--gold);
   letter-spacing: 0.3em;
   margin-bottom: 20px;
   text-shadow: 0 0 40px rgba(245, 230, 200, 0.2);
@@ -117,9 +86,9 @@ body {
   text-align: center;
   padding: 20px;
   font-size: 0.85rem;
-  color: #6b6860;
+  color: var(--text-faint);
   letter-spacing: 0.1em;
-  z-index: 100;
+  z-index: var(--z-header);
 }
 
 @media (max-width: 768px) {

@@ -7,32 +7,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/stars.css">
   <style>
-    /* ========== 全局基础（页面整体不滚动） ========== */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { 
-      width: 100%; 
-      height: 100%; 
-      overflow: hidden; /* 禁止页面整体滚动 */
-    }
-    body {
-      font-family: 'Noto Serif SC', serif;
-      color: #e8e4d9;
-      background: linear-gradient(135deg, #0a0a12 0%, #12121a 30%, #0d0d15 70%, #0a0a12 100%);
-      position: relative;
-    }
-
-    /* ========== 星空背景（固定不动） ========== */
-    .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-    .star {
-      position: absolute; background: #fff; border-radius: 50%;
-      animation: twinkle var(--duration) ease-in-out infinite;
-      box-shadow: 0 0 6px 2px rgba(245,230,200,0.3);
-    }
-    @keyframes twinkle {
-      0%,100% { opacity: var(--min-opacity); transform: scale(1); }
-      50% { opacity: var(--max-opacity); transform: scale(1.2); }
-    }
+    /* 页面整体不滚动（覆盖 base.css，reset/星空/字体渐变由公共文件提供） */
+    html, body { height: 100%; overflow: hidden; }
 
     /* ========== 顶部导航（固定不动） ========== */
     .header {
@@ -347,26 +326,9 @@
   <!-- 永久固定返回按钮，永远在最上层 -->
   <a href="../settings.html" class="back-float" title="返回设定列表">返回设定</a>
 
+  <script src="../assets/js/common.js" defer></script>
   <script>
-    // 星空动画（完全保留）
-    function generateStars() {
-      const container = document.getElementById('stars');
-      for (let i = 0; i < 100; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.width = Math.random() * 3 + 1 + 'px';
-        star.style.height = star.style.width;
-        star.style.setProperty('--duration', Math.random() * 4 + 2 + 's');
-        star.style.setProperty('--min-opacity', Math.random() * 0.2 + 0.1);
-        star.style.setProperty('--max-opacity', Math.random() * 0.4 + 0.5);
-        container.appendChild(star);
-      }
-    }
-    generateStars();
-
-    // Escape键全局返回（完全保留）
+    // 页面专属：Escape键全局返回
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         window.location.href = '../settings.html';
