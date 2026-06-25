@@ -1,0 +1,82 @@
+/* ============================================================
+   灵弦华夏 · 全站基础样式（base.css）
+   ------------------------------------------------------------
+   作用范围：所有页面共用
+   提供内容：CSS reset、设计令牌（变量系统）、字体加载、body 基础
+   扩展方式：在 :root 中新增变量；子页面可用 data-theme 属性切换
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&display=swap');
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* === 设计令牌（Design Tokens）===
+   统一管理全站颜色、字体、间距、圆角、阴影、动画。
+   新增页面只需引用 base.css 即可继承这些变量。 */
+:root {
+  /* 主题色 · 古风暗黑 */
+  --bg-base: #0a0a12;
+  --bg-grad: linear-gradient(135deg, #0a0a12 0%, #12121a 30%, #0d0d15 70%, #0a0a12 100%);
+  --text: #e8e4d9;
+  --text-muted: #c9c4b5;
+  --text-dim: #8a8578;
+  --text-faint: #6b6860;
+
+  /* 强调色 · 月华金 */
+  --gold: #f5e6c8;
+  --gold-soft: rgba(245, 230, 200, 0.4);
+  --gold-faint: rgba(245, 230, 200, 0.08);
+  --gold-glow: rgba(245, 230, 200, 0.3);
+
+  /* 卡片 / 容器 */
+  --card-bg: linear-gradient(145deg, rgba(20, 20, 32, 0.9), rgba(12, 12, 20, 0.95));
+  --card-border: rgba(201, 196, 181, 0.08);
+  --card-border-hover: rgba(245, 230, 200, 0.18);
+  --inset-bg: rgba(10, 10, 18, 0.5);
+
+  /* 字体族 */
+  --font-body: 'Noto Serif SC', serif;
+  --font-title: 'Ma Shan Zheng', cursive;
+
+  /* 圆角 */
+  --radius: 16px;
+  --radius-sm: 12px;
+  --radius-xs: 10px;
+  --radius-pill: 22px;
+
+  /* 过渡 */
+  --transition: 0.3s ease;
+
+  /* z-index 层级 */
+  --z-stars: 0;
+  --z-content: 10;
+  --z-header: 20;
+  --z-overlay: 1000;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--bg-base);
+  position: relative;
+  line-height: 1.6;
+}
+
+/* 可访问性：尊重用户减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,144 @@
+/* ============================================================
+   灵弦华夏 · 首页专属样式（page-index.css）
+   ------------------------------------------------------------
+   依赖：base.css, stars.css
+   布局：左上站点名 / 右侧垂直导航 / 居中主视觉 / 底部页脚
+   ============================================================ */
+
+body {
+  background: var(--bg-base);
+}
+
+.site-name {
+  position: fixed;
+  top: 24px;
+  left: 28px;
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  z-index: var(--z-header);
+  text-shadow: 0 0 20px var(--gold-soft);
+}
+
+.nav {
+  position: fixed;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  z-index: var(--z-header);
+}
+
+.nav a {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  writing-mode: vertical-rl;
+  letter-spacing: 0.2em;
+  transition: color var(--transition);
+  padding: 8px 4px;
+}
+
+.nav a:hover {
+  color: var(--gold);
+}
+
+.main-content {
+  position: relative;
+  z-index: var(--z-content);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.hero {
+  text-align: center;
+}
+
+.hero h1 {
+  font-family: var(--font-title);
+  font-size: 3.5rem;
+  color: var(--gold);
+  letter-spacing: 0.3em;
+  margin-bottom: 20px;
+  text-shadow: 0 0 40px rgba(245, 230, 200, 0.2);
+}
+
+.hero .slogan {
+  font-size: 1.1rem;
+  color: #a8a49a;
+  letter-spacing: 0.4em;
+  font-weight: 400;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.85rem;
+  color: var(--text-faint);
+  letter-spacing: 0.1em;
+  z-index: var(--z-header);
+}
+
+@media (max-width: 768px) {
+  .site-name {
+    font-size: 1.4rem;
+    top: 16px;
+    left: 16px;
+  }
+
+  .nav {
+    right: 16px;
+    top: 50%;
+    gap: 20px;
+  }
+
+  .nav a {
+    font-size: 0.85rem;
+  }
+
+  .hero h1 {
+    font-size: 2.4rem;
+  }
+
+  .hero .slogan {
+    font-size: 0.95rem;
+    letter-spacing: 0.2em;
+  }
+
+  .footer {
+    padding: 16px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    flex-direction: row;
+    right: 50%;
+    top: auto;
+    bottom: 52px;
+    transform: translateX(50%);
+    gap: 24px;
+  }
+
+  .nav a {
+    writing-mode: horizontal-tb;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+    letter-spacing: 0.2em;
+  }
+}

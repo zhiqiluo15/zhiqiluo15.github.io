@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>王权名义 - 角色档案</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/stars.css">
+  <link rel="stylesheet" href="../assets/css/page-role.css">
+  <style>
+    /* 角色详情页专属样式（reset/星空/字体由 base.css + stars.css 提供，body 渐变由 page-role.css 提供） */
+
+    .header {
+      position: relative;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      border-bottom: 1px solid rgba(201, 196, 181, 0.1);
+    }
+
+    .site-name {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 1.8rem;
+      color: #f5e6c8;
+      letter-spacing: 0.15em;
+      text-shadow: 0 0 30px rgba(245, 230, 200, 0.4);
+    }
+
+    .nav-back {
+      font-size: 0.9rem;
+      color: #c9c4b5;
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      padding: 10px 20px;
+      border: 1px solid rgba(201, 196, 181, 0.2);
+      border-radius: 25px;
+      background: linear-gradient(135deg, rgba(245, 230, 200, 0.05), transparent);
+      transition: all 0.3s ease;
+    }
+
+    .nav-back:hover {
+      color: #f5e6c8;
+      border-color: rgba(245, 230, 200, 0.5);
+    }
+
+    .main-content {
+      position: relative;
+      z-index: 10;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 32px;
+    }
+
+    .character-header {
+      text-align: center;
+      margin-bottom: 48px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(245, 230, 200, 0.15);
+      position: relative;
+    }
+
+    .character-header::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(245, 230, 200, 0.6), transparent);
+      border-radius: 2px;
+    }
+
+    .avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #303042, #20202d);
+      border: 3px solid rgba(245, 230, 200, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 3.5rem;
+      color: #f5e6c8;
+      margin: 0 auto 24px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 40px rgba(245, 230, 200, 0.1);
+      position: relative;
+    }
+
+    .avatar::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, rgba(245, 230, 200, 0.3), transparent, rgba(245, 230, 200, 0.15));
+    }
+
+    .character-name {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 3rem;
+      color: #f5e6c8;
+      letter-spacing: 0.2em;
+      margin-bottom: 8px;
+    }
+
+    .character-title {
+      font-size: 1.1rem;
+      color: #9a9588;
+      letter-spacing: 0.15em;
+      margin-bottom: 20px;
+    }
+
+    .character-tags {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      padding: 8px 18px;
+      background: linear-gradient(135deg, rgba(245, 230, 200, 0.1), rgba(245, 230, 200, 0.03));
+      border: 1px solid rgba(245, 230, 200, 0.25);
+      border-radius: 25px;
+      font-size: 0.85rem;
+      color: #d4cfc2;
+      letter-spacing: 0.08em;
+    }
+
+    .section {
+      background: linear-gradient(145deg, rgba(20, 20, 35, 0.7), rgba(15, 15, 25, 0.8));
+      border: 1px solid rgba(201, 196, 181, 0.12);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .section:hover {
+      border-color: rgba(245, 230, 200, 0.25);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-title {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 1.3rem;
+      color: #f5e6c8;
+      letter-spacing: 0.12em;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(201, 196, 181, 0.12);
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(245, 230, 200, 0.8), transparent);
+    }
+
+    .basic-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      padding: 14px 18px;
+      background: rgba(10, 10, 18, 0.5);
+      border-radius: 10px;
+      border: 1px solid rgba(201, 196, 181, 0.08);
+    }
+
+    .info-label {
+      font-size: 0.82rem;
+      color: #8a8578;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .info-value {
+      font-size: 0.92rem;
+      color: #e8e4d9;
+      line-height: 1.5;
+    }
+
+    .placeholder-box {
+      background: rgba(10, 10, 18, 0.4);
+      border: 2px dashed rgba(201, 196, 181, 0.15);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .placeholder-box p {
+      font-size: 0.95rem;
+      color: #8a8578;
+      line-height: 1.8;
+    }
+
+    .placeholder-box p:first-child {
+      font-size: 1.1rem;
+      color: #9a9588;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .progress-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 8px 16px;
+      background: rgba(245, 230, 200, 0.08);
+      border-radius: 20px;
+    }
+
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      background: linear-gradient(135deg, #f5e6c8, #d4cfc2);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+
+    .progress-text {
+      font-size: 0.8rem;
+      color: #d4cfc2;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 16px 20px;
+      }
+
+      .site-name {
+        font-size: 1.3rem;
+      }
+
+      .main-content {
+        padding: 24px 16px;
+      }
+
+      .character-header {
+        padding-bottom: 28px;
+        margin-bottom: 32px;
+      }
+
+      .avatar {
+        width: 100px;
+        height: 100px;
+        font-size: 2.5rem;
+        margin-bottom: 16px;
+      }
+
+      .character-name {
+        font-size: 2.2rem;
+      }
+
+      .character-title {
+        font-size: 0.95rem;
+      }
+
+      .section {
+        padding: 20px;
+      }
+
+      .section-title {
+        font-size: 1.15rem;
+      }
+
+      .basic-info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .placeholder-box {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+
+  <header class="header">
+    <div class="site-name">灵弦华夏</div>
+    <a href="index.html" class="nav-back">返回角色列表</a>
+  </header>
+
+  <main class="main-content">
+    <div class="character-header">
+      <div class="avatar">王</div>
+      <h1 class="character-name">王权名义</h1>
+      <p class="character-title">暂未命名</p>
+      <div class="character-tags">
+        <span class="tag">核心人物</span>
+        <span class="tag">待完善</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">基本信息</h2>
+      <div class="basic-info-grid">
+        <div class="info-item">
+          <div class="info-label">外貌特征</div>
+          <div class="info-value" style="color: #8a8578;">待设定</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">身份</div>
+          <div class="info-value" style="color: #8a8578;">待设定</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">年龄</div>
+          <div class="info-value" style="color: #8a8578;">待设定</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">家庭成员</div>
+          <div class="info-value" style="color: #8a8578;">待设定</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">核心处境</div>
+          <div class="info-value" style="color: #8a8578;">待设定</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">来源档案</div>
+          <div class="info-value">角色档案·王权名义</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">角色概述</h2>
+      <div class="placeholder-box">
+        <p>该角色档案正在完善中</p>
+        <p>王权名义是《灵弦华夏》中的核心人物之一，其角色设定尚在创作阶段。</p>
+        <p>随着故事的推进，此角色的详细信息、性格特点、人物关系等内容将逐步补充完善。</p>
+        <div class="progress-indicator">
+          <div class="progress-dot"></div>
+          <div class="progress-text">创作进行中</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">性格核心</h2>
+      <div class="placeholder-box">
+        <p>待设定</p>
+        <p>角色的性格定义、核心机制及反类型细节将在后续完善。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">行为对比</h2>
+      <div class="placeholder-box">
+        <p>待设定</p>
+        <p>角色的行为模式、与正常人的对比场景将在后续完善。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">抉择时刻</h2>
+      <div class="placeholder-box">
+        <p>待设定</p>
+        <p>角色的关键决策场景、重大选择将在后续完善。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">经典台词</h2>
+      <div class="placeholder-box">
+        <p>待设定</p>
+        <p>角色的代表性台词、经典对白将在后续完善。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">内驱与矛盾</h2>
+      <div class="placeholder-box">
+        <p>待设定</p>
+        <p>角色的表面目标、深层欲望、核心矛盾及失控开关将在后续完善。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">弧光规划</h2>
+      <div class="placeholder-box">
+        <p>待设定</p>
+        <p>角色的成长路径、转变方向及触发事件将在后续完善。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">关系图谱</h2>
+      <div class="placeholder-box">
+        <p>待设定</p>
+        <p>角色的人物关系、情感牵绊及对立势力将在后续完善。</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="../assets/js/common.js" defer></script>
+</body>
+</html>
