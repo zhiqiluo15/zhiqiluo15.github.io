@@ -1,0 +1,140 @@
+body {
+  color: #e8e4d9;
+  background: #0a0a12;
+}
+
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  animation: twinkle var(--duration) ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: var(--min-opacity); }
+  50% { opacity: var(--max-opacity); }
+}
+
+.nav {
+  position: fixed;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  z-index: 100;
+}
+
+.nav a {
+  font-size: 0.95rem;
+  color: #c9c4b5;
+  text-decoration: none;
+  writing-mode: vertical-rl;
+  letter-spacing: 0.2em;
+  transition: color 0.3s ease;
+  padding: 8px 4px;
+}
+
+.nav a:hover {
+  color: #f5e6c8;
+}
+
+.main-content {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.hero {
+  text-align: center;
+}
+
+.hero h1 {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 3.5rem;
+  color: #f5e6c8;
+  letter-spacing: 0.3em;
+  margin-bottom: 20px;
+  text-shadow: 0 0 40px rgba(245, 230, 200, 0.2);
+}
+
+.hero .slogan {
+  font-size: 1.1rem;
+  color: #a8a49a;
+  letter-spacing: 0.4em;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.85rem;
+  color: #6b6860;
+  letter-spacing: 0.1em;
+  z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    right: 16px;
+    top: 50%;
+    gap: 20px;
+  }
+
+  .nav a {
+    font-size: 0.85rem;
+  }
+
+  .hero h1 {
+    font-size: 2.4rem;
+  }
+
+  .hero .slogan {
+    font-size: 0.95rem;
+    letter-spacing: 0.2em;
+  }
+
+  .footer {
+    padding: 16px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    flex-direction: row;
+    right: 50%;
+    top: auto;
+    bottom: 52px;
+    transform: translateX(50%);
+    gap: 24px;
+  }
+
+  .nav a {
+    writing-mode: horizontal-tb;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+    letter-spacing: 0.2em;
+  }
+}
