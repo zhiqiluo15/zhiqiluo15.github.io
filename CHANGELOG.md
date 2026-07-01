@@ -21,3 +21,11 @@
 
 ### 新增
 - 创建 `CHANGELOG.md`，记录设计决策与变更历史
+- 创建 `404.html`，暗色主题 404 页面，与首页风格一致
+- 创建 `favicon.png`，中国风线条图标
+
+### 调整
+- 导航栏"作品"和"暂定"从锚点链接改为指向不存在的页面（`works.html` / `temp.html`），统一走 404
+- `index.html` 和 `404.html` 添加 favicon 引用
+- `404.html` 导航栏与 `index.html` 保持一致
+- Google Fonts 替换为 jsDelivr Fontsource CDN（国内访问更稳定）
