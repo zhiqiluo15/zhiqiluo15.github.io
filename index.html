@@ -4,12 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>灵弦华夏</title>
-  <!-- 预加载明月楷书字体 -->
-  <link rel="preload" href="font/mingyue-kai.ttf" as="font" type="font/ttf" crossorigin>
-  <!-- 公共基础 + 星空背景 + 首页专属 -->
-  <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/stars.css">
-  <link rel="stylesheet" href="assets/css/page-index.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
@@ -22,15 +16,12 @@
 
     html, body {
       width: 100%;
-      height: 100%;
-      overflow-x: hidden;
     }
 
     body {
       font-family: 'Noto Serif SC', serif;
       color: #e8e4d9;
       min-height: 100vh;
-      position: relative;
       background: #0a0a12;
     }
 
@@ -56,18 +47,6 @@
       50% { opacity: var(--max-opacity); }
     }
 
-    .site-name {
-      position: fixed;
-      top: 24px;
-      left: 28px;
-      font-family: 'Ma Shan Zheng', cursive;
-      font-size: 1.8rem;
-      color: #f5e6c8;
-      letter-spacing: 0.15em;
-      z-index: 100;
-      text-shadow: 0 0 20px rgba(245, 230, 200, 0.3);
-    }
-
     .nav {
       position: fixed;
       right: 32px;
@@ -80,7 +59,6 @@
     }
 
     .nav a {
-      font-family: 'Noto Serif SC', serif;
       font-size: 0.95rem;
       color: #c9c4b5;
       text-decoration: none;
@@ -93,8 +71,6 @@
     .nav a:hover {
       color: #f5e6c8;
     }
-
-    /* 播放器模块已完全移除 */
 
     .main-content {
       position: relative;
@@ -124,7 +100,6 @@
       font-size: 1.1rem;
       color: #a8a49a;
       letter-spacing: 0.4em;
-      font-weight: 400;
     }
 
     .footer {
@@ -141,12 +116,6 @@
     }
 
     @media (max-width: 768px) {
-      .site-name {
-        font-size: 1.4rem;
-        top: 16px;
-        left: 16px;
-      }
-
       .nav {
         right: 16px;
         top: 50%;
@@ -194,9 +163,7 @@
   </style>
 </head>
 <body>
-  <div class="stars" id="stars" data-stars="150"></div>
-
-  <div class="site-name">灵弦华夏</div>
+  <div class="stars" id="stars"></div>
 
   <div class="nav">
     <a href="#works">作品</a>
@@ -218,46 +185,28 @@
     贪文笔著 © <span id="date"></span>
   </footer>
 
-  <!-- 公共脚本（星空 / 日期 / 扩展接口） -->
-  <script src="assets/js/common.js" defer></script>
   <script>
-    (function() {
-      const starsContainer = document.getElementById('stars');
-      const starCount = 150;
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 150; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      const size = Math.random() * 2 + 1;
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+      star.style.setProperty('--min-opacity', Math.random() * 0.3 + 0.1);
+      star.style.setProperty('--max-opacity', Math.random() * 0.5 + 0.5);
+      star.style.animationDelay = Math.random() * 5 + 's';
+      starsContainer.appendChild(star);
+    }
 
-      for (let i = 0; i < starCount; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        const size = Math.random() * 2 + 1;
-        star.style.width = size + 'px';
-        star.style.height = size + 'px';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-        star.style.setProperty('--min-opacity', Math.random() * 0.3 + 0.1);
-        star.style.setProperty('--max-opacity', Math.random() * 0.5 + 0.5);
-        star.style.animationDelay = Math.random() * 5 + 's';
-        starsContainer.appendChild(star);
-      }
-
-      const dateEl = document.getElementById('date');
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const day = String(now.getDate()).padStart(2, '0');
-      dateEl.textContent = year + '-' + month + '-' + day;
-
-      // 全局 Escape 键（保留，虽然首页没播放器，但子页面可能用到）
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          const openOverlays = document.querySelectorAll('.overlay.open');
-          if (openOverlays.length > 0) {
-            openOverlays.forEach(ol => ol.classList.remove('open'));
-            e.preventDefault();
-          }
-        }
-      });
-    })();
+    const dateEl = document.getElementById('date');
+    const now = new Date();
+    dateEl.textContent = now.getFullYear() + '-' +
+      String(now.getMonth() + 1).padStart(2, '0') + '-' +
+      String(now.getDate()).padStart(2, '0');
   </script>
 </body>
 </html>
