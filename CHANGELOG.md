@@ -38,3 +38,6 @@
 - 将 `index.html` 中的 CSS 拆分至 `css/base.css`（全局 reset 与基础排版）和 `css/theme.css`（主题视觉，含星空/导航/响应式），方便后续页面共享主题样式
 - 将 `index.html` 中的 JavaScript 拆分至 `js/theme.js`（星星生成 + 页脚日期），供所有页面复用
 - `index.html` 改为引用外部资源，新增 `meta description` 提升 SEO
+
+### 修改
+- 字体优化：移除对 Google Fonts 的外部依赖，马善正书法字体（Ma Shan Zheng）改为自托管 WOFF2 子集文件（共 12 个按 unicode-range 拆分的文件，浏览器按需加载），正文改用系统宋体回退链（STSong / Songti SC / Noto Serif CJK SC），消除 Google Fonts 在国内访问慢或不稳定的瓶颈
