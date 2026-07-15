@@ -37,7 +37,7 @@
 ### 修改
 - 主标题"灵弦华夏"每个字独立渐变：灵(浅金→浅紫) 弦(浅紫→浅金) 华(浅金→浅紫) 夏(浅紫→浅金)，交替交替节奏
 - 页脚字体加粗（font-weight: 600），提升可读性
-- Slogan 改为英中双语："Lingxian Eternal · Huaxia in Heart"
+- Slogan 改为英文："Lingxian Eternal · Huaxia in Hearts"
 
 ## 2026-07-02
 
