@@ -168,10 +168,40 @@ body {
 .hero h1 {
     font-family: 'Ma Shan Zheng', cursive;
     font-size: 3.5rem;
-    color: #f5e6c8;
     letter-spacing: 0.3em;
     margin-bottom: 20px;
-    text-shadow: 0 0 40px rgba(245, 230, 200, 0.2);
+}
+
+.hero h1 .g-1 {
+    background: linear-gradient(90deg, #f5e6c8, #c084fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 14px rgba(245, 230, 200, 0.3));
+}
+
+.hero h1 .g-2 {
+    background: linear-gradient(90deg, #c084fc, #f5e6c8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 14px rgba(192, 132, 252, 0.3));
+}
+
+.hero h1 .g-3 {
+    background: linear-gradient(90deg, #f5e6c8, #c084fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 14px rgba(245, 230, 200, 0.3));
+}
+
+.hero h1 .g-4 {
+    background: linear-gradient(90deg, #c084fc, #f5e6c8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 14px rgba(192, 132, 252, 0.3));
 }
 
 .hero .slogan {
@@ -188,6 +218,7 @@ body {
     text-align: center;
     padding: 20px;
     font-size: 0.85rem;
+    font-weight: 600;
     color: #6b6860;
     letter-spacing: 0.1em;
     z-index: 100;
