@@ -25,6 +25,11 @@
     color: #c9c4b5;
 }
 
+.poem-list-main .back-link-bottom {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 /* ===== 头部 ===== */
 .list-header {
     margin-bottom: 48px;

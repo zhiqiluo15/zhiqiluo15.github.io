@@ -25,6 +25,11 @@
     color: #c9c4b5;
 }
 
+.back-link-bottom {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 /* ===== 诗词原文区 ===== */
 .poem-full {
     text-align: center;
