@@ -1,0 +1,242 @@
+/* === word-software.css — 灵弦词集分首页 === */
+
+/* ===== 导航激活态 ===== */
+.nav a.active {
+    color: #f5e6c8;
+}
+
+/* ===== 主布局 ===== */
+.word-main {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 20px 120px;
+    gap: 80px;
+}
+
+/* ===== 顶部：当日诗词 ===== */
+.daily-poem {
+    text-align: center;
+    max-width: 640px;
+}
+
+.poem-cn {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.45rem;
+    color: #d4cfc1;
+    letter-spacing: 0.25em;
+    line-height: 2.6;
+    margin-bottom: 18px;
+}
+
+.poem-cn ruby {
+    ruby-align: center;
+}
+
+.poem-cn rt {
+    font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
+    font-size: 0.55rem;
+    color: #5a564e;
+    letter-spacing: 0;
+    font-weight: 700;
+}
+
+.poem-en {
+    font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
+    font-size: 0.95rem;
+    color: #7a766c;
+    letter-spacing: 0.06em;
+    line-height: 1.85;
+    font-style: italic;
+}
+
+.poem-source {
+    font-size: 0.72rem;
+    color: #4a4740;
+    letter-spacing: 0.1em;
+    text-align: right;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* ===== 中部：三入口卡片 ===== */
+.word-gates {
+    display: flex;
+    gap: 40px;
+    max-width: 780px;
+    width: 100%;
+}
+
+.gate {
+    flex: 1;
+    text-align: center;
+    padding: 36px 20px 28px;
+    border: 1px solid rgba(197, 165, 114, 0.12);
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.015);
+    cursor: pointer;
+    transition: border-color 0.4s ease, background 0.4s ease, transform 0.3s ease;
+    position: relative;
+}
+
+.gate:hover {
+    border-color: rgba(197, 165, 114, 0.4);
+    background: rgba(255, 255, 255, 0.03);
+    transform: translateY(-2px);
+}
+
+.gate-title {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.45rem;
+    color: #d4cfc1;
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+    transition: color 0.4s ease;
+}
+
+.gate:hover .gate-title {
+    color: #f5e6c8;
+}
+
+.gate-sub {
+    font-size: 0.78rem;
+    color: #6b6860;
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.gate-arrow {
+    display: inline-block;
+    font-size: 1.1rem;
+    color: rgba(197, 165, 114, 0.3);
+    transition: color 0.4s ease, transform 0.3s ease;
+}
+
+.gate:hover .gate-arrow {
+    color: rgba(197, 165, 114, 0.7);
+    transform: translateX(3px);
+}
+
+/* ===== 底部：隐含时间轴 ===== */
+.timeline-hint {
+    width: 100%;
+    max-width: 780px;
+    padding: 0 20px;
+}
+
+.timeline-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 0 10px;
+}
+
+.timeline-line::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 50%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        rgba(197, 165, 114, 0.05) 0%,
+        rgba(197, 165, 114, 0.18) 30%,
+        rgba(197, 165, 114, 0.18) 70%,
+        rgba(197, 165, 114, 0.05) 100%
+    );
+    z-index: 0;
+}
+
+.tl-mark {
+    position: relative;
+    z-index: 1;
+    font-size: 1.2rem;
+    color: rgba(197, 165, 114, 0.35);
+    cursor: default;
+    transition: color 0.4s ease, transform 0.3s ease;
+    padding: 8px 4px;
+}
+
+.tl-mark:hover {
+    color: rgba(197, 165, 114, 0.7);
+    transform: translateY(-2px);
+}
+
+.tl-mark::after {
+    content: attr(data-era);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    color: #6b6860;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.tl-mark:hover::after {
+    opacity: 1;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 768px) {
+    .word-main {
+        gap: 56px;
+        padding: 60px 16px 130px;
+    }
+
+    .poem-cn {
+        font-size: 1.2rem;
+        letter-spacing: 0.15em;
+    }
+
+    .poem-en {
+        font-size: 0.85rem;
+    }
+
+    .word-gates {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .gate {
+        padding: 28px 20px 22px;
+    }
+
+    .gate-title {
+        font-size: 1.25rem;
+    }
+
+    .timeline-hint {
+        max-width: 100%;
+    }
+
+    .tl-mark::after {
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .word-main {
+        gap: 40px;
+        padding: 48px 14px 140px;
+    }
+
+    .poem-cn {
+        font-size: 1.05rem;
+    }
+
+    .tl-mark::after {
+        bottom: calc(100% + 12px);
+    }
+}
