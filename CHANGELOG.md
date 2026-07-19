@@ -102,14 +102,21 @@ base.css + theme.css      → 所有页面必引
 - **布局单位**：目录页 max-width 900px，详情页 max-width 900px
 - **Supabase URL**：https://vacfnpexbwjqscrltwds.supabase.co
 - **模板页**：`word-list.html?category=` / `word-detail.html?id=` 为数据库驱动页面，所有内容从 Supabase 动态加载
+- **排版规则**：所有字号 ≤ 1rem 的元素必须加粗（`font-weight: 700`），确保中文小字和拼音/英文字母清晰可辨；英文字母间距 `letter-spacing` 不低于 0.05em，避免字母粘连；诗词拼音 `rt` 字号不低于 0.85rem
 
 ---
 
 ## 2026-07-19
 
 ### 清理
-- **移除遗留静态页面**：删除 6 个旧静态页面（word-poem-list.html / word-poem-xinglunan.html / word-history-list.html / word-history-yapian.html / word-etymology-list.html / word-etymology-tea.html）及对应的 6 个 CSS 文件（word-poem-list.css / word-poem.css / word-history-list.css / word-history.css / word-etymology-list.css / word-etymology.css），所有内容已迁移至 Supabase，统一由 word-list.html + word-detail.html 模板驱动
+- **移除遗留静态页面**：删除 6 个旧静态页面及对应 CSS，所有内容已迁移至 Supabase，统一由 word-list.html + word-detail.html 模板驱动
 - 更新 CHANGELOG「站点结构」章节，反映清理后的实际文件树、导航流和 CSS 引用规则
+
+### 新增
+- **以诗入词：杜甫《春望》**：国破山河在→花溅泪鸟惊心→烽火家书，许渊冲英译，词卡 beacon / war / ruin / petal / bird / letter / scratch / hairpin / thin
+- **以史鉴词：丝绸之路**：张骞凿空西域→驼铃万里横贯欧亚→文明对流不止丝绸与香料，词卡 silk / caravan / spice / porcelain / merchant / monk / bazaar / damask
+- **以词溯源：台风 Typhoon**：粤语「大风」走海路 + 希腊 Typhon 走陆路→16 世纪葡萄牙海图中双源合一，词卡 typhoon / tempest / hurricane / monsoon / vortex / spiral / voyage
+- 数据通过 service_role key 直接写入 Supabase，同步更新 `supabase-setup.sql` 脚本
 
 ### 重构
 - **Supabase 接入**：引入 Supabase 数据层，替代硬编码页面
@@ -125,6 +132,11 @@ base.css + theme.css      → 所有页面必引
 ### 修改
 - `word-software.html` 三入口链接指向 `word-list.html?category=xxx`
 - CHANGELOG 新增「站点结构」章节，记录文件树、页面层级、CSS 引用规则、设计约定
+- **全局排版优化**：
+  - 所有 ≤1rem 字号元素统一加粗（`font-weight: 700`），包括拼音 rt、词卡、目录摘要、导航链接等
+  - 英文字母间距整体上调至 0.05em–0.06em，拼音字号从 0.8rem 上调至 0.9rem
+  - 详情页中文诗句 letter-spacing 从 0.12em 上调至 0.18em，字号 1.1→1.15rem
+  - 设计约定新增「排版规则」条目，约束后续开发
 
 ### 设计决策
 - **Supabase 行级安全**：所有表启用 RLS，仅 `SELECT` 授权匿名读取，不暴露写入权限

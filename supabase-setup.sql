@@ -196,6 +196,139 @@ BEGIN
     (eid, 5, '丝绸',       'silk',       '/sɪlk/',           'a fine fiber produced by silkworms', 'The <em>Silk</em> Road — 希腊人用丝国人命名中国');
 END $$;
 
+-- === 以诗入词：春望 ===
+INSERT INTO entries (category_id, title_zh, subtitle_zh, title_en, author_era, period_label, summary_zh, summary_en, vocab_preview, content_data)
+SELECT id, '春望', '', 'Spring View', '杜甫', '〔唐〕',
+  '感时花溅泪，恨别鸟惊心——烽火三月，家书万金',
+  'Grieved o''er the years, flowers make us shed tears — the war-torn land of Du Fu',
+  'beacon · war · ruin · petal · bird · letter · scratch · hairpin · thinner',
+  '{
+    "context_label": "原",
+    "translator": "许渊冲",
+    "poem_lines": [
+      {"html": "<ruby>国<rt>guó</rt></ruby><ruby>破<rt>pò</rt></ruby><ruby>山<rt>shān</rt></ruby><ruby>河<rt>hé</rt></ruby><ruby>在<rt>zài</rt></ruby>，", "highlight": false},
+      {"html": "<ruby>城<rt>chéng</rt></ruby><ruby>春<rt>chūn</rt></ruby><ruby>草<rt>cǎo</rt></ruby><ruby>木<rt>mù</rt></ruby><ruby>深<rt>shēn</rt></ruby>。", "highlight": false},
+      {"html": "<ruby>感<rt>gǎn</rt></ruby><ruby>时<rt>shí</rt></ruby><ruby>花<rt>huā</rt></ruby><ruby>溅<rt>jiàn</rt></ruby><ruby>泪<rt>lèi</rt></ruby>，", "highlight": true},
+      {"html": "<ruby>恨<rt>hèn</rt></ruby><ruby>别<rt>bié</rt></ruby><ruby>鸟<rt>niǎo</rt></ruby><ruby>惊<rt>jīng</rt></ruby><ruby>心<rt>xīn</rt></ruby>。", "highlight": true},
+      {"html": "<ruby>烽<rt>fēng</rt></ruby><ruby>火<rt>huǒ</rt></ruby><ruby>连<rt>lián</rt></ruby><ruby>三<rt>sān</rt></ruby><ruby>月<rt>yuè</rt></ruby>，", "highlight": false},
+      {"html": "<ruby>家<rt>jiā</rt></ruby><ruby>书<rt>shū</rt></ruby><ruby>抵<rt>dǐ</rt></ruby><ruby>万<rt>wàn</rt></ruby><ruby>金<rt>jīn</rt></ruby>。", "highlight": false},
+      {"html": "<ruby>白<rt>bái</rt></ruby><ruby>头<rt>tóu</rt></ruby><ruby>搔<rt>sāo</rt></ruby><ruby>更<rt>gèng</rt></ruby><ruby>短<rt>duǎn</rt></ruby>，", "highlight": false},
+      {"html": "<ruby>浑<rt>hún</rt></ruby><ruby>欲<rt>yù</rt></ruby><ruby>不<rt>bù</rt></ruby><ruby>胜<rt>shèng</rt></ruby><ruby>簪<rt>zān</rt></ruby>。", "highlight": false}
+    ],
+    "translation_lines": [
+      {"text": "On war-torn land streams flow and mountains stand;", "highlight": false},
+      {"text": "In vernal town grass and weeds are o''ergrown.", "highlight": false},
+      {"text": "Grieved o''er the years, flowers make us shed tears;", "highlight": true},
+      {"text": "Hating to part, hearing birds breaks our heart.", "highlight": true},
+      {"text": "The beacon fire has gone higher and higher;", "highlight": false},
+      {"text": "Words from household are worth their weight in gold.", "highlight": false},
+      {"text": "I cannot bear to scratch my grizzling hair;", "highlight": false},
+      {"text": "It grows too thin for a hairpin to hold.", "highlight": false}
+    ]
+  }'::jsonb
+FROM categories WHERE slug = 'poem';
+
+-- 春望 词卡
+DO $$
+DECLARE
+  eid INTEGER;
+BEGIN
+  SELECT id INTO eid FROM entries WHERE title_zh = '春望';
+  INSERT INTO word_cards (entry_id, sort_order, word_zh, word_en, phonetic, definition, context_ref) VALUES
+    (eid, 0, '烽火', 'beacon',  '/ˈbiːkən/',  'a fire lit on a hill as a signal, especially in war', 'The <em>beacon</em> fire has gone higher — 烽火连三月'),
+    (eid, 1, '国破', 'war',     '/wɔːr/',      'a state of armed conflict between nations', 'On <em>war</em>-torn land — 国破山河在'),
+    (eid, 2, '城春', 'ruin',    '/ˈruːɪn/',    'the physical destruction or decay of a place', 'In <em>vernal</em> town — 城春草木深'),
+    (eid, 3, '花',   'petal',   '/ˈpetl/',     'each segment of the corolla of a flower', '<em>Flowers</em> make us shed tears — 感时花溅泪'),
+    (eid, 4, '鸟',   'bird',    '/bɜːrd/',     'a warm-blooded vertebrate with feathers and wings', 'Hearing <em>birds</em> breaks our heart — 恨别鸟惊心'),
+    (eid, 5, '家书', 'letter',  '/ˈletər/',   'a written message addressed to a person', '<em>Words</em> from household — 家书抵万金'),
+    (eid, 6, '搔',   'scratch', '/skrætʃ/',   'to rub or scrape with one''s nails', 'Cannot bear to <em>scratch</em> — 白头搔更短'),
+    (eid, 7, '簪',   'hairpin', '/ˈherpɪn/',  'a small U-shaped pin for holding hair in place', 'Too thin for a <em>hairpin</em> — 浑欲不胜簪'),
+    (eid, 8, '短',   'thin',    '/θɪn/',       'having little extent from one surface to its opposite', 'It grows too <em>thin</em> — 浑欲不胜簪');
+END $$;
+
+-- === 以史鉴词：丝绸之路 ===
+INSERT INTO entries (category_id, title_zh, subtitle_zh, title_en, author_era, period_label, summary_zh, summary_en, vocab_preview, content_data)
+SELECT id, '丝绸之路', '· 驼铃万里', 'The Silk Road', '汉–明 · 欧亚大陆', '汉–明 ／ 公元前2世纪–公元15世纪',
+  '张骞凿空西域——驼铃万里，文明对流，不止丝绸与香料',
+  'Zhang Qian opened the way West — caravans carried silk, spice, and civilizations across Eurasia',
+  'silk · caravan · spice · porcelain · merchant · monk · bazaar · damask',
+  '{
+    "context_label": "史",
+    "source_note": "adapted from historical sources",
+    "history_zh": [
+      {"text": "张骞凿空西域，一条横贯欧亚的商道自此贯通，", "highlight": false},
+      {"text": "丝绸、瓷器、茶叶自长安西行，骆驼商队穿越帕米尔高原，", "highlight": true},
+      {"text": "香料、玻璃、天文知识逆流东来，", "highlight": false},
+      {"text": "不只是商品交换——佛教、景教、伊斯兰教沿此传入中土，", "highlight": true},
+      {"text": "纸张与火药文明西传，改写世界历史进程。", "highlight": false}
+    ],
+    "history_en": [
+      {"text": "The <strong>Silk Road</strong> was never a single road, but a sprawling web of <strong>caravan</strong> routes stretching from Chang''an to the Mediterranean. For over a millennium, <strong>merchants</strong> and <strong>monks</strong> alike traversed deserts and mountains, carrying not just goods but entire civilizations.", "highlight": false},
+      {"text": "<strong>Silk</strong>, of course, gave the route its name — a Chinese secret so guarded that Roman senators grumbled about the Empire''s gold draining east for the fabric. But <strong>spice</strong>, <strong>porcelain</strong>, and <strong>tea</strong> flowed alongside it, while <strong>glass</strong> and <strong>gems</strong> returned westward.", "highlight": false},
+      {"text": "The words we use today — silk, caravan, bazaar, damask — trace directly back to this ancient exchange. The Silk Road was history''s first great experiment in globalization, and its vocabulary lives on in every language it touched.", "highlight": false}
+    ]
+  }'::jsonb
+FROM categories WHERE slug = 'history';
+
+-- 丝绸之路 词卡
+DO $$
+DECLARE
+  eid INTEGER;
+BEGIN
+  SELECT id INTO eid FROM entries WHERE title_zh = '丝绸之路';
+  INSERT INTO word_cards (entry_id, sort_order, word_zh, word_en, phonetic, definition, context_ref) VALUES
+    (eid, 0, '丝绸', 'silk',       '/sɪlk/',          'a fine lustrous fiber produced by silkworms', '<em>Silk</em> gave the route its name — 丝绸命名了这条路'),
+    (eid, 1, '商队', 'caravan',    '/ˈkærəvæn/',     'a group of travelers journeying together through desert regions', '<em>Caravan</em> routes stretching from Chang''an — 骆驼商队越漠穿山'),
+    (eid, 2, '香料', 'spice',      '/spaɪs/',         'an aromatic vegetable substance used to flavor food', 'But <em>spice</em>, porcelain, and tea flowed — 香料逆流东来'),
+    (eid, 3, '瓷器', 'porcelain',  '/ˈpɔːrsəlɪn/',   'a white vitrified translucent ceramic', '<em>Porcelain</em> and tea flowed alongside — 瓷器与茶海陆并行'),
+    (eid, 4, '商人', 'merchant',   '/ˈmɜːrtʃənt/',  'a person who trades in commodities', '<em>Merchants</em> and monks alike traversed — 商旅与僧人同路'),
+    (eid, 5, '僧侣', 'monk',       '/mʌŋk/',          'a member of a religious community of men', 'Merchants and <em>monks</em> alike — 佛教沿丝路传入中土'),
+    (eid, 6, '集市', 'bazaar',     '/bəˈzɑːr/',      'a marketplace, from Persian bāzār', 'The words — <em>bazaar</em>, damask — 波斯集市遍及丝路'),
+    (eid, 7, '锦缎', 'damask',     '/ˈdæməsk/',      'a rich patterned fabric, named after Damascus', '<em>Damask</em> traces back to this ancient exchange — 大马士革锦缎');
+END $$;
+
+-- === 以词溯源：台风 ===
+INSERT INTO entries (category_id, title_zh, subtitle_zh, title_en, author_era, period_label, summary_zh, summary_en, vocab_preview, content_data)
+SELECT id, '台风', '· 双源归一的风暴之名', 'Typhoon', '粤语 + 希腊语 → 英语', '粤语 daai6 fung1 ／ 希腊语 Typhon → 英语 typhoon',
+  '粤语「大风」走海路，希腊巨怪 Typhon 走陆路——十六世纪在英语中合二为一',
+  'Cantonese ''daai fung'' met Greek ''Typhon'' in 16th-century sailor charts — a rare case of dual etymology',
+  'typhoon · tempest · hurricane · monsoon · vortex · spiral · voyage',
+  '{
+    "context_label": "源",
+    "story_zh": [
+      {"text": "狂风呼啸、暴雨倾盆的西太平洋猛烈风暴，", "highlight": false},
+      {"text": "英语叫 typhoon——这个词身世复杂，同时有中文和希腊文两个源头，", "highlight": true},
+      {"text": "中文「大风」→ 粤语 daai6 fung1 → 阿拉伯语 ṭūfān → 葡萄牙语 tufão，", "highlight": false},
+      {"text": "希腊神话中 Typhon 是喷火百头巨怪，风暴之王，", "highlight": true},
+      {"text": "两条词源路径在 16 世纪葡萄牙航海家的海图中交汇——", "highlight": false},
+      {"text": "最终在英语里合二为一，成为 typhoon。", "highlight": false},
+      {"text": "这是罕见的东西方词源同归现象：一个词，两段历史，同一种风暴。", "highlight": false}
+    ],
+    "etymology_en": [
+      {"text": "The word <strong>typhoon</strong> has a fascinating dual etymology — one of the rare cases where Chinese and Greek roots converged into a single English word.", "highlight": false},
+      {"text": "From the Chinese side: Cantonese <em>daai6 fung1</em> (大风, ''great wind'') traveled via Arabic sailors as <em>ṭūfān</em>, then into Portuguese as <em>tufão</em> during the Age of Exploration.", "highlight": false},
+      {"text": "From the Greek side: <strong>Typhon</strong> was a monstrous hundred-headed giant in Greek mythology — the father of all storm winds. Greek traders and scholars carried the name across the Mediterranean.", "highlight": false},
+      {"text": "When Portuguese navigators reached East Asian waters in the 16th century and encountered the violent Pacific storms, both etymological streams — Chinese <em>tai fung</em> and Greek <em>Typhon</em> — merged naturally in English as <strong>typhoon</strong>. Two ancient civilizations, one shared vocabulary for fury.", "highlight": false}
+    ]
+  }'::jsonb
+FROM categories WHERE slug = 'etymology';
+
+-- 台风 词卡
+DO $$
+DECLARE
+  eid INTEGER;
+BEGIN
+  SELECT id INTO eid FROM entries WHERE title_zh = '台风';
+  INSERT INTO word_cards (entry_id, sort_order, word_zh, word_en, phonetic, definition, context_ref) VALUES
+    (eid, 0, '台风',   'typhoon',   '/taɪˈfuːn/',    'a tropical storm in the western Pacific, from Cantonese daai fung', '<em>Typhoon</em> — Chinese and Greek roots converged — 双源归一'),
+    (eid, 1, '暴风雨', 'tempest',   '/ˈtempɪst/',    'a violent windy storm, from Latin tempestas', 'Greek <em>Typhon</em>, father of all storm winds — 风暴之王'),
+    (eid, 2, '飓风',   'hurricane', '/ˈhʌrɪkən/',   'a tropical storm in the Atlantic, from Taino hurakán', 'Pacific <em>typhoon</em> vs Atlantic <em>hurricane</em> — 同名异域'),
+    (eid, 3, '季风',   'monsoon',   '/mɒnˈsuːn/',    'a seasonal wind, from Arabic mawsim', 'Arabic sailors carried <em>ṭūfān</em> — 阿拉伯航海者'),
+    (eid, 4, '漩涡',   'vortex',    '/ˈvɔːrteks/',   'a whirling mass of fluid or air', 'The <em>vortex</em> of the storm — 风暴之眼'),
+    (eid, 5, '螺旋',   'spiral',    '/ˈspaɪrəl/',    'a curve winding around a center point', 'The <em>spiral</em> of typhoon clouds — 台风螺旋云系'),
+    (eid, 6, '航海',   'voyage',    '/ˈvɔɪɪdʒ/',     'a long journey by sea', 'Portuguese <em>voyages</em> to East Asia — 大航海时代');
+END $$;
+
 -- === 当日诗词 ===
 INSERT INTO daily_poems (poem_html, source, poem_en, poem_en2) VALUES
   (

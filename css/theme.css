@@ -144,6 +144,7 @@ body {
     letter-spacing: 0.2em;
     transition: color 0.3s ease;
     padding: 8px 4px;
+    font-weight: 700;
 }
 
 .nav a:hover {
@@ -233,6 +234,7 @@ body {
 
     .nav a {
         font-size: 0.95rem;
+        font-weight: 700;
     }
 
     .hero h1 {
