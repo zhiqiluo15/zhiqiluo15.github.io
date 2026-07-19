@@ -21,7 +21,7 @@
 /* ===== 顶部：当日诗词 ===== */
 .daily-poem {
     text-align: center;
-    max-width: 640px;
+    max-width: 960px;
 }
 
 .poem-cn {
@@ -68,7 +68,7 @@
 .word-gates {
     display: flex;
     gap: 40px;
-    max-width: 780px;
+    max-width: 960px;
     width: 100%;
 }
 
@@ -127,7 +127,7 @@
 /* ===== 底部：隐含时间轴 ===== */
 .timeline-hint {
     width: 100%;
-    max-width: 780px;
+    max-width: 960px;
     padding: 0 20px;
 }
 

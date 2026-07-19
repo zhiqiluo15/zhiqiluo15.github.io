@@ -4,7 +4,7 @@
 .poem-detail {
     position: relative;
     z-index: 10;
-    max-width: 720px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 80px 20px 120px;
 }
