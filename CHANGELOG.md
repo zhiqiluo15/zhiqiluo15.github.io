@@ -108,7 +108,8 @@ base.css + theme.css      → 所有页面必引
 ### 设计约定
 
 - **零框架**：纯 HTML + CSS + JS，无前端框架
-- **数据层**：单词内容迁移至 Supabase，原有硬编码静态页保留作为回退
+- **数据层**：单词内容存储在 Supabase 数据库，运行时通过 API 查询；`supabase-setup.sql` 为建表+种子数据脚本，存在 GitHub 仓库作为数据蓝图，需在 Supabase SQL Editor 手动执行
+- **数据与代码分离**：GitHub 仓库管代码+SQL 脚本，Supabase 管运行时数据。新增内容流程：编辑 SQL → 推 GitHub → 在 Supabase 执行 INSERT
 - **三链路统一范式**：目录页用列表条目 + 悬浮左移 + 金线动画；详情页用词卡两列网格布局
 - **字体自托管**：Ma Shan Zheng 拆分 12 个 WOFF2 按需加载，正文宋体回退链，不走 Google Fonts
 - **导航**：竖排固定右侧，移动端改为底部横排
