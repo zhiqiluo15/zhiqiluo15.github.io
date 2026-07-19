@@ -46,32 +46,23 @@ zhiqiluo15.github.io/
 ├── index.html                       # 首页（星空 + 导航）
 ├── word-software.html               # 单词分首页（诗词 + 三入口卡片 + 时间轴）
 │
-├── word-poem-list.html              # 以诗入词 · 目录页
-├── word-poem-xinglunan.html         # 以诗入词 · 详情页（行路难）
-│
-├── word-history-list.html           # 以史鉴词 · 目录页
-├── word-history-yapian.html         # 以史鉴词 · 详情页（鸦片战争）
-│
-├── word-etymology-list.html         # 以词溯源 · 目录页
-├── word-etymology-tea.html          # 以词溯源 · 详情页（茶）
+├── word-list.html                   # 统一目录页模板（?category=poem|history|etymology）
+├── word-detail.html                 # 统一详情页模板（?id=xxx）
 │
 ├── css/
 │   ├── base.css                     # 全局 reset + 基础排版
 │   ├── theme.css                    # 主题：星空 / 导航 / 页脚 / 响应式
 │   ├── word-software.css            # 单词分首页
-│   ├── word-poem-list.css           # 以诗入词 · 目录
-│   ├── word-poem.css                # 以诗入词 · 详情
-│   ├── word-history-list.css        # 以史鉴词 · 目录
-│   ├── word-history.css             # 以史鉴词 · 详情
-│   ├── word-etymology-list.css      # 以词溯源 · 目录
-│   └── word-etymology.css           # 以词溯源 · 详情
+│   └── word-template.css            # 统一模板页（目录 + 详情）样式
 │
 ├── js/
-│   └── theme.js                     # 星空生成 + 页脚年份
+│   ├── theme.js                     # 星空生成 + 页脚年份
+│   └── supabase.js                  # Supabase 客户端 + 数据查询封装
 │
 ├── fonts/
 │   └── MaShanZheng-*.woff2          # 书法字体（12 个子集，按 unicode-range 拆分）
 │
+├── supabase-setup.sql               # 数据库建表 + 种子数据 SQL 脚本
 ├── CHANGELOG.md
 └── CNAME
 ```
@@ -83,11 +74,11 @@ index.html（首页）
   │
   └── word-software.html（单词分首页）
         ├── 以诗入词
-        │   └── word-poem-list.html → word-poem-xinglunan.html
+        │   └── word-list.html?category=poem → word-detail.html?id=xxx
         ├── 以史鉴词
-        │   └── word-history-list.html → word-history-yapian.html
+        │   └── word-list.html?category=history → word-detail.html?id=xxx
         └── 以词溯源
-            └── word-etymology-list.html → word-etymology-tea.html
+            └── word-list.html?category=etymology → word-detail.html?id=xxx
 ```
 
 每级页面末端都有返回上一级链接。
@@ -97,12 +88,7 @@ index.html（首页）
 ```
 base.css + theme.css      → 所有页面必引
 + word-software.css       → 仅 word-software.html
-+ word-poem-list.css      → 仅 word-poem-list.html
-+ word-poem.css           → 仅 word-poem-xinglunan.html
-+ word-history-list.css   → 仅 word-history-list.html
-+ word-history.css        → 仅 word-history-yapian.html
-+ word-etymology-list.css → 仅 word-etymology-list.html
-+ word-etymology.css      → 仅 word-etymology-tea.html
++ word-template.css       → 仅 word-list.html / word-detail.html
 ```
 
 ### 设计约定
@@ -115,11 +101,15 @@ base.css + theme.css      → 所有页面必引
 - **导航**：竖排固定右侧，移动端改为底部横排
 - **布局单位**：目录页 max-width 900px，详情页 max-width 900px
 - **Supabase URL**：https://vacfnpexbwjqscrltwds.supabase.co
-- **模板页**：`word-list.html?category=` / `word-detail.html?id=` 为数据库驱动页面，原有静态页保留作为回退
+- **模板页**：`word-list.html?category=` / `word-detail.html?id=` 为数据库驱动页面，所有内容从 Supabase 动态加载
 
 ---
 
 ## 2026-07-19
+
+### 清理
+- **移除遗留静态页面**：删除 6 个旧静态页面（word-poem-list.html / word-poem-xinglunan.html / word-history-list.html / word-history-yapian.html / word-etymology-list.html / word-etymology-tea.html）及对应的 6 个 CSS 文件（word-poem-list.css / word-poem.css / word-history-list.css / word-history.css / word-etymology-list.css / word-etymology.css），所有内容已迁移至 Supabase，统一由 word-list.html + word-detail.html 模板驱动
+- 更新 CHANGELOG「站点结构」章节，反映清理后的实际文件树、导航流和 CSS 引用规则
 
 ### 重构
 - **Supabase 接入**：引入 Supabase 数据层，替代硬编码页面
@@ -133,12 +123,11 @@ base.css + theme.css      → 所有页面必引
 - **分首页动态化**：当日诗词从 `daily_poems` 表随机加载，Supabase 不可用时保留硬编码兜底
 
 ### 修改
-- `word-software.html` 三入口链接指向 `word-list.html?category=xxx`（原静态目录页保留可回退）
+- `word-software.html` 三入口链接指向 `word-list.html?category=xxx`
 - CHANGELOG 新增「站点结构」章节，记录文件树、页面层级、CSS 引用规则、设计约定
 
 ### 设计决策
 - **Supabase 行级安全**：所有表启用 RLS，仅 `SELECT` 授权匿名读取，不暴露写入权限
-- **向后兼容**：原有静态目录/详情页保留不动，新模板页并行上线；全部迁移完成后可删除旧文件
 - **内容结构 JSONB**：`entries.content_data` 用 JSONB 存储不同分类的结构化内容（poem_lines / history_zh / story_zh），前端按类型渲染，避免每种分类拆多表
 
 ### 新增
