@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵弦词集 — 灵弦华夏</title>
+    <meta name="description" content="灵弦词集 — 以诗入词 · 以史鉴词 · 以词溯源">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/word-template.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+    <div class="stars" id="stars"></div>
+
+    <nav class="nav">
+        <a href="index.html">灵弦华夏</a>
+        <a href="works.html">作品</a>
+        <a href="settings.html">设定</a>
+        <a href="role.html">人物</a>
+        <a href="word-software.html" class="active">单词</a>
+        <a href="music.html">音乐</a>
+        <a href="game.html">游戏</a>
+    </nav>
+
+    <main class="template-main">
+        <a href="word-software.html" class="back-link">← 灵弦词集</a>
+
+        <section class="list-header">
+            <h1 class="list-title" id="categoryName">加载中…</h1>
+            <p class="list-desc" id="categoryDesc"></p>
+        </section>
+
+        <section class="item-list" id="itemList">
+            <p class="loading">加载中…</p>
+        </section>
+
+        <a href="word-software.html" class="back-link back-link-bottom">← 灵弦词集</a>
+    </main>
+
+    <footer class="footer">
+        <p>贪文笔著 &copy; <span id="date"></span></p>
+    </footer>
+
+    <script src="js/theme.js"></script>
+    <script src="js/supabase.js"></script>
+    <script>
+    (async function() {
+        const params = new URLSearchParams(window.location.search);
+        const slug = params.get('category') || 'poem';
+
+        // 设置页面标题
+        const cat = await fetchCategory(slug);
+        if (cat) {
+            document.getElementById('categoryName').textContent = cat.name_zh;
+            document.getElementById('categoryDesc').textContent = cat.desc_zh || '';
+            document.title = cat.name_zh + ' — 灵弦词集';
+        }
+
+        const entries = await fetchEntriesByCategory(slug);
+        const listEl = document.getElementById('itemList');
+
+        if (!entries || entries.length === 0) {
+            listEl.innerHTML = '<p class="loading">暂无内容</p>';
+            return;
+        }
+
+        listEl.innerHTML = entries.map(e => `
+            <a href="word-detail.html?id=${e.id}" class="list-item">
+                <span class="li-title">${e.title_zh}${e.subtitle_zh ? '<span class="li-subtitle">' + e.subtitle_zh + '</span>' : ''}</span>
+                <span class="li-meta">${e.period_label || e.author_era}</span>
+                <span class="li-summary">${e.summary_zh}</span>
+                <span class="li-summary-en">${e.summary_en}</span>
+                <span class="li-words"><span>${e.vocab_preview}</span></span>
+            </a>
+        `).join('');
+    })();
+    </script>
+</body>
+</html>

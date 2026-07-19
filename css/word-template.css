@@ -1,0 +1,400 @@
+/* === word-template.css — 统一目录/详情模板 === */
+
+/* ===== 导航激活态 ===== */
+.nav a.active {
+    color: #f5e6c8;
+}
+
+/* ===== 主布局 ===== */
+.template-main {
+    position: relative;
+    z-index: 10;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 20px 120px;
+}
+
+.template-detail {
+    max-width: 900px;
+}
+
+/* ===== 返回链接 ===== */
+.back-link {
+    display: inline-block;
+    font-size: 1.05rem;
+    color: #6b6860;
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    margin-bottom: 48px;
+    transition: color 0.3s ease;
+    font-weight: 700;
+}
+
+.back-link:hover {
+    color: #c9c4b5;
+}
+
+.back-link-bottom {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* ===== 加载提示 ===== */
+.loading {
+    font-size: 1rem;
+    color: #6b6860;
+    text-align: center;
+    padding: 60px 0;
+    font-weight: 700;
+}
+
+/* ===== 目录头部 ===== */
+.list-header {
+    margin-bottom: 48px;
+}
+
+.list-title {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.8rem;
+    color: #d4cfc1;
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+}
+
+.list-desc {
+    font-size: 1.05rem;
+    color: #6b6860;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+}
+
+/* ===== 目录条目列表 ===== */
+.item-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(107, 104, 96, 0.1);
+    transition: border-color 0.3s ease, padding-left 0.3s ease;
+}
+
+.list-item:hover {
+    border-bottom-color: rgba(197, 165, 114, 0.25);
+    padding-left: 8px;
+}
+
+.li-title {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.3rem;
+    color: #c9c4b5;
+    letter-spacing: 0.15em;
+    transition: color 0.3s ease;
+}
+
+.list-item:hover .li-title {
+    color: #f5e6c8;
+}
+
+.li-subtitle {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1rem;
+    color: #6b6860;
+    letter-spacing: 0.08em;
+    margin-left: 8px;
+}
+
+.li-meta {
+    font-size: 1.05rem;
+    color: #5a564e;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+    font-weight: 700;
+}
+
+.li-summary {
+    font-size: 1.05rem;
+    color: #8a8578;
+    letter-spacing: 0.1em;
+    margin-top: 14px;
+    line-height: 1.6;
+    font-weight: 700;
+}
+
+.li-summary-en {
+    font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
+    font-size: 1rem;
+    color: #5a564e;
+    font-style: italic;
+    letter-spacing: 0.03em;
+    margin-top: 4px;
+    font-weight: 700;
+}
+
+.li-words {
+    font-size: 1rem;
+    color: #5a564e;
+    letter-spacing: 0.06em;
+    margin-top: 8px;
+}
+
+.li-words span {
+    color: #8a8578;
+}
+
+/* ===== 详情·标题区 ===== */
+.detail-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.detail-title {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.8rem;
+    color: #d4cfc1;
+    letter-spacing: 0.2em;
+    margin-bottom: 4px;
+}
+
+.detail-subtitle {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1rem;
+    color: #8a8578;
+    letter-spacing: 0.12em;
+}
+
+.detail-title-en {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1rem;
+    color: #8a8578;
+    letter-spacing: 0.12em;
+}
+
+.detail-meta {
+    font-size: 1.05rem;
+    color: #6b6860;
+    letter-spacing: 0.12em;
+    margin-bottom: 32px;
+    font-weight: 700;
+}
+
+/* ===== 详情·中文内容区 ===== */
+.detail-context {
+    text-align: center;
+    margin-bottom: 48px;
+    line-height: 2.4;
+}
+
+.detail-context p {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.1rem;
+    color: #c9c4b5;
+    letter-spacing: 0.12em;
+}
+
+.detail-context p.highlight {
+    position: relative;
+    color: #f5e6c8 !important;
+    padding: 4px 0;
+}
+
+.detail-context p.highlight::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(197, 165, 114, 0.25) 20%,
+        rgba(197, 165, 114, 0.25) 80%,
+        transparent 100%
+    );
+    opacity: 0.6;
+}
+
+/* ===== 详情·英文区 ===== */
+.detail-english {
+    margin-bottom: 56px;
+    padding-left: 24px;
+    border-left: 1px solid rgba(197, 165, 114, 0.1);
+}
+
+.section-label {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1rem;
+    color: #5a564e;
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+}
+
+.english-text {
+    line-height: 2;
+}
+
+.english-text p {
+    font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
+    font-size: 1rem;
+    color: #7a766c;
+    font-style: italic;
+    letter-spacing: 0.03em;
+    font-weight: 700;
+}
+
+.english-text p strong {
+    color: #f5e6c8;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.en-highlight {
+    color: #c9c4b5 !important;
+    font-weight: 700;
+}
+
+.source-note {
+    font-size: 1rem;
+    color: #4a4740;
+    text-align: right;
+    margin-top: 14px;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+}
+
+/* ===== 词汇拆解 ===== */
+.word-breakdown {
+    margin-bottom: 40px;
+}
+
+.word-breakdown .section-label {
+    margin-bottom: 24px;
+}
+
+.word-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.word-card {
+    border: 1px solid rgba(107, 104, 96, 0.12);
+    border-radius: 2px;
+    padding: 20px 18px 16px;
+    background: rgba(255, 255, 255, 0.01);
+    transition: border-color 0.35s ease, background 0.35s ease;
+}
+
+.word-card:hover {
+    border-color: rgba(197, 165, 114, 0.25);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.wc-char {
+    display: inline-block;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1rem;
+    color: #8a8578;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.wc-word {
+    font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
+    font-size: 1.1rem;
+    color: #d4cfc1;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.wc-phonetic {
+    font-size: 1.05rem;
+    color: #5a564e;
+    font-style: italic;
+    vertical-align: middle;
+    font-weight: 700;
+}
+
+.wc-def {
+    font-size: 1rem;
+    color: #8a8578;
+    line-height: 1.6;
+    margin-top: 10px;
+    letter-spacing: 0.03em;
+    font-weight: 700;
+}
+
+.wc-context {
+    font-size: 1rem;
+    color: #5a564e;
+    margin-top: 8px;
+    font-style: italic;
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+    font-weight: 700;
+}
+
+.wc-context em {
+    font-style: normal;
+    color: #f5e6c8;
+    font-weight: 700;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 768px) {
+    .template-main {
+        padding: 60px 16px 110px;
+    }
+
+    .list-title,
+    .detail-title {
+        font-size: 1.5rem;
+    }
+
+    .li-title {
+        font-size: 1.15rem;
+    }
+
+    .li-summary {
+        font-size: 1rem;
+    }
+
+    .li-summary-en {
+        font-size: 0.85rem;
+    }
+
+    .detail-context p {
+        font-size: 1rem;
+    }
+
+    .word-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .english-text p {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .template-main {
+        padding: 48px 14px 130px;
+    }
+
+    .list-title,
+    .detail-title {
+        font-size: 1.3rem;
+    }
+
+    .detail-context p {
+        font-size: 0.92rem;
+    }
+}

@@ -35,7 +35,110 @@
 
 ---
 
+## 站点结构
+
+> 最后更新：2026-07-19
+
+### 文件树
+
+```
+zhiqiluo15.github.io/
+├── index.html                       # 首页（星空 + 导航）
+├── word-software.html               # 单词分首页（诗词 + 三入口卡片 + 时间轴）
+│
+├── word-poem-list.html              # 以诗入词 · 目录页
+├── word-poem-xinglunan.html         # 以诗入词 · 详情页（行路难）
+│
+├── word-history-list.html           # 以史鉴词 · 目录页
+├── word-history-yapian.html         # 以史鉴词 · 详情页（鸦片战争）
+│
+├── word-etymology-list.html         # 以词溯源 · 目录页
+├── word-etymology-tea.html          # 以词溯源 · 详情页（茶）
+│
+├── css/
+│   ├── base.css                     # 全局 reset + 基础排版
+│   ├── theme.css                    # 主题：星空 / 导航 / 页脚 / 响应式
+│   ├── word-software.css            # 单词分首页
+│   ├── word-poem-list.css           # 以诗入词 · 目录
+│   ├── word-poem.css                # 以诗入词 · 详情
+│   ├── word-history-list.css        # 以史鉴词 · 目录
+│   ├── word-history.css             # 以史鉴词 · 详情
+│   ├── word-etymology-list.css      # 以词溯源 · 目录
+│   └── word-etymology.css           # 以词溯源 · 详情
+│
+├── js/
+│   └── theme.js                     # 星空生成 + 页脚年份
+│
+├── fonts/
+│   └── MaShanZheng-*.woff2          # 书法字体（12 个子集，按 unicode-range 拆分）
+│
+├── CHANGELOG.md
+└── CNAME
+```
+
+### 页面层级 & 导航流
+
+```
+index.html（首页）
+  │
+  └── word-software.html（单词分首页）
+        ├── 以诗入词
+        │   └── word-poem-list.html → word-poem-xinglunan.html
+        ├── 以史鉴词
+        │   └── word-history-list.html → word-history-yapian.html
+        └── 以词溯源
+            └── word-etymology-list.html → word-etymology-tea.html
+```
+
+每级页面末端都有返回上一级链接。
+
+### CSS 引用规则
+
+```
+base.css + theme.css      → 所有页面必引
++ word-software.css       → 仅 word-software.html
++ word-poem-list.css      → 仅 word-poem-list.html
++ word-poem.css           → 仅 word-poem-xinglunan.html
++ word-history-list.css   → 仅 word-history-list.html
++ word-history.css        → 仅 word-history-yapian.html
++ word-etymology-list.css → 仅 word-etymology-list.html
++ word-etymology.css      → 仅 word-etymology-tea.html
+```
+
+### 设计约定
+
+- **零框架**：纯 HTML + CSS + JS，无前端框架
+- **数据层**：单词内容迁移至 Supabase，原有硬编码静态页保留作为回退
+- **三链路统一范式**：目录页用列表条目 + 悬浮左移 + 金线动画；详情页用词卡两列网格布局
+- **字体自托管**：Ma Shan Zheng 拆分 12 个 WOFF2 按需加载，正文宋体回退链，不走 Google Fonts
+- **导航**：竖排固定右侧，移动端改为底部横排
+- **布局单位**：目录页 max-width 900px，详情页 max-width 900px
+- **Supabase URL**：https://vacfnpexbwjqscrltwds.supabase.co
+- **模板页**：`word-list.html?category=` / `word-detail.html?id=` 为数据库驱动页面，原有静态页保留作为回退
+
+---
+
 ## 2026-07-19
+
+### 重构
+- **Supabase 接入**：引入 Supabase 数据层，替代硬编码页面
+  - 建表 `categories` / `entries` / `word_cards` / `daily_poems`（见 `supabase-setup.sql`）
+  - 客户端 `js/supabase.js` 封装所有查询方法
+  - 三级条目（行路难 / 鸦片战争 / 茶）的数据已迁移入库
+- **统一模板页**：
+  - `word-list.html` — 统一目录页，按 `?category=poem|history|etymology` 动态渲染
+  - `word-detail.html` — 统一详情页，按 `?id=xxx` 加载内容 + 词卡
+  - 新增 `css/word-template.css` 统一样式，替代原先三套独立 CSS 中的目录/详情部分
+- **分首页动态化**：当日诗词从 `daily_poems` 表随机加载，Supabase 不可用时保留硬编码兜底
+
+### 修改
+- `word-software.html` 三入口链接指向 `word-list.html?category=xxx`（原静态目录页保留可回退）
+- CHANGELOG 新增「站点结构」章节，记录文件树、页面层级、CSS 引用规则、设计约定
+
+### 设计决策
+- **Supabase 行级安全**：所有表启用 RLS，仅 `SELECT` 授权匿名读取，不暴露写入权限
+- **向后兼容**：原有静态目录/详情页保留不动，新模板页并行上线；全部迁移完成后可删除旧文件
+- **内容结构 JSONB**：`entries.content_data` 用 JSONB 存储不同分类的结构化内容（poem_lines / history_zh / story_zh），前端按类型渲染，避免每种分类拆多表
 
 ### 新增
 - **「以史鉴词」目录页 `word-history-list.html` + `css/word-history-list.css`**：历史事件列表，每个条目含标题、时代标签、中文概要、英文摘要、目标词汇预览

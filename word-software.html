@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/word-software.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
@@ -39,17 +40,17 @@
 
         <!-- 中部：三入口 -->
         <section class="word-gates">
-            <div class="gate" onclick="location.href='word-poem-list.html'">
+            <div class="gate" onclick="location.href='word-list.html?category=poem'">
                 <h2 class="gate-title">以诗入词</h2>
                 <p class="gate-sub">从诗词文言中拆解英文词汇</p>
                 <span class="gate-arrow">→</span>
             </div>
-            <div class="gate" onclick="location.href='word-history-list.html'">
+            <div class="gate" onclick="location.href='word-list.html?category=history'">
                 <h2 class="gate-title">以史鉴词</h2>
                 <p class="gate-sub">中西历史对照中的语言演变</p>
                 <span class="gate-arrow">→</span>
             </div>
-            <div class="gate" onclick="location.href='word-etymology-list.html'">
+            <div class="gate" onclick="location.href='word-list.html?category=etymology'">
                 <h2 class="gate-title">以词溯源</h2>
                 <p class="gate-sub">单词在中文语境中的回声</p>
                 <span class="gate-arrow">→</span>
@@ -74,5 +75,17 @@
     </footer>
 
     <script src="js/theme.js"></script>
+    <script src="js/supabase.js"></script>
+    <script>
+    // 从 Supabase 加载随机当日诗词，失败则保留硬编码兜底
+    (async function() {
+        const poem = await fetchRandomPoem();
+        if (!poem) return;
+        document.querySelector('.daily-poem .poem-cn').innerHTML = poem.poem_html;
+        document.querySelector('.daily-poem .poem-source').textContent = '—— ' + poem.source;
+        document.querySelector('.daily-poem .poem-en').innerHTML =
+            poem.poem_en + (poem.poem_en2 ? '<br>' + poem.poem_en2 : '');
+    })();
+    </script>
 </body>
 </html>
