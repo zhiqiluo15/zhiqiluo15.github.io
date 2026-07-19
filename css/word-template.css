@@ -9,13 +9,13 @@
 .template-main {
     position: relative;
     z-index: 10;
-    max-width: 900px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 80px 20px 120px;
 }
 
 .template-detail {
-    max-width: 900px;
+    max-width: 1100px;
 }
 
 /* ===== 返回链接 ===== */
@@ -132,7 +132,7 @@
     font-size: 1rem;
     color: #5a564e;
     font-style: italic;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     margin-top: 4px;
     font-weight: 700;
 }
@@ -192,14 +192,19 @@
 .detail-context {
     text-align: center;
     margin-bottom: 48px;
-    line-height: 2.4;
+    line-height: 2.8;
 }
 
 .detail-context p {
     font-family: 'Ma Shan Zheng', cursive;
-    font-size: 1.15rem;
+    font-size: 1.3rem;
     color: #c9c4b5;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.45em;
+}
+
+.detail-context ruby {
+    ruby-align: center;
+    letter-spacing: 0;
 }
 
 .detail-context p.highlight {
@@ -241,6 +246,16 @@
     font-weight: 700;
 }
 
+.section-label-sub {
+    font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
+    font-size: 0.85rem;
+    color: #4a4740;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    font-style: italic;
+    margin-left: 8px;
+}
+
 .english-text {
     line-height: 2;
 }
@@ -250,7 +265,7 @@
     font-size: 1rem;
     color: #7a766c;
     font-style: italic;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     font-weight: 700;
 }
 
@@ -317,7 +332,7 @@
     font-size: 1.1rem;
     color: #d4cfc1;
     font-weight: 700;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     vertical-align: middle;
     margin-right: 6px;
 }
@@ -335,7 +350,7 @@
     color: #8a8578;
     line-height: 1.6;
     margin-top: 10px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.07em;
     font-weight: 700;
 }
 
@@ -344,7 +359,7 @@
     color: #5a564e;
     margin-top: 8px;
     font-style: italic;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.07em;
     line-height: 1.5;
     font-weight: 700;
 }

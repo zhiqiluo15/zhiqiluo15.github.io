@@ -99,7 +99,10 @@ base.css + theme.css      → 所有页面必引
 - **三链路统一范式**：目录页用列表条目 + 悬浮左移 + 金线动画；详情页用词卡两列网格布局
 - **字体自托管**：Ma Shan Zheng 拆分 12 个 WOFF2 按需加载，正文宋体回退链，不走 Google Fonts
 - **导航**：竖排固定右侧，移动端改为底部横排
-- **布局单位**：目录页 max-width 900px，详情页 max-width 900px
+- **布局单位**：所有内容容器 max-width 统一为 1100px（桌面端约占屏幕 75%），专注桌面端体验
+- **Ruby 拼音硬性规则**：每日诗句 `letter-spacing: 0.55em`、`line-height: 3`；详情页原文 `letter-spacing: 0.45em`、`font-size: 1.3rem`、`line-height: 2.8`。`ruby` 标签内 `letter-spacing: 0` 保持拼音与汉字不散开。严禁超过 0.6em 导致字符松散
+- **英文字母间距统一**：所有英文/拉丁文本 `letter-spacing: 0.07em–0.08em`，词卡英文单词 0.08em，定义和出处 0.07em
+- **中文字间距统一**：无 ruby 中文文本（列表、摘要、标签等）`letter-spacing: 0.1em–0.15em`
 - **Supabase URL**：https://vacfnpexbwjqscrltwds.supabase.co
 - **Supabase anon key**（公开，前端使用）：`sb_publishable_bzHhPvrtJiiGrfE1eWldtA_1wYtEnQJ`
 - **Supabase service_role key**（加密存储，需解密时联系罗智奇获取密码）：
@@ -137,7 +140,7 @@ base.css + theme.css      → 所有页面必引
   // 使用：decrypt(passphrase, { salt, iv, data }).then(console.log)
   ```
 - **模板页**：`word-list.html?category=` / `word-detail.html?id=` 为数据库驱动页面，所有内容从 Supabase 动态加载
-- **排版规则**：所有字号 ≤ 1rem 的元素必须加粗（`font-weight: 700`），确保中文小字和拼音/英文字母清晰可辨；英文字母间距 `letter-spacing` 不低于 0.05em，避免字母粘连；诗词拼音 `rt` 字号不低于 0.85rem
+- **排版规则**：所有字号 ≤ 1rem 的元素必须加粗（`font-weight: 700`），确保中文小字和拼音/英文字母清晰可辨；诗词拼音 `rt` 字号不低于 0.85rem
 
 ---
 
