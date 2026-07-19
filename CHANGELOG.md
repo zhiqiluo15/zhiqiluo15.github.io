@@ -102,7 +102,7 @@ base.css + theme.css      → 所有页面必引
 - **布局单位**：目录页 max-width 900px，详情页 max-width 900px
 - **Supabase URL**：https://vacfnpexbwjqscrltwds.supabase.co
 - **Supabase anon key**（公开，前端使用）：`sb_publishable_bzHhPvrtJiiGrfE1eWldtA_1wYtEnQJ`
-- **Supabase service_role key**（加密存储，密码为四个汉字，知者可解）：
+- **Supabase service_role key**（加密存储，需解密时联系罗智奇获取密码）：
   ```
   salt:  AepL3Lug2JzCVh6Pr/vBTg==
   iv:    Fc8WWdp+LM6Brcch6G1Uvg==
@@ -116,7 +116,7 @@ base.css + theme.css      → 所有页面必引
     const d = crypto.createDecipheriv('aes-256-cbc', key, Buffer.from(iv, 'base64'));
     return d.update(data, 'base64', 'utf8') + d.final('utf8');
   }
-  // 使用：decrypt('四个汉字', { salt, iv, data })
+  // 使用：decrypt(passphrase, { salt, iv, data })
   ```
   浏览器控制台解密方法：
   ```js
@@ -134,7 +134,7 @@ base.css + theme.css      → 所有页面必引
       dk, ct);
     return new TextDecoder().decode(buf);
   }
-  // 使用：decrypt('四个汉字', { salt, iv, data }).then(console.log)
+  // 使用：decrypt(passphrase, { salt, iv, data }).then(console.log)
   ```
 - **模板页**：`word-list.html?category=` / `word-detail.html?id=` 为数据库驱动页面，所有内容从 Supabase 动态加载
 - **排版规则**：所有字号 ≤ 1rem 的元素必须加粗（`font-weight: 700`），确保中文小字和拼音/英文字母清晰可辨；英文字母间距 `letter-spacing` 不低于 0.05em，避免字母粘连；诗词拼音 `rt` 字号不低于 0.85rem
