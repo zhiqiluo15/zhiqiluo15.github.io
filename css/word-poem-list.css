@@ -18,7 +18,7 @@
     letter-spacing: 0.08em;
     margin-bottom: 48px;
     transition: color 0.3s ease;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .poem-list-main .back-link:hover {
@@ -47,7 +47,7 @@
     font-size: 0.82rem;
     color: #6b6860;
     letter-spacing: 0.1em;
-    font-weight: 500;
+    font-weight: 700;
 }
 
 /* ===== 诗词条目列表 ===== */
@@ -96,7 +96,7 @@
     color: #5a564e;
     letter-spacing: 0.1em;
     margin-top: 4px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .pi-line {
@@ -105,7 +105,7 @@
     letter-spacing: 0.1em;
     margin-top: 14px;
     line-height: 1.6;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .pi-line-en {
@@ -115,7 +115,7 @@
     font-style: italic;
     letter-spacing: 0.03em;
     margin-top: 4px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 /* ===== 响应式 ===== */
