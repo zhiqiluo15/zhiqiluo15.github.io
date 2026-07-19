@@ -76,7 +76,7 @@
 
 .poem-body rt {
     font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
-    font-size: 0.48rem;
+    font-size: 0.6rem;
     color: #5a564e;
     letter-spacing: 0;
     font-weight: 700;
@@ -129,7 +129,7 @@
 
 .translation-text p {
     font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #7a766c;
     font-style: italic;
     letter-spacing: 0.03em;
@@ -142,7 +142,7 @@
 }
 
 .translator-note {
-    font-size: 0.7rem;
+    font-size: 0.82rem;
     color: #4a4740;
     text-align: right;
     margin-top: 14px;
@@ -198,7 +198,7 @@
 }
 
 .wc-phonetic {
-    font-size: 0.7rem;
+    font-size: 0.82rem;
     color: #5a564e;
     font-style: italic;
     vertical-align: middle;
@@ -206,7 +206,7 @@
 }
 
 .wc-def {
-    font-size: 0.78rem;
+    font-size: 1rem;
     color: #8a8578;
     line-height: 1.6;
     margin-top: 10px;
@@ -215,7 +215,7 @@
 }
 
 .wc-context {
-    font-size: 0.72rem;
+    font-size: 0.85rem;
     color: #5a564e;
     margin-top: 8px;
     font-style: italic;

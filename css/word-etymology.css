@@ -12,7 +12,7 @@
 /* ===== 返回链接 ===== */
 .back-link {
     display: inline-block;
-    font-size: 0.8rem;
+    font-size: 0.92rem;
     color: #6b6860;
     text-decoration: none;
     letter-spacing: 0.08em;
@@ -52,7 +52,7 @@
 }
 
 .etymology-origin {
-    font-size: 0.82rem;
+    font-size: 0.95rem;
     color: #6b6860;
     letter-spacing: 0.12em;
     margin-bottom: 32px;
@@ -117,7 +117,7 @@
 
 .english-text p {
     font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #7a766c;
     font-style: italic;
     letter-spacing: 0.03em;
@@ -177,7 +177,7 @@
 }
 
 .wc-phonetic {
-    font-size: 0.7rem;
+    font-size: 0.82rem;
     color: #5a564e;
     font-style: italic;
     vertical-align: middle;
@@ -185,7 +185,7 @@
 }
 
 .wc-def {
-    font-size: 0.78rem;
+    font-size: 1rem;
     color: #8a8578;
     line-height: 1.6;
     margin-top: 10px;
@@ -194,7 +194,7 @@
 }
 
 .wc-context {
-    font-size: 0.72rem;
+    font-size: 0.85rem;
     color: #5a564e;
     margin-top: 8px;
     font-style: italic;
@@ -228,7 +228,7 @@
     }
 
     .english-text p {
-        font-size: 0.82rem;
+        font-size: 0.95rem;
     }
 }
 

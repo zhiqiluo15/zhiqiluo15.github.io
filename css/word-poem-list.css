@@ -12,7 +12,7 @@
 /* ===== 返回链接 ===== */
 .poem-list-main .back-link {
     display: inline-block;
-    font-size: 0.8rem;
+    font-size: 0.92rem;
     color: #6b6860;
     text-decoration: none;
     letter-spacing: 0.08em;
@@ -44,7 +44,7 @@
 }
 
 .list-desc {
-    font-size: 0.82rem;
+    font-size: 1rem;
     color: #6b6860;
     letter-spacing: 0.1em;
     font-weight: 700;
@@ -85,14 +85,14 @@
 
 .pi-subtitle {
     font-family: 'Ma Shan Zheng', cursive;
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #8a8578;
     letter-spacing: 0.08em;
     margin-left: 2px;
 }
 
 .pi-author {
-    font-size: 0.72rem;
+    font-size: 1rem;
     color: #5a564e;
     letter-spacing: 0.1em;
     margin-top: 4px;
@@ -100,7 +100,7 @@
 }
 
 .pi-line {
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: #8a8578;
     letter-spacing: 0.1em;
     margin-top: 14px;
@@ -110,7 +110,7 @@
 
 .pi-line-en {
     font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
-    font-size: 0.78rem;
+    font-size: 0.9rem;
     color: #5a564e;
     font-style: italic;
     letter-spacing: 0.03em;
@@ -133,11 +133,11 @@
     }
 
     .pi-line {
-        font-size: 0.85rem;
+        font-size: 1rem;
     }
 
     .pi-line-en {
-        font-size: 0.72rem;
+        font-size: 1rem;
     }
 }
 
