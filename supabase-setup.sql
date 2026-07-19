@@ -336,6 +336,42 @@ INSERT INTO daily_poems (poem_html, source, poem_en, poem_en2) VALUES
     '王勃《滕王阁序》',
     'A solitary wild duck soars with the sunset clouds —',
     'Autumn river merges with the sky in one hue.'
+  ),
+  (
+    '<ruby>但<rt>dàn</rt></ruby><ruby>愿<rt>yuàn</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>长<rt>cháng</rt></ruby><ruby>久<rt>jiǔ</rt></ruby>，<ruby>千<rt>qiān</rt></ruby><ruby>里<rt>lǐ</rt></ruby><ruby>共<rt>gòng</rt></ruby><ruby>婵<rt>chán</rt></ruby><ruby>娟<rt>juān</rt></ruby>',
+    '苏轼《水调歌头》',
+    'May we all be blessed with longevity —',
+    'Though miles apart, we share the same moonlit beauty.'
+  ),
+  (
+    '<ruby>举<rt>jǔ</rt></ruby><ruby>头<rt>tóu</rt></ruby><ruby>望<rt>wàng</rt></ruby><ruby>明<rt>míng</rt></ruby><ruby>月<rt>yuè</rt></ruby>，<ruby>低<rt>dī</rt></ruby><ruby>头<rt>tóu</rt></ruby><ruby>思<rt>sī</rt></ruby><ruby>故<rt>gù</rt></ruby><ruby>乡<rt>xiāng</rt></ruby>',
+    '李白《静夜思》',
+    'I raise my head and gaze upon the moon so bright —',
+    'Then lower it, homesick thoughts filling the night.'
+  ),
+  (
+    '<ruby>明<rt>míng</rt></ruby><ruby>月<rt>yuè</rt></ruby><ruby>松<rt>sōng</rt></ruby><ruby>间<rt>jiān</rt></ruby><ruby>照<rt>zhào</rt></ruby>，<ruby>清<rt>qīng</rt></ruby><ruby>泉<rt>quán</rt></ruby><ruby>石<rt>shí</rt></ruby><ruby>上<rt>shàng</rt></ruby><ruby>流<rt>liú</rt></ruby>',
+    '王维《山居秋暝》',
+    'Through pine woods shines the bright moonlight —',
+    'O''er crystal-clear stones flows the stream in sight.'
+  ),
+  (
+    '<ruby>月<rt>yuè</rt></ruby><ruby>落<rt>luò</rt></ruby><ruby>乌<rt>wū</rt></ruby><ruby>啼<rt>tí</rt></ruby><ruby>霜<rt>shuāng</rt></ruby><ruby>满<rt>mǎn</rt></ruby><ruby>天<rt>tiān</rt></ruby>，<ruby>江<rt>jiāng</rt></ruby><ruby>枫<rt>fēng</rt></ruby><ruby>渔<rt>yú</rt></ruby><ruby>火<rt>huǒ</rt></ruby><ruby>对<rt>duì</rt></ruby><ruby>愁<rt>chóu</rt></ruby><ruby>眠<rt>mián</rt></ruby>',
+    '张继《枫桥夜泊》',
+    'The moon goes down, crows cry under the frosty sky —',
+    'Dimly-lit fishing boats ''neath maples sadly lie.'
+  ),
+  (
+    '<ruby>野<rt>yě</rt></ruby><ruby>火<rt>huǒ</rt></ruby><ruby>烧<rt>shāo</rt></ruby><ruby>不<rt>bù</rt></ruby><ruby>尽<rt>jìn</rt></ruby>，<ruby>春<rt>chūn</rt></ruby><ruby>风<rt>fēng</rt></ruby><ruby>吹<rt>chuī</rt></ruby><ruby>又<rt>yòu</rt></ruby><ruby>生<rt>shēng</rt></ruby>',
+    '白居易《赋得古原草送别》',
+    'Wildfire cannot burn it all away —',
+    'When spring breeze blows, it grows again one day.'
+  ),
+  (
+    '<ruby>大<rt>dà</rt></ruby><ruby>漠<rt>mò</rt></ruby><ruby>孤<rt>gū</rt></ruby><ruby>烟<rt>yān</rt></ruby><ruby>直<rt>zhí</rt></ruby>，<ruby>长<rt>cháng</rt></ruby><ruby>河<rt>hé</rt></ruby><ruby>落<rt>luò</rt></ruby><ruby>日<rt>rì</rt></ruby><ruby>圆<rt>yuán</rt></ruby>',
+    '王维《使至塞上》',
+    'In boundless desert lonely smoke rises straight —',
+    'Over endless river the sun sinks round and great.'
   );
 
 -- 索引

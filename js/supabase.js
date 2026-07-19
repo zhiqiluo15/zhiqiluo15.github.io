@@ -60,7 +60,7 @@ async function fetchEntryDetail(entryId) {
   };
 }
 
-// 获取随机当日诗词
+// 获取当日诗词（按日期轮换，同一天内始终显示同一句）
 async function fetchRandomPoem() {
   const sb = getSupabase();
   if (!sb) return null;
@@ -71,7 +71,14 @@ async function fetchRandomPoem() {
     .limit(100);
 
   if (error || !data || data.length === 0) return null;
-  return data[Math.floor(Math.random() * data.length)];
+
+  // 基于日期选择：同一天始终返回同一句，午夜自动切换
+  const now = new Date();
+  const startOfYear = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now - startOfYear) / (1000 * 60 * 60 * 24));
+  const index = dayOfYear % data.length;
+
+  return data[index];
 }
 
 // 获取分类信息
