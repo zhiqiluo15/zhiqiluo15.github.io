@@ -12,7 +12,7 @@
 /* ===== 返回链接 ===== */
 .poem-list-main .back-link {
     display: inline-block;
-    font-size: 0.92rem;
+    font-size: 1rem;
     color: #6b6860;
     text-decoration: none;
     letter-spacing: 0.08em;
@@ -110,7 +110,7 @@
 
 .pi-line-en {
     font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #5a564e;
     font-style: italic;
     letter-spacing: 0.03em;

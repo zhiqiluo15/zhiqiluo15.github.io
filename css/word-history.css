@@ -12,7 +12,7 @@
 /* ===== 返回链接 ===== */
 .back-link {
     display: inline-block;
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: #6b6860;
     text-decoration: none;
     letter-spacing: 0.08em;
@@ -52,7 +52,7 @@
 }
 
 .history-period {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     color: #6b6860;
     letter-spacing: 0.12em;
     margin-bottom: 32px;
@@ -130,7 +130,7 @@
 }
 
 .source-note {
-    font-size: 0.82rem;
+    font-size: 1.05rem;
     color: #4a4740;
     text-align: right;
     margin-top: 14px;
@@ -186,7 +186,7 @@
 }
 
 .wc-phonetic {
-    font-size: 0.82rem;
+    font-size: 1.05rem;
     color: #5a564e;
     font-style: italic;
     vertical-align: middle;
@@ -203,7 +203,7 @@
 }
 
 .wc-context {
-    font-size: 0.85rem;
+    font-size: 1.05rem;
     color: #5a564e;
     margin-top: 8px;
     font-style: italic;
@@ -237,7 +237,7 @@
     }
 
     .english-text p {
-        font-size: 0.95rem;
+        font-size: 1.05rem;
     }
 }
 
@@ -247,7 +247,7 @@
     }
 
     .history-context p {
-        font-size: 0.92rem;
+        font-size: 1rem;
     }
 
     .history-title {

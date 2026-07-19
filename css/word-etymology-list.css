@@ -12,7 +12,7 @@
 /* ===== 返回链接 ===== */
 .etymology-list-main .back-link {
     display: inline-block;
-    font-size: 0.92rem;
+    font-size: 1rem;
     color: #6b6860;
     text-decoration: none;
     letter-spacing: 0.08em;
@@ -85,14 +85,14 @@
 
 .ei-subtitle {
     font-family: 'Ma Shan Zheng', cursive;
-    font-size: 0.92rem;
+    font-size: 1rem;
     color: #6b6860;
     letter-spacing: 0.08em;
     margin-left: 8px;
 }
 
 .ei-origin {
-    font-size: 0.85rem;
+    font-size: 1.05rem;
     color: #5a564e;
     letter-spacing: 0.1em;
     margin-top: 4px;
@@ -119,7 +119,7 @@
 }
 
 .ei-words {
-    font-size: 0.85rem;
+    font-size: 1.05rem;
     color: #5a564e;
     letter-spacing: 0.06em;
     margin-top: 8px;
@@ -144,11 +144,11 @@
     }
 
     .ei-summary {
-        font-size: 0.85rem;
+        font-size: 1.05rem;
     }
 
     .ei-summary-en {
-        font-size: 0.85rem;
+        font-size: 1.05rem;
     }
 }
 

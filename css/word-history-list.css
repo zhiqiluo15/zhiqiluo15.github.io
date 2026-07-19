@@ -12,7 +12,7 @@
 /* ===== 返回链接 ===== */
 .history-list-main .back-link {
     display: inline-block;
-    font-size: 0.92rem;
+    font-size: 1rem;
     color: #6b6860;
     text-decoration: none;
     letter-spacing: 0.08em;
@@ -85,14 +85,14 @@
 
 .hi-era {
     font-family: 'Ma Shan Zheng', cursive;
-    font-size: 0.92rem;
+    font-size: 1rem;
     color: #6b6860;
     letter-spacing: 0.08em;
     margin-left: 8px;
 }
 
 .hi-period {
-    font-size: 0.85rem;
+    font-size: 1.05rem;
     color: #5a564e;
     letter-spacing: 0.1em;
     margin-top: 4px;
@@ -110,7 +110,7 @@
 
 .hi-summary-en {
     font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #5a564e;
     font-style: italic;
     letter-spacing: 0.03em;
@@ -119,7 +119,7 @@
 }
 
 .hi-words {
-    font-size: 0.85rem;
+    font-size: 1.05rem;
     color: #5a564e;
     letter-spacing: 0.06em;
     margin-top: 8px;
@@ -144,11 +144,11 @@
     }
 
     .hi-summary {
-        font-size: 0.85rem;
+        font-size: 1.05rem;
     }
 
     .hi-summary-en {
-        font-size: 0.85rem;
+        font-size: 1.05rem;
     }
 }
 
