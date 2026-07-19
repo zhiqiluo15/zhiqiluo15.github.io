@@ -1,0 +1,255 @@
+/* === word-history.css — 以史鉴词详情页 === */
+
+/* ===== 主布局 ===== */
+.history-detail {
+    position: relative;
+    z-index: 10;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 20px 120px;
+}
+
+/* ===== 返回链接 ===== */
+.back-link {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: #6b6860;
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    margin-bottom: 48px;
+    transition: color 0.3s ease;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    color: #c9c4b5;
+}
+
+.back-link-bottom {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* ===== 标题区 ===== */
+.history-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.history-title {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.8rem;
+    color: #d4cfc1;
+    letter-spacing: 0.2em;
+    margin-bottom: 4px;
+}
+
+.history-subtitle {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1rem;
+    color: #8a8578;
+    letter-spacing: 0.12em;
+}
+
+.history-period {
+    font-size: 0.82rem;
+    color: #6b6860;
+    letter-spacing: 0.12em;
+    margin-bottom: 32px;
+    font-weight: 600;
+}
+
+/* ===== 历史背景 ===== */
+.history-context {
+    text-align: center;
+    margin-bottom: 48px;
+    line-height: 2.4;
+}
+
+.history-context p {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.1rem;
+    color: #c9c4b5;
+    letter-spacing: 0.12em;
+}
+
+.history-context .hc-highlight {
+    position: relative;
+    color: #f5e6c8 !important;
+    padding: 4px 0;
+}
+
+.history-context .hc-highlight::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(197, 165, 114, 0.25) 20%,
+        rgba(197, 165, 114, 0.25) 80%,
+        transparent 100%
+    );
+    opacity: 0.6;
+}
+
+/* ===== 英文史述 ===== */
+.history-english {
+    margin-bottom: 56px;
+    padding-left: 24px;
+    border-left: 1px solid rgba(197, 165, 114, 0.1);
+}
+
+.section-label {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1rem;
+    color: #5a564e;
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+}
+
+.english-text {
+    line-height: 2;
+}
+
+.english-text p {
+    font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
+    font-size: 0.9rem;
+    color: #7a766c;
+    font-style: italic;
+    letter-spacing: 0.03em;
+}
+
+.en-highlight {
+    color: #c9c4b5 !important;
+    font-weight: 600;
+}
+
+.source-note {
+    font-size: 0.7rem;
+    color: #4a4740;
+    text-align: right;
+    margin-top: 14px;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+}
+
+/* ===== 词汇拆解 ===== */
+.word-breakdown {
+    margin-bottom: 40px;
+}
+
+.word-breakdown .section-label {
+    margin-bottom: 24px;
+}
+
+.word-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.word-card {
+    border: 1px solid rgba(107, 104, 96, 0.12);
+    border-radius: 2px;
+    padding: 20px 18px 16px;
+    background: rgba(255, 255, 255, 0.01);
+    transition: border-color 0.35s ease, background 0.35s ease;
+}
+
+.word-card:hover {
+    border-color: rgba(197, 165, 114, 0.25);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.wc-char {
+    display: inline-block;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1rem;
+    color: #8a8578;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.wc-word {
+    font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
+    font-size: 1.1rem;
+    color: #d4cfc1;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.wc-phonetic {
+    font-size: 0.7rem;
+    color: #5a564e;
+    font-style: italic;
+    vertical-align: middle;
+    font-weight: 600;
+}
+
+.wc-def {
+    font-size: 0.78rem;
+    color: #8a8578;
+    line-height: 1.6;
+    margin-top: 10px;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+}
+
+.wc-context {
+    font-size: 0.72rem;
+    color: #5a564e;
+    margin-top: 8px;
+    font-style: italic;
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+.wc-context em {
+    font-style: normal;
+    color: #f5e6c8;
+    font-weight: 600;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 768px) {
+    .history-detail {
+        padding: 60px 16px 110px;
+    }
+
+    .history-title {
+        font-size: 1.5rem;
+    }
+
+    .history-context p {
+        font-size: 1rem;
+    }
+
+    .word-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .english-text p {
+        font-size: 0.82rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .history-detail {
+        padding: 48px 14px 130px;
+    }
+
+    .history-context p {
+        font-size: 0.92rem;
+    }
+
+    .history-title {
+        font-size: 1.3rem;
+    }
+}

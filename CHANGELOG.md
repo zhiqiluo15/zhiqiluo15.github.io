@@ -35,6 +35,25 @@
 
 ---
 
+## 2026-07-19
+
+### 新增
+- **「以史鉴词」目录页 `word-history-list.html` + `css/word-history-list.css`**：历史事件列表，每个条目含标题、时代标签、中文概要、英文摘要、目标词汇预览
+- **鸦片战争详情页 `word-history-yapian.html` + `css/word-history.css`**：
+  - 历史背景中文简述（坚船利炮叩开国门），金线标注关键句
+  - 英文史述段落，核心词汇高亮（opium / gunboat / treaty / cede 等）
+  - 词汇拆解卡片（opium / gunboat / treaty / cede / empire / port / indemnity / concession），含音标、释义、史境出处
+  - 详情页与目录页底部均含返回链接
+
+### 修改
+- `word-software.html`「以史鉴词」gate 从无链接改为跳转 `word-history-list.html`
+
+### 设计决策
+- 页面结构与「以诗入词」保持一致：分首页 → 目录页 → 详情页，目录页沿用条目列表+悬浮左移+金线的交互范式
+- 详情页复用诗词详情页的词卡布局，将「诗词原文」「英文译本」替换为「历史背景」「英文史述」，保持视觉统一
+
+---
+
 ## 2026-07-18
 
 ### 清理
