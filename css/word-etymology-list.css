@@ -1,0 +1,163 @@
+/* === word-etymology-list.css — 以词溯源目录页 === */
+
+/* ===== 主布局 ===== */
+.etymology-list-main {
+    position: relative;
+    z-index: 10;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 80px 20px 120px;
+}
+
+/* ===== 返回链接 ===== */
+.etymology-list-main .back-link {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: #6b6860;
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    margin-bottom: 48px;
+    transition: color 0.3s ease;
+    font-weight: 600;
+}
+
+.etymology-list-main .back-link:hover {
+    color: #c9c4b5;
+}
+
+.etymology-list-main .back-link-bottom {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* ===== 头部 ===== */
+.list-header {
+    margin-bottom: 48px;
+}
+
+.list-title {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.8rem;
+    color: #d4cfc1;
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+}
+
+.list-desc {
+    font-size: 0.82rem;
+    color: #6b6860;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+}
+
+/* ===== 词源条目列表 ===== */
+.etymology-items {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.etymology-item {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(107, 104, 96, 0.1);
+    transition: border-color 0.3s ease, padding-left 0.3s ease;
+}
+
+.etymology-item:hover {
+    border-bottom-color: rgba(197, 165, 114, 0.25);
+    padding-left: 8px;
+}
+
+.ei-title {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.3rem;
+    color: #c9c4b5;
+    letter-spacing: 0.15em;
+    transition: color 0.3s ease;
+}
+
+.etymology-item:hover .ei-title {
+    color: #f5e6c8;
+}
+
+.ei-subtitle {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 0.8rem;
+    color: #6b6860;
+    letter-spacing: 0.08em;
+    margin-left: 8px;
+}
+
+.ei-origin {
+    font-size: 0.72rem;
+    color: #5a564e;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+    font-weight: 600;
+}
+
+.ei-summary {
+    font-size: 0.95rem;
+    color: #8a8578;
+    letter-spacing: 0.1em;
+    margin-top: 14px;
+    line-height: 1.6;
+    font-weight: 600;
+}
+
+.ei-summary-en {
+    font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
+    font-size: 0.78rem;
+    color: #5a564e;
+    font-style: italic;
+    letter-spacing: 0.03em;
+    margin-top: 4px;
+    font-weight: 600;
+}
+
+.ei-words {
+    font-size: 0.72rem;
+    color: #5a564e;
+    letter-spacing: 0.06em;
+    margin-top: 8px;
+}
+
+.ei-words span {
+    color: #8a8578;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 768px) {
+    .etymology-list-main {
+        padding: 60px 16px 110px;
+    }
+
+    .list-title {
+        font-size: 1.5rem;
+    }
+
+    .ei-title {
+        font-size: 1.15rem;
+    }
+
+    .ei-summary {
+        font-size: 0.85rem;
+    }
+
+    .ei-summary-en {
+        font-size: 0.72rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .etymology-list-main {
+        padding: 48px 14px 130px;
+    }
+
+    .list-title {
+        font-size: 1.3rem;
+    }
+}
