@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>灵弦词集 — 灵弦华夏</title>
     <meta name="description" content="灵弦词集 — 以诗入词 · 以史鉴词 · 以词溯源">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://vacfnpexbwjqscrltwds.supabase.co">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/word-software.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
@@ -38,7 +39,7 @@
         </section>
 
         <!-- 中部：三入口 -->
-        <section class="word-gates">
+        <section class="word-gates" id="wordGates">
             <a class="gate" href="word-list.html?category=poem">
                 <h2 class="gate-title">以诗入词</h2>
                 <p class="gate-sub">从诗词文言中拆解英文词汇</p>
@@ -74,19 +75,37 @@
     </footer>
 
     <script src="js/theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script src="js/supabase.js"></script>
     <script>
-    // 从 Supabase 加载当日诗词；初始隐藏，就绪后淡入；失败则显示兜底
+    // 从 Supabase 加载当日诗词 & 分类；初始隐藏，就绪后淡入；失败则显示硬编码兜底
     (async function() {
         const section = document.querySelector('.daily-poem');
         const loadingEl = document.querySelector('.poem-loading');
-        const poem = await fetchRandomPoem();
+
+        const [poem, categories] = await Promise.all([
+            fetchRandomPoem(),
+            fetchCategories()
+        ]);
+
         if (poem) {
             document.querySelector('.daily-poem .poem-cn').innerHTML = poem.poem_html;
             document.querySelector('.daily-poem .poem-source').textContent = '—— ' + poem.source;
             document.querySelector('.daily-poem .poem-en').innerHTML =
                 poem.poem_en + (poem.poem_en2 ? '<br>' + poem.poem_en2 : '');
         }
+
+        // 动态替换三入口卡片
+        if (categories && categories.length > 0) {
+            document.getElementById('wordGates').innerHTML = categories.map(c => `
+                <a class="gate" href="word-list.html?category=${c.slug}">
+                    <h2 class="gate-title">${c.name_zh}</h2>
+                    <p class="gate-sub">${c.desc_zh || ''}</p>
+                    <span class="gate-arrow">→</span>
+                </a>
+            `).join('');
+        }
+
         if (loadingEl) loadingEl.remove();
         section.style.opacity = '1';
     })();
