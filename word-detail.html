@@ -65,7 +65,7 @@
             // 诗词类
             contextHtml = `
             <section class="detail-context">
-                ${cd.poem_lines.map(l => `<p${l.highlight ? ' class="highlight"' : ''}>${l.html}</p>`).join('')}
+                ${cd.poem_lines.map(l => `<p${l.highlight ? ' class="highlight"' : ''}>${l.html.replace(/<ruby>([^<]*)<rt>[^<]*<\/rt><\/ruby>/g, '$1')}</p>`).join('')}
             </section>`;
 
             englishHtml = `

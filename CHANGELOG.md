@@ -149,9 +149,11 @@ base.css + theme.css      → 所有页面必引
 ### 修复
 - **拼音 `rt` 字号过小**：`word-template.css` 中 `.detail-context rt` 新增 `font-size: 0.85rem; font-weight: 700`，此前浏览器默认约 0.65rem，低于设计约定下限
 - **`.nav a.active` 重复定义**：从 `word-software.css` 和 `word-template.css` 移除各自重复的激活态规则，统一到 `theme.css` 中 `.nav a:hover, .nav a.active` 一处管理
+- **详情页诗句字间距无效**：`.detail-context p` 的 `letter-spacing: 0.45em` 对独立 `<ruby>` 包裹的单字不生效，改为 `.detail-context ruby { margin-right: 0.45em }` 直接给每个 ruby 元素加右间距，恢复字间呼吸感
 
 ### 修改
 - **当日诗词加载过渡**：`word-software.html` 中 Supabase 异步替换当日诗词时加入 200ms 渐隐 → 更新内容 → 渐显过渡，`word-software.css` 中 `.daily-poem` 增加 `transition: opacity 0.5s ease`，避免硬编码兜底被突然替换的闪烁感
+- **详情页剥离拼音**：`word-detail.html` 渲染 `poem_lines` 时用正则剥离 `<ruby><rt>` 标签，仅保留纯汉字，同步恢复 `.detail-context p` 的 `letter-spacing: 0.45em` 字间距
 
 ---
 
