@@ -100,7 +100,7 @@ base.css + theme.css      → 所有页面必引
 - **字体自托管**：Ma Shan Zheng 拆分 12 个 WOFF2 按需加载，正文宋体回退链，不走 Google Fonts
 - **导航**：竖排固定右侧，移动端改为底部横排
 - **布局单位**：所有内容容器 max-width 统一为 1100px（桌面端约占屏幕 75%），专注桌面端体验
-- **Ruby 拼音硬性规则**：每日诗句 `letter-spacing: 0.55em`、`line-height: 3`；详情页原文 `letter-spacing: 0.45em`、`font-size: 1.3rem`、`line-height: 2.8`。`ruby` 标签内 `letter-spacing: 0` 保持拼音与汉字不散开。严禁超过 0.6em 导致字符松散
+- **Ruby 拼音硬性规则**：每日诗句已移除拼音，纯汉字 `letter-spacing: 0.75em`、`line-height: 2.5`。详情页原文 `letter-spacing: 0.45em`、`font-size: 1.3rem`、`line-height: 2.8`。`ruby` 标签内 `letter-spacing: 0` 保持拼音与汉字不散开
 - **英文字母间距统一**：所有英文/拉丁文本 `letter-spacing: 0.07em–0.08em`，词卡英文单词 0.08em，定义和出处 0.07em
 - **中文字间距统一**：无 ruby 中文文本（列表、摘要、标签等）`letter-spacing: 0.1em–0.15em`
 - **Supabase URL**：https://vacfnpexbwjqscrltwds.supabase.co

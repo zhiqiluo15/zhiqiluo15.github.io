@@ -78,7 +78,10 @@ async function fetchRandomPoem() {
   const dayOfYear = Math.floor((now - startOfYear) / (1000 * 60 * 60 * 24));
   const index = dayOfYear % data.length;
 
-  return data[index];
+  const poem = data[index];
+  // 兼容旧数据：剥离 ruby 拼音标签，保留纯汉字
+  poem.poem_html = poem.poem_html.replace(/<ruby>([^<]*)<rt>[^<]*<\/rt><\/ruby>/g, '$1');
+  return poem;
 }
 
 // 获取分类信息

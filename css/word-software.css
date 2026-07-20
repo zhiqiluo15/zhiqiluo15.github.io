@@ -28,22 +28,9 @@
     font-family: 'Ma Shan Zheng', cursive;
     font-size: 1.45rem;
     color: #d4cfc1;
-    letter-spacing: 0.55em;
-    line-height: 3;
+    letter-spacing: 0.75em;
+    line-height: 2.5;
     margin-bottom: 18px;
-}
-
-.poem-cn ruby {
-    ruby-align: center;
-    letter-spacing: 0;
-}
-
-.poem-cn rt {
-    font-family: 'Georgia', 'Times New Roman', STSong, 'Songti SC', serif;
-    font-size: 0.9rem;
-    color: #5a564e;
-    letter-spacing: 0;
-    font-weight: 700;
 }
 
 .poem-en {
@@ -204,7 +191,7 @@
 
     .poem-cn {
         font-size: 1.2rem;
-        letter-spacing: 0.15em;
+        letter-spacing: 0.4em;
     }
 
     .poem-en {
@@ -241,6 +228,7 @@
 
     .poem-cn {
         font-size: 1.05rem;
+        letter-spacing: 0.3em;
     }
 
     .tl-mark::after {
