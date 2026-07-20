@@ -153,6 +153,7 @@ base.css + theme.css      → 所有页面必引
 
 ### 修改
 - **当日诗词加载过渡**：`word-software.html` 中 Supabase 异步替换当日诗词时加入 200ms 渐隐 → 更新内容 → 渐显过渡，`word-software.css` 中 `.daily-poem` 增加 `transition: opacity 0.5s ease`，避免硬编码兜底被突然替换的闪烁感
+- **当日诗词初始隐藏**：`.daily-poem` 初始 `opacity: 0`，Supabase 数据就绪后再淡入；失败则显示硬编码兜底。彻底消除刷新时"先看到滕王阁序再跳变"的问题
 - **详情页剥离拼音**：`word-detail.html` 渲染 `poem_lines` 时用正则剥离 `<ruby><rt>` 标签，仅保留纯汉字，同步恢复 `.detail-context p` 的 `letter-spacing: 0.45em` 字间距
 
 ---

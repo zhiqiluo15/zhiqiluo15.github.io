@@ -75,17 +75,16 @@
     <script src="js/theme.js"></script>
     <script src="js/supabase.js"></script>
     <script>
-    // 从 Supabase 加载随机当日诗词，失败则保留硬编码兜底
+    // 从 Supabase 加载当日诗词；初始隐藏，就绪后淡入；失败则显示兜底
     (async function() {
-        const poem = await fetchRandomPoem();
-        if (!poem) return;
         const section = document.querySelector('.daily-poem');
-        section.style.opacity = '0';
-        await new Promise(r => setTimeout(r, 200));
-        document.querySelector('.daily-poem .poem-cn').innerHTML = poem.poem_html;
-        document.querySelector('.daily-poem .poem-source').textContent = '—— ' + poem.source;
-        document.querySelector('.daily-poem .poem-en').innerHTML =
-            poem.poem_en + (poem.poem_en2 ? '<br>' + poem.poem_en2 : '');
+        const poem = await fetchRandomPoem();
+        if (poem) {
+            document.querySelector('.daily-poem .poem-cn').innerHTML = poem.poem_html;
+            document.querySelector('.daily-poem .poem-source').textContent = '—— ' + poem.source;
+            document.querySelector('.daily-poem .poem-en').innerHTML =
+                poem.poem_en + (poem.poem_en2 ? '<br>' + poem.poem_en2 : '');
+        }
         section.style.opacity = '1';
     })();
     </script>
