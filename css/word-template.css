@@ -197,17 +197,6 @@
     letter-spacing: 0.45em;
 }
 
-.detail-context ruby {
-    ruby-align: center;
-    letter-spacing: 0;
-    margin-right: 0.45em;
-}
-
-.detail-context rt {
-    font-size: 0.85rem;
-    font-weight: 700;
-}
-
 .detail-context p.highlight {
     position: relative;
     color: #f5e6c8 !important;

@@ -52,11 +52,9 @@
 
         // 设置页面标题
         const cat = await fetchCategory(slug);
-        if (cat) {
-            document.getElementById('categoryName').textContent = cat.name_zh;
-            document.getElementById('categoryDesc').textContent = cat.desc_zh || '';
-            document.title = cat.name_zh + ' — 灵弦词集';
-        }
+        document.getElementById('categoryName').textContent = cat ? cat.name_zh : '词集';
+        document.getElementById('categoryDesc').textContent = cat ? (cat.desc_zh || '') : '';
+        if (cat) document.title = cat.name_zh + ' — 灵弦词集';
 
         const entries = await fetchEntriesByCategory(slug);
         const listEl = document.getElementById('itemList');

@@ -31,6 +31,7 @@
 
         <!-- 顶部：当日诗词 -->
         <section class="daily-poem">
+            <p class="poem-loading">·  ·  ·</p>
             <p class="poem-cn">落霞与孤鹜齐飞，秋水共长天一色</p>
             <p class="poem-source">—— 王勃《滕王阁序》</p>
             <p class="poem-en">A solitary wild duck soars with the sunset clouds —<br>Autumn river merges with the sky in one hue.</p>
@@ -78,6 +79,7 @@
     // 从 Supabase 加载当日诗词；初始隐藏，就绪后淡入；失败则显示兜底
     (async function() {
         const section = document.querySelector('.daily-poem');
+        const loadingEl = document.querySelector('.poem-loading');
         const poem = await fetchRandomPoem();
         if (poem) {
             document.querySelector('.daily-poem .poem-cn').innerHTML = poem.poem_html;
@@ -85,6 +87,7 @@
             document.querySelector('.daily-poem .poem-en').innerHTML =
                 poem.poem_en + (poem.poem_en2 ? '<br>' + poem.poem_en2 : '');
         }
+        if (loadingEl) loadingEl.remove();
         section.style.opacity = '1';
     })();
     </script>

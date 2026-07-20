@@ -67,8 +67,7 @@ async function fetchRandomPoem() {
   const { data, error } = await sb
     .from('daily_poems')
     .select('*')
-    .order('id')
-    .limit(100);
+    .order('id');
 
   if (error || !data || data.length === 0) return null;
 
@@ -91,10 +90,4 @@ async function fetchCategory(slug) {
   const { data, error } = await sb.from('categories').select('*').eq('slug', slug).single();
   if (error) return null;
   return data;
-}
-
-// 获取分类名（用于详情页显示）
-async function fetchCategoryNameOf(entryId) {
-  const detail = await fetchEntryDetail(entryId);
-  return detail?.categories?.name_zh || '';
 }

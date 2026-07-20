@@ -100,7 +100,7 @@ base.css + theme.css      → 所有页面必引
 - **字体自托管**：Ma Shan Zheng 拆分 12 个 WOFF2 按需加载，正文宋体回退链，不走 Google Fonts
 - **导航**：竖排固定右侧，移动端改为底部横排
 - **布局单位**：所有内容容器 max-width 统一为 1100px（桌面端约占屏幕 75%），专注桌面端体验
-- **Ruby 拼音硬性规则**：每日诗句已移除拼音，纯汉字 `letter-spacing: 0.75em`、`line-height: 2.5`。详情页原文 `letter-spacing: 0.45em`、`font-size: 1.3rem`、`line-height: 2.8`。`ruby` 标签内 `letter-spacing: 0` 保持拼音与汉字不散开
+- **Ruby 拼音硬性规则**：已移除全部拼音，诗句和每日诗词均为纯汉字。详情页原文 `letter-spacing: 0.45em`、`font-size: 1.3rem`、`line-height: 2.8`。每日诗句 `letter-spacing: 0.75em`、`line-height: 2.5`
 - **英文字母间距统一**：所有英文/拉丁文本 `letter-spacing: 0.07em–0.08em`，词卡英文单词 0.08em，定义和出处 0.07em
 - **中文字间距统一**：无 ruby 中文文本（列表、摘要、标签等）`letter-spacing: 0.1em–0.15em`
 - **Supabase URL**：https://vacfnpexbwjqscrltwds.supabase.co
@@ -140,7 +140,7 @@ base.css + theme.css      → 所有页面必引
   // 使用：decrypt(passphrase, { salt, iv, data }).then(console.log)
   ```
 - **模板页**：`word-list.html?category=` / `word-detail.html?id=` 为数据库驱动页面，所有内容从 Supabase 动态加载
-- **排版规则**：所有字号 ≤ 1rem 的元素必须加粗（`font-weight: 700`），确保中文小字和拼音/英文字母清晰可辨；诗词拼音 `rt` 字号不低于 0.85rem
+- **排版规则**：所有字号 ≤ 1rem 的元素必须加粗（`font-weight: 700`），确保中文小字和英文字母清晰可辨
 
 ---
 
@@ -153,8 +153,15 @@ base.css + theme.css      → 所有页面必引
 
 ### 修改
 - **当日诗词加载过渡**：`word-software.html` 中 Supabase 异步替换当日诗词时加入 200ms 渐隐 → 更新内容 → 渐显过渡，`word-software.css` 中 `.daily-poem` 增加 `transition: opacity 0.5s ease`，避免硬编码兜底被突然替换的闪烁感
-- **当日诗词初始隐藏**：`.daily-poem` 初始 `opacity: 0`，Supabase 数据就绪后再淡入；失败则显示硬编码兜底。彻底消除刷新时"先看到滕王阁序再跳变"的问题
+- **当日诗词初始隐藏 + loading**：`.daily-poem` 初始 `opacity: 0`，Supabase 数据就绪后再淡入，同时添加 `· · ·` 加载提示避免空白等待；失败则显示硬编码兜底。彻底消除刷新时"先看到滕王阁序再跳变"的问题
 - **详情页剥离拼音**：`word-detail.html` 渲染 `poem_lines` 时用正则剥离 `<ruby><rt>` 标签，仅保留纯汉字，同步恢复 `.detail-context p` 的 `letter-spacing: 0.45em` 字间距
+- **`word-list.html` 兜底处理**：`fetchCategory` 失败时分类标题不再卡在"加载中…"，改为显示"词集"
+
+### 清理
+- 移除 `word-template.css` 中不再使用的 `.detail-context ruby` / `.detail-context rt` 样式（拼音已全剥离）
+- 移除 `js/supabase.js` 中从未被调用的 `fetchCategoryNameOf()` 函数
+- 移除 `fetchRandomPoem()` 中无意义的 `.limit(100)`（仅 7 条记录）
+- CHANGELOG「设计约定」章节更新，移除已过时的 ruby 拼音相关规则
 
 ---
 

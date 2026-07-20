@@ -21,6 +21,14 @@
     transition: opacity 0.5s ease;
 }
 
+.poem-loading {
+    font-size: 1rem;
+    color: #4a4740;
+    letter-spacing: 0.3em;
+    margin-bottom: 18px;
+    font-weight: 700;
+}
+
 .poem-cn {
     font-family: 'Ma Shan Zheng', cursive;
     font-size: 1.45rem;
