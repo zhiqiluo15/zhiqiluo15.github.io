@@ -1,10 +1,5 @@
 /* === word-software.css — 灵弦词集分首页 === */
 
-/* ===== 导航激活态 ===== */
-.nav a.active {
-    color: #f5e6c8;
-}
-
 /* ===== 主布局 ===== */
 .word-main {
     position: relative;
@@ -22,6 +17,7 @@
 .daily-poem {
     text-align: center;
     max-width: 1100px;
+    transition: opacity 0.5s ease;
 }
 
 .poem-cn {

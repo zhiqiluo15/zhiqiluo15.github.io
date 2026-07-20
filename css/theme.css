@@ -147,7 +147,8 @@ body {
     font-weight: 700;
 }
 
-.nav a:hover {
+.nav a:hover,
+.nav a.active {
     color: #f5e6c8;
 }
 

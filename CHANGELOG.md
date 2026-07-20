@@ -144,6 +144,17 @@ base.css + theme.css      → 所有页面必引
 
 ---
 
+## 2026-07-20
+
+### 修复
+- **拼音 `rt` 字号过小**：`word-template.css` 中 `.detail-context rt` 新增 `font-size: 0.85rem; font-weight: 700`，此前浏览器默认约 0.65rem，低于设计约定下限
+- **`.nav a.active` 重复定义**：从 `word-software.css` 和 `word-template.css` 移除各自重复的激活态规则，统一到 `theme.css` 中 `.nav a:hover, .nav a.active` 一处管理
+
+### 修改
+- **当日诗词加载过渡**：`word-software.html` 中 Supabase 异步替换当日诗词时加入 200ms 渐隐 → 更新内容 → 渐显过渡，`word-software.css` 中 `.daily-poem` 增加 `transition: opacity 0.5s ease`，避免硬编码兜底被突然替换的闪烁感
+
+---
+
 ## 2026-07-19
 
 ### 清理
